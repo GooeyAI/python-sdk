@@ -25,7 +25,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "gooeyai",
-            "X-Fern-SDK-Version": "0.0.1b01",
+            "X-Fern-SDK-Version": "0.0.1b1",
         }
         if self._authorization is not None:
             headers["Authorization"] = self._authorization
