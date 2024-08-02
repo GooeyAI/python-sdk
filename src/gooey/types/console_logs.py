@@ -5,11 +5,11 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .level import Level
+from .console_logs_level import ConsoleLogsLevel
 
 
 class ConsoleLogs(UniversalBaseModel):
-    level: Level
+    level: ConsoleLogsLevel
     message: str
 
     if IS_PYDANTIC_V2:

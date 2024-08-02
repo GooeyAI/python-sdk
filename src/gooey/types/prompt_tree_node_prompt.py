@@ -4,4 +4,4 @@ import typing
 
 from .conversation_entry import ConversationEntry
 
-Prompt = typing.Union[str, typing.List[ConversationEntry]]
+PromptTreeNodePrompt = typing.Union[str, typing.List[ConversationEntry]]

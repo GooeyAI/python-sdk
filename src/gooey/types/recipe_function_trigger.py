@@ -2,4 +2,4 @@
 
 import typing
 
-Trigger = typing.Union[typing.Literal["pre", "post"], typing.Any]
+RecipeFunctionTrigger = typing.Union[typing.Literal["pre", "post"], typing.Any]

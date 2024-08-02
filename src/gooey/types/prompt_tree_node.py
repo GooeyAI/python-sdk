@@ -7,11 +7,11 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from .prompt import Prompt
+from .prompt_tree_node_prompt import PromptTreeNodePrompt
 
 
 class PromptTreeNode(UniversalBaseModel):
-    prompt: Prompt
+    prompt: PromptTreeNodePrompt
     children: typing.List[PromptTreeNode]
 
     if IS_PYDANTIC_V2:

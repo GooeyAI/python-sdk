@@ -5,12 +5,12 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .function import Function
+from .agg_function_result_function import AggFunctionResultFunction
 
 
 class AggFunctionResult(UniversalBaseModel):
     column: str
-    function: Function
+    function: AggFunctionResultFunction
     count: int
     value: float
 

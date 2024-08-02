@@ -2,7 +2,7 @@
 
 import typing
 
-Scheduler = typing.Union[
+CompareText2ImgPageRequestScheduler = typing.Union[
     typing.Literal[
         "singlestep_dpm_solver",
         "multistep_dpm_solver",

@@ -5,12 +5,12 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .preprocess import Preprocess
+from .sad_talker_settings_preprocess import SadTalkerSettingsPreprocess
 
 
 class SadTalkerSettings(UniversalBaseModel):
     still: typing.Optional[bool] = None
-    preprocess: typing.Optional[Preprocess] = pydantic.Field(default=None)
+    preprocess: typing.Optional[SadTalkerSettingsPreprocess] = pydantic.Field(default=None)
     """
     SadTalker only generates 512x512 output. 'crop' handles this by cropping the input to 512x512. 'resize' scales down the input to fit 512x512 and scales it back up after lipsyncing (does not work well for full person images, better for portraits). 'full' processes the cropped region and pastes it back into the original input. 'extcrop' and 'extfull' are similar to 'crop' and 'full' but with extended cropping.
     """

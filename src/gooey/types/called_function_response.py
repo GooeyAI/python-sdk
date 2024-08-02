@@ -5,12 +5,12 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .trigger import Trigger
+from .called_function_response_trigger import CalledFunctionResponseTrigger
 
 
 class CalledFunctionResponse(UniversalBaseModel):
     url: str
-    trigger: Trigger
+    trigger: CalledFunctionResponseTrigger
     return_value: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:

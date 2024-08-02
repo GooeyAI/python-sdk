@@ -4,4 +4,4 @@ import typing
 
 from .conversation_entry_content_item import ConversationEntryContentItem
 
-Content = typing.Union[str, typing.List[ConversationEntryContentItem]]
+ConversationEntryContent = typing.Union[str, typing.List[ConversationEntryContentItem]]

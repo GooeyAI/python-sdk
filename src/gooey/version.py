@@ -1,4 +1,4 @@
 
 from importlib import metadata
 
-__version__ = metadata.version("gooey")
+__version__ = metadata.version("gooeyai")

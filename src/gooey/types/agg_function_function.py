@@ -2,7 +2,7 @@
 
 import typing
 
-Function = typing.Union[
+AggFunctionFunction = typing.Union[
     typing.Literal[
         "mean",
         "median",

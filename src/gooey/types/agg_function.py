@@ -5,12 +5,12 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .function import Function
+from .agg_function_function import AggFunctionFunction
 
 
 class AggFunction(UniversalBaseModel):
     column: typing.Optional[str] = None
-    function: Function
+    function: AggFunctionFunction
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

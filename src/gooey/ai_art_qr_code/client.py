@@ -18,6 +18,7 @@ from ..types.http_validation_error import HttpValidationError
 from ..types.qr_code_generator_page_request_image_prompt_controlnet_models_item import (
     QrCodeGeneratorPageRequestImagePromptControlnetModelsItem,
 )
+from ..types.qr_code_generator_page_request_scheduler import QrCodeGeneratorPageRequestScheduler
 from ..types.qr_code_generator_page_request_selected_controlnet_model_item import (
     QrCodeGeneratorPageRequestSelectedControlnetModelItem,
 )
@@ -26,7 +27,6 @@ from ..types.qr_code_generator_page_response import QrCodeGeneratorPageResponse
 from ..types.qr_code_generator_page_status_response import QrCodeGeneratorPageStatusResponse
 from ..types.recipe_function import RecipeFunction
 from ..types.run_settings import RunSettings
-from ..types.scheduler import Scheduler
 from ..types.vcard import Vcard
 
 # this is used as the default value for optional parameters
@@ -67,7 +67,7 @@ class AiArtQrCodeClient:
         controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
         seed: typing.Optional[int] = OMIT,
         obj_scale: typing.Optional[float] = OMIT,
         obj_pos_x: typing.Optional[float] = OMIT,
@@ -125,7 +125,7 @@ class AiArtQrCodeClient:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
 
         seed : typing.Optional[int]
 
@@ -248,7 +248,7 @@ class AiArtQrCodeClient:
         controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
         seed: typing.Optional[int] = OMIT,
         obj_scale: typing.Optional[float] = OMIT,
         obj_pos_x: typing.Optional[float] = OMIT,
@@ -306,7 +306,7 @@ class AiArtQrCodeClient:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
 
         seed : typing.Optional[int]
 
@@ -481,7 +481,7 @@ class AsyncAiArtQrCodeClient:
         controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
         seed: typing.Optional[int] = OMIT,
         obj_scale: typing.Optional[float] = OMIT,
         obj_pos_x: typing.Optional[float] = OMIT,
@@ -539,7 +539,7 @@ class AsyncAiArtQrCodeClient:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
 
         seed : typing.Optional[int]
 
@@ -670,7 +670,7 @@ class AsyncAiArtQrCodeClient:
         controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
         seed: typing.Optional[int] = OMIT,
         obj_scale: typing.Optional[float] = OMIT,
         obj_pos_x: typing.Optional[float] = OMIT,
@@ -728,7 +728,7 @@ class AsyncAiArtQrCodeClient:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
 
         seed : typing.Optional[int]
 

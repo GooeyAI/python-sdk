@@ -5,7 +5,7 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .trigger import Trigger
+from .recipe_function_trigger import RecipeFunctionTrigger
 
 
 class RecipeFunction(UniversalBaseModel):
@@ -14,7 +14,7 @@ class RecipeFunction(UniversalBaseModel):
     The URL of the [function](https://gooey.ai/functions) to call.
     """
 
-    trigger: Trigger = pydantic.Field()
+    trigger: RecipeFunctionTrigger = pydantic.Field()
     """
     When to run this function. `pre` runs before the recipe, `post` runs after the recipe.
     """

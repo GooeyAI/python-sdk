@@ -24,8 +24,8 @@ class BaseClientWrapper:
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "gooey",
-            "X-Fern-SDK-Version": "0.0.1b0",
+            "X-Fern-SDK-Name": "gooeyai",
+            "X-Fern-SDK-Version": "0.0.1b01",
         }
         if self._authorization is not None:
             headers["Authorization"] = self._authorization

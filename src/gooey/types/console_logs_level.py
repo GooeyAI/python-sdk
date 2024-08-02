@@ -2,4 +2,4 @@
 
 import typing
 
-Detail = typing.Union[typing.Literal["auto", "low", "high"], typing.Any]
+ConsoleLogsLevel = typing.Union[typing.Literal["log", "error"], typing.Any]

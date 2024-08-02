@@ -12,6 +12,7 @@ from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.async_api_response_model_v3 import AsyncApiResponseModelV3
+from ..types.compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
 from ..types.compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
 from ..types.compare_text2img_page_response import CompareText2ImgPageResponse
 from ..types.compare_text2img_page_status_response import CompareText2ImgPageStatusResponse
@@ -20,7 +21,6 @@ from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.recipe_function import RecipeFunction
 from ..types.run_settings import RunSettings
-from ..types.scheduler import Scheduler
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -47,7 +47,7 @@ class CompareAiImageGeneratorsClient:
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
         selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -85,7 +85,7 @@ class CompareAiImageGeneratorsClient:
 
         selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
 
         edit_instruction : typing.Optional[str]
 
@@ -180,7 +180,7 @@ class CompareAiImageGeneratorsClient:
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
         selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -218,7 +218,7 @@ class CompareAiImageGeneratorsClient:
 
         selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
 
         edit_instruction : typing.Optional[str]
 
@@ -365,7 +365,7 @@ class AsyncCompareAiImageGeneratorsClient:
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
         selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -403,7 +403,7 @@ class AsyncCompareAiImageGeneratorsClient:
 
         selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
 
         edit_instruction : typing.Optional[str]
 
@@ -506,7 +506,7 @@ class AsyncCompareAiImageGeneratorsClient:
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
         selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[Scheduler] = OMIT,
+        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -544,7 +544,7 @@ class AsyncCompareAiImageGeneratorsClient:
 
         selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
 
-        scheduler : typing.Optional[Scheduler]
+        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
 
         edit_instruction : typing.Optional[str]
 

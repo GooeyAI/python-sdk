@@ -11,8 +11,8 @@ from .image_url import ImageUrl
 
 
 class ConversationEntryContentItem_Text(UniversalBaseModel):
-    text: typing.Optional[str] = None
     type: typing.Literal["text"] = "text"
+    text: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,8 +25,8 @@ class ConversationEntryContentItem_Text(UniversalBaseModel):
 
 
 class ConversationEntryContentItem_ImageUrl(UniversalBaseModel):
-    image_url: typing.Optional[ImageUrl] = None
     type: typing.Literal["image_url"] = "image_url"
+    image_url: typing.Optional[ImageUrl] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

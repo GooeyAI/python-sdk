@@ -2403,7 +2403,7 @@ client.ai_art_qr_code.art_qr_code(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Scheduler]` 
+**scheduler:** `typing.Optional[QrCodeGeneratorPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -2688,7 +2688,7 @@ client.ai_art_qr_code.async_art_qr_code(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Scheduler]` 
+**scheduler:** `typing.Optional[QrCodeGeneratorPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -10561,7 +10561,7 @@ client.compare_ai_image_generators.compare_text2img(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Scheduler]` 
+**scheduler:** `typing.Optional[CompareText2ImgPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -10754,7 +10754,7 @@ client.compare_ai_image_generators.async_compare_text2img(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Scheduler]` 
+**scheduler:** `typing.Optional[CompareText2ImgPageRequestScheduler]` 
     
 </dd>
 </dl>

@@ -5,13 +5,13 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .content import Content
-from .role import Role
+from .conversation_entry_content import ConversationEntryContent
+from .conversation_entry_role import ConversationEntryRole
 
 
 class ConversationEntry(UniversalBaseModel):
-    role: Role
-    content: Content
+    role: ConversationEntryRole
+    content: ConversationEntryContent
     display_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

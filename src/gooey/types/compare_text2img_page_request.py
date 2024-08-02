@@ -5,10 +5,10 @@ import typing
 import pydantic
 
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
 from .compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
 from .recipe_function import RecipeFunction
 from .run_settings import RunSettings
-from .scheduler import Scheduler
 
 
 class CompareText2ImgPageRequest(UniversalBaseModel):
@@ -30,7 +30,7 @@ class CompareText2ImgPageRequest(UniversalBaseModel):
     seed: typing.Optional[int] = None
     sd2upscaling: typing.Optional[bool] = pydantic.Field(alias="sd_2_upscaling", default=None)
     selected_models: typing.Optional[typing.List[CompareText2ImgPageRequestSelectedModelsItem]] = None
-    scheduler: typing.Optional[Scheduler] = None
+    scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = None
     edit_instruction: typing.Optional[str] = None
     image_guidance_scale: typing.Optional[float] = None
     settings: typing.Optional[RunSettings] = None
