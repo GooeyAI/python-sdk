@@ -15,6 +15,8 @@ from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .embeddings.client import AsyncEmbeddingsClient, EmbeddingsClient
 from .environment import GooeyEnvironment
+from .errors.bad_request_error import BadRequestError
+from .errors.internal_server_error import InternalServerError
 from .errors.payment_required_error import PaymentRequiredError
 from .errors.too_many_requests_error import TooManyRequestsError
 from .errors.unprocessable_entity_error import UnprocessableEntityError
@@ -23,103 +25,68 @@ from .functions.client import AsyncFunctionsClient, FunctionsClient
 from .lip_syncing.client import AsyncLipSyncingClient, LipSyncingClient
 from .misc.client import AsyncMiscClient, MiscClient
 from .smart_gpt.client import AsyncSmartGptClient, SmartGptClient
-from .types.animation_prompt import AnimationPrompt
-from .types.asr_page_request_output_format import AsrPageRequestOutputFormat
-from .types.asr_page_request_selected_model import AsrPageRequestSelectedModel
-from .types.asr_page_request_translation_model import AsrPageRequestTranslationModel
 from .types.asr_page_response import AsrPageResponse
+from .types.body_async_form_art_qr_code import BodyAsyncFormArtQrCode
+from .types.body_async_form_asr import BodyAsyncFormAsr
+from .types.body_async_form_bulk_runner import BodyAsyncFormBulkRunner
+from .types.body_async_form_compare_ai_upscalers import BodyAsyncFormCompareAiUpscalers
+from .types.body_async_form_compare_llm import BodyAsyncFormCompareLlm
+from .types.body_async_form_compare_text2img import BodyAsyncFormCompareText2Img
+from .types.body_async_form_deforum_sd import BodyAsyncFormDeforumSd
+from .types.body_async_form_doc_extract import BodyAsyncFormDocExtract
+from .types.body_async_form_doc_search import BodyAsyncFormDocSearch
+from .types.body_async_form_doc_summary import BodyAsyncFormDocSummary
+from .types.body_async_form_email_face_inpainting import BodyAsyncFormEmailFaceInpainting
+from .types.body_async_form_embeddings import BodyAsyncFormEmbeddings
+from .types.body_async_form_face_inpainting import BodyAsyncFormFaceInpainting
+from .types.body_async_form_google_gpt import BodyAsyncFormGoogleGpt
+from .types.body_async_form_google_image_gen import BodyAsyncFormGoogleImageGen
+from .types.body_async_form_image_segmentation import BodyAsyncFormImageSegmentation
+from .types.body_async_form_img2img import BodyAsyncFormImg2Img
+from .types.body_async_form_lipsync_tts import BodyAsyncFormLipsyncTts
+from .types.body_async_form_object_inpainting import BodyAsyncFormObjectInpainting
+from .types.body_async_form_related_qna_maker import BodyAsyncFormRelatedQnaMaker
+from .types.body_async_form_related_qna_maker_doc import BodyAsyncFormRelatedQnaMakerDoc
+from .types.body_async_form_seo_summary import BodyAsyncFormSeoSummary
+from .types.body_async_form_social_lookup_email import BodyAsyncFormSocialLookupEmail
+from .types.body_async_form_text2audio import BodyAsyncFormText2Audio
+from .types.body_async_form_text_to_speech import BodyAsyncFormTextToSpeech
+from .types.body_async_form_translate import BodyAsyncFormTranslate
+from .types.bulk_eval_page_response import BulkEvalPageResponse
 from .types.bulk_runner_page_response import BulkRunnerPageResponse
-from .types.compare_llm_page_request_response_format_type import CompareLlmPageRequestResponseFormatType
-from .types.compare_llm_page_request_selected_models_item import CompareLlmPageRequestSelectedModelsItem
+from .types.chyron_plant_page_response import ChyronPlantPageResponse
 from .types.compare_llm_page_response import CompareLlmPageResponse
-from .types.compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
-from .types.compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
 from .types.compare_text2img_page_response import CompareText2ImgPageResponse
-from .types.compare_upscaler_page_request_selected_models_item import CompareUpscalerPageRequestSelectedModelsItem
 from .types.compare_upscaler_page_response import CompareUpscalerPageResponse
-from .types.deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
 from .types.deforum_sd_page_response import DeforumSdPageResponse
-from .types.doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
-from .types.doc_extract_page_request_selected_asr_model import DocExtractPageRequestSelectedAsrModel
-from .types.doc_extract_page_request_selected_model import DocExtractPageRequestSelectedModel
 from .types.doc_extract_page_response import DocExtractPageResponse
-from .types.doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
-from .types.doc_search_page_request_embedding_model import DocSearchPageRequestEmbeddingModel
-from .types.doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
-from .types.doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
-from .types.doc_search_page_request_selected_model import DocSearchPageRequestSelectedModel
 from .types.doc_search_page_response import DocSearchPageResponse
-from .types.doc_summary_page_request_response_format_type import DocSummaryPageRequestResponseFormatType
-from .types.doc_summary_page_request_selected_asr_model import DocSummaryPageRequestSelectedAsrModel
-from .types.doc_summary_page_request_selected_model import DocSummaryPageRequestSelectedModel
 from .types.doc_summary_page_response import DocSummaryPageResponse
-from .types.email_face_inpainting_page_request_selected_model import EmailFaceInpaintingPageRequestSelectedModel
 from .types.email_face_inpainting_page_response import EmailFaceInpaintingPageResponse
-from .types.embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
 from .types.embeddings_page_response import EmbeddingsPageResponse
-from .types.face_inpainting_page_request_selected_model import FaceInpaintingPageRequestSelectedModel
 from .types.face_inpainting_page_response import FaceInpaintingPageResponse
+from .types.failed_reponse_model_v2 import FailedReponseModelV2
+from .types.functions_page_response import FunctionsPageResponse
 from .types.generic_error_response import GenericErrorResponse
-from .types.google_gpt_page_request_embedding_model import GoogleGptPageRequestEmbeddingModel
-from .types.google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
-from .types.google_gpt_page_request_selected_model import GoogleGptPageRequestSelectedModel
 from .types.google_gpt_page_response import GoogleGptPageResponse
-from .types.google_image_gen_page_request_selected_model import GoogleImageGenPageRequestSelectedModel
 from .types.google_image_gen_page_response import GoogleImageGenPageResponse
 from .types.http_validation_error import HttpValidationError
-from .types.image_segmentation_page_request_selected_model import ImageSegmentationPageRequestSelectedModel
 from .types.image_segmentation_page_response import ImageSegmentationPageResponse
-from .types.img2img_page_request_selected_controlnet_model import Img2ImgPageRequestSelectedControlnetModel
-from .types.img2img_page_request_selected_model import Img2ImgPageRequestSelectedModel
 from .types.img2img_page_response import Img2ImgPageResponse
-from .types.lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
-from .types.lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
-from .types.lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
-from .types.lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
+from .types.letter_writer_page_response import LetterWriterPageResponse
+from .types.lipsync_page_response import LipsyncPageResponse
 from .types.lipsync_tts_page_response import LipsyncTtsPageResponse
-from .types.object_inpainting_page_request_selected_model import ObjectInpaintingPageRequestSelectedModel
 from .types.object_inpainting_page_response import ObjectInpaintingPageResponse
-from .types.qr_code_generator_page_request_image_prompt_controlnet_models_item import (
-    QrCodeGeneratorPageRequestImagePromptControlnetModelsItem,
-)
-from .types.qr_code_generator_page_request_scheduler import QrCodeGeneratorPageRequestScheduler
-from .types.qr_code_generator_page_request_selected_controlnet_model_item import (
-    QrCodeGeneratorPageRequestSelectedControlnetModelItem,
-)
-from .types.qr_code_generator_page_request_selected_model import QrCodeGeneratorPageRequestSelectedModel
 from .types.qr_code_generator_page_response import QrCodeGeneratorPageResponse
-from .types.recipe_function import RecipeFunction
-from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
-from .types.related_qn_a_doc_page_request_embedding_model import RelatedQnADocPageRequestEmbeddingModel
-from .types.related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
-from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
-from .types.related_qn_a_doc_page_request_selected_model import RelatedQnADocPageRequestSelectedModel
 from .types.related_qn_a_doc_page_response import RelatedQnADocPageResponse
-from .types.related_qn_a_page_request_embedding_model import RelatedQnAPageRequestEmbeddingModel
-from .types.related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
-from .types.related_qn_a_page_request_selected_model import RelatedQnAPageRequestSelectedModel
 from .types.related_qn_a_page_response import RelatedQnAPageResponse
-from .types.run_settings import RunSettings
-from .types.sad_talker_settings import SadTalkerSettings
-from .types.seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
-from .types.seo_summary_page_request_selected_model import SeoSummaryPageRequestSelectedModel
 from .types.seo_summary_page_response import SeoSummaryPageResponse
-from .types.serp_search_location import SerpSearchLocation
-from .types.serp_search_type import SerpSearchType
-from .types.social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
-from .types.social_lookup_email_page_request_selected_model import SocialLookupEmailPageRequestSelectedModel
+from .types.smart_gpt_page_response import SmartGptPageResponse
 from .types.social_lookup_email_page_response import SocialLookupEmailPageResponse
 from .types.text2audio_page_response import Text2AudioPageResponse
-from .types.text_to_speech_page_request_openai_tts_model import TextToSpeechPageRequestOpenaiTtsModel
-from .types.text_to_speech_page_request_openai_voice_name import TextToSpeechPageRequestOpenaiVoiceName
-from .types.text_to_speech_page_request_tts_provider import TextToSpeechPageRequestTtsProvider
 from .types.text_to_speech_page_response import TextToSpeechPageResponse
-from .types.translation_page_request_selected_model import TranslationPageRequestSelectedModel
 from .types.translation_page_response import TranslationPageResponse
-from .types.vcard import Vcard
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
+from .types.video_bots_page_response import VideoBotsPageResponse
 
 
 class Gooey:
@@ -193,113 +160,40 @@ class Gooey:
         self.embeddings = EmbeddingsClient(client_wrapper=self._client_wrapper)
 
     def animate(
-        self,
-        *,
-        animation_prompts: typing.Sequence[AnimationPrompt],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        max_frames: typing.Optional[int] = OMIT,
-        selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
-        animation_mode: typing.Optional[str] = OMIT,
-        zoom: typing.Optional[str] = OMIT,
-        translation_x: typing.Optional[str] = OMIT,
-        translation_y: typing.Optional[str] = OMIT,
-        rotation3d_x: typing.Optional[str] = OMIT,
-        rotation3d_y: typing.Optional[str] = OMIT,
-        rotation3d_z: typing.Optional[str] = OMIT,
-        fps: typing.Optional[int] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DeforumSdPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDeforumSd:
         """
         Parameters
         ----------
-        animation_prompts : typing.Sequence[AnimationPrompt]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        max_frames : typing.Optional[int]
-
-        selected_model : typing.Optional[DeforumSdPageRequestSelectedModel]
-
-        animation_mode : typing.Optional[str]
-
-        zoom : typing.Optional[str]
-
-        translation_x : typing.Optional[str]
-
-        translation_y : typing.Optional[str]
-
-        rotation3d_x : typing.Optional[str]
-
-        rotation3d_y : typing.Optional[str]
-
-        rotation3d_z : typing.Optional[str]
-
-        fps : typing.Optional[int]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DeforumSdPageResponse
+        BodyAsyncFormDeforumSd
             Successful Response
 
         Examples
         --------
-        from gooey import AnimationPrompt, Gooey
+        from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.animate(
-            animation_prompts=[
-                AnimationPrompt(
-                    frame="frame",
-                    prompt="prompt",
-                )
-            ],
-        )
+        client.animate()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/DeforumSD/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "animation_prompts": animation_prompts,
-                "max_frames": max_frames,
-                "selected_model": selected_model,
-                "animation_mode": animation_mode,
-                "zoom": zoom,
-                "translation_x": translation_x,
-                "translation_y": translation_y,
-                "rotation_3d_x": rotation3d_x,
-                "rotation_3d_y": rotation3d_y,
-                "rotation_3d_z": rotation3d_z,
-                "fps": fps,
-                "seed": seed,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/DeforumSD/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DeforumSdPageResponse, parse_obj_as(type_=DeforumSdPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDeforumSd, parse_obj_as(type_=BodyAsyncFormDeforumSd, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -311,6 +205,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -318,114 +216,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def qr_code(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[str] = OMIT,
-        qr_code_vcard: typing.Optional[Vcard] = OMIT,
-        qr_code_file: typing.Optional[str] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
-        image_prompt_controlnet_models: typing.Optional[
-            typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeGeneratorPageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[
-            typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]
-        ] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> QrCodeGeneratorPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormArtQrCode:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        qr_code_data : typing.Optional[str]
-
-        qr_code_input_image : typing.Optional[str]
-
-        qr_code_vcard : typing.Optional[Vcard]
-
-        qr_code_file : typing.Optional[str]
-
-        use_url_shortener : typing.Optional[bool]
-
-        negative_prompt : typing.Optional[str]
-
-        image_prompt : typing.Optional[str]
-
-        image_prompt_controlnet_models : typing.Optional[typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]]
-
-        image_prompt_strength : typing.Optional[float]
-
-        image_prompt_scale : typing.Optional[float]
-
-        image_prompt_pos_x : typing.Optional[float]
-
-        image_prompt_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[QrCodeGeneratorPageRequestSelectedModel]
-
-        selected_controlnet_model : typing.Optional[typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.Sequence[float]]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
-
-        seed : typing.Optional[int]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        QrCodeGeneratorPageResponse
+        BodyAsyncFormArtQrCode
             Successful Response
 
         Examples
@@ -435,51 +238,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.qr_code(
-            text_prompt="text_prompt",
-        )
+        client.qr_code()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/art-qr-code/async",
+            "v3/art-qr-code/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "qr_code_data": qr_code_data,
-                "qr_code_input_image": qr_code_input_image,
-                "qr_code_vcard": qr_code_vcard,
-                "qr_code_file": qr_code_file,
-                "use_url_shortener": use_url_shortener,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "image_prompt": image_prompt,
-                "image_prompt_controlnet_models": image_prompt_controlnet_models,
-                "image_prompt_strength": image_prompt_strength,
-                "image_prompt_scale": image_prompt_scale,
-                "image_prompt_pos_x": image_prompt_pos_x,
-                "image_prompt_pos_y": image_prompt_pos_y,
-                "selected_model": selected_model,
-                "selected_controlnet_model": selected_controlnet_model,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "controlnet_conditioning_scale": controlnet_conditioning_scale,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "scheduler": scheduler,
-                "seed": seed,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(QrCodeGeneratorPageResponse, parse_obj_as(type_=QrCodeGeneratorPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormArtQrCode, parse_obj_as(type_=BodyAsyncFormArtQrCode, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -491,6 +264,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -498,101 +275,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def seo_people_also_ask(
-        self,
-        *,
-        search_query: str,
-        site_filter: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnAPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[RelatedQnAPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> RelatedQnAPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormRelatedQnaMaker:
         """
         Parameters
         ----------
-        search_query : str
-
-        site_filter : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[RelatedQnAPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[RelatedQnAPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RelatedQnAPageResponse
+        BodyAsyncFormRelatedQnaMaker
             Successful Response
 
         Examples
@@ -602,47 +297,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.seo_people_also_ask(
-            search_query="search_query",
-            site_filter="site_filter",
-        )
+        client.seo_people_also_ask()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/related-qna-maker/async",
+            "v3/related-qna-maker/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "site_filter": site_filter,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(RelatedQnAPageResponse, parse_obj_as(type_=RelatedQnAPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormRelatedQnaMaker, parse_obj_as(type_=BodyAsyncFormRelatedQnaMaker, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -654,6 +323,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -661,87 +334,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def seo_content(
-        self,
-        *,
-        search_query: str,
-        keywords: str,
-        title: str,
-        company_url: str,
-        example_id: typing.Optional[str] = None,
-        task_instructions: typing.Optional[str] = OMIT,
-        enable_html: typing.Optional[bool] = OMIT,
-        selected_model: typing.Optional[SeoSummaryPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        enable_crosslinks: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SeoSummaryPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormSeoSummary:
         """
         Parameters
         ----------
-        search_query : str
-
-        keywords : str
-
-        title : str
-
-        company_url : str
-
         example_id : typing.Optional[str]
-
-        task_instructions : typing.Optional[str]
-
-        enable_html : typing.Optional[bool]
-
-        selected_model : typing.Optional[SeoSummaryPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        enable_crosslinks : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SeoSummaryPageResponse
+        BodyAsyncFormSeoSummary
             Successful Response
 
         Examples
@@ -751,46 +356,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.seo_content(
-            search_query="search_query",
-            keywords="keywords",
-            title="title",
-            company_url="company_url",
-        )
+        client.seo_content()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/SEOSummary/async",
+            "v3/SEOSummary/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "search_query": search_query,
-                "keywords": keywords,
-                "title": title,
-                "company_url": company_url,
-                "task_instructions": task_instructions,
-                "enable_html": enable_html,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "enable_crosslinks": enable_crosslinks,
-                "seed": seed,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(SeoSummaryPageResponse, parse_obj_as(type_=SeoSummaryPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormSeoSummary, parse_obj_as(type_=BodyAsyncFormSeoSummary, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -802,6 +382,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -809,101 +393,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def web_search_llm(
-        self,
-        *,
-        search_query: str,
-        site_filter: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[GoogleGptPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[GoogleGptPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> GoogleGptPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormGoogleGpt:
         """
         Parameters
         ----------
-        search_query : str
-
-        site_filter : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[GoogleGptPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[GoogleGptPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GoogleGptPageResponse
+        BodyAsyncFormGoogleGpt
             Successful Response
 
         Examples
@@ -913,47 +415,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.web_search_llm(
-            search_query="search_query",
-            site_filter="site_filter",
-        )
+        client.web_search_llm()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/google-gpt/async",
+            "v3/google-gpt/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "site_filter": site_filter,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(GoogleGptPageResponse, parse_obj_as(type_=GoogleGptPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormGoogleGpt, parse_obj_as(type_=BodyAsyncFormGoogleGpt, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -965,6 +441,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -972,59 +452,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def personalize_email(
-        self,
-        *,
-        email_address: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SocialLookupEmailPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SocialLookupEmailPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SocialLookupEmailPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormSocialLookupEmail:
         """
         Parameters
         ----------
-        email_address : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[SocialLookupEmailPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[SocialLookupEmailPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SocialLookupEmailPageResponse
+        BodyAsyncFormSocialLookupEmail
             Successful Response
 
         Examples
@@ -1034,34 +474,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.personalize_email(
-            email_address="email_address",
-        )
+        client.personalize_email()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/SocialLookupEmail/async",
+            "v3/SocialLookupEmail/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "email_address": email_address,
-                "input_prompt": input_prompt,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(SocialLookupEmailPageResponse, parse_obj_as(type_=SocialLookupEmailPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormSocialLookupEmail, parse_obj_as(type_=BodyAsyncFormSocialLookupEmail, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1073,6 +500,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1080,65 +511,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def bulk_run(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormBulkRunner:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-
-        run_urls : typing.Sequence[str]
-
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-
-        input_columns : typing.Dict[str, str]
-
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-
-        output_columns : typing.Dict[str, str]
-
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BulkRunnerPageResponse
+        BodyAsyncFormBulkRunner
             Successful Response
 
         Examples
@@ -1148,33 +533,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.bulk_run(
-            documents=["documents"],
-            run_urls=["run_urls"],
-            input_columns={"key": "value"},
-            output_columns={"key": "value"},
-        )
+        client.bulk_run()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/async",
+            "v3/bulk-runner/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormBulkRunner, parse_obj_as(type_=BodyAsyncFormBulkRunner, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1186,6 +559,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1193,73 +570,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def synthesize_data(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        sheet_url: typing.Optional[str] = OMIT,
-        selected_asr_model: typing.Optional[DocExtractPageRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocExtractPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocExtractPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocExtractPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocExtract:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        sheet_url : typing.Optional[str]
-
-        selected_asr_model : typing.Optional[DocExtractPageRequestSelectedAsrModel]
-
-        google_translate_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        task_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocExtractPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocExtractPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocExtractPageResponse
+        BodyAsyncFormDocExtract
             Successful Response
 
         Examples
@@ -1269,38 +592,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.synthesize_data(
-            documents=["documents"],
-        )
+        client.synthesize_data()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/doc-extract/async",
+            "v3/doc-extract/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "sheet_url": sheet_url,
-                "selected_asr_model": selected_asr_model,
-                "google_translate_target": google_translate_target,
-                "glossary_document": glossary_document,
-                "task_instructions": task_instructions,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocExtractPageResponse, parse_obj_as(type_=DocExtractPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocExtract, parse_obj_as(type_=BodyAsyncFormDocExtract, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1313,62 +619,29 @@ class Gooey:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def llm(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CompareLlmPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareLlmPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareLlm:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_models : typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[CompareLlmPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareLlmPageResponse
+        BodyAsyncFormCompareLlm
             Successful Response
 
         Examples
@@ -1381,28 +654,18 @@ class Gooey:
         client.llm()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/CompareLLM/async",
+            "v3/CompareLLM/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_prompt": input_prompt,
-                "selected_models": selected_models,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareLlmPageResponse, parse_obj_as(type_=CompareLlmPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareLlm, parse_obj_as(type_=BodyAsyncFormCompareLlm, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1414,6 +677,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1421,93 +688,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def rag(
-        self,
-        *,
-        search_query: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        keyword_query: typing.Optional[DocSearchPageRequestKeywordQuery] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[DocSearchPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSearchPageRequestSelectedModel] = OMIT,
-        citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSearchPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocSearchPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocSearch:
         """
         Parameters
         ----------
-        search_query : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[DocSearchPageRequestKeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[DocSearchPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocSearchPageRequestSelectedModel]
-
-        citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocSearchPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocSearchPageResponse
+        BodyAsyncFormDocSearch
             Successful Response
 
         Examples
@@ -1517,44 +710,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.rag(
-            search_query="search_query",
-        )
+        client.rag()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/doc-search/async",
+            "v3/doc-search/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "keyword_query": keyword_query,
-                "documents": documents,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "doc_extract_url": doc_extract_url,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "citation_style": citation_style,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocSearchPageResponse, parse_obj_as(type_=DocSearchPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocSearch, parse_obj_as(type_=BodyAsyncFormDocSearch, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1566,6 +736,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1573,71 +747,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def doc_summary(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryPageRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryPageRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocSummaryPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocSummary:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        merge_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocSummaryPageRequestSelectedModel]
-
-        chain_type : typing.Optional[typing.Literal["map_reduce"]]
-
-        selected_asr_model : typing.Optional[DocSummaryPageRequestSelectedAsrModel]
-
-        google_translate_target : typing.Optional[str]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocSummaryPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocSummaryPageResponse
+        BodyAsyncFormDocSummary
             Successful Response
 
         Examples
@@ -1647,38 +769,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.doc_summary(
-            documents=["documents"],
-        )
+        client.doc_summary()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/doc-summary/async",
+            "v3/doc-summary/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "task_instructions": task_instructions,
-                "merge_instructions": merge_instructions,
-                "selected_model": selected_model,
-                "chain_type": chain_type,
-                "selected_asr_model": selected_asr_model,
-                "google_translate_target": google_translate_target,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocSummaryPageResponse, parse_obj_as(type_=DocSummaryPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocSummary, parse_obj_as(type_=BodyAsyncFormDocSummary, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1690,6 +795,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1697,111 +806,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def lipsync_tts(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[str] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[SadTalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> LipsyncTtsPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormLipsyncTts:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[LipsyncTtsPageRequestTtsProvider]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName]
-
-        openai_tts_model : typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel]
-
-        input_face : typing.Optional[str]
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncTtsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LipsyncTtsPageResponse
+        BodyAsyncFormLipsyncTts
             Successful Response
 
         Examples
@@ -1811,51 +828,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.lipsync_tts(
-            text_prompt="text_prompt",
-        )
+        client.lipsync_tts()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/LipsyncTTS/async",
+            "v3/LipsyncTTS/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "tts_provider": tts_provider,
-                "uberduck_voice_name": uberduck_voice_name,
-                "uberduck_speaking_rate": uberduck_speaking_rate,
-                "google_voice_name": google_voice_name,
-                "google_speaking_rate": google_speaking_rate,
-                "google_pitch": google_pitch,
-                "bark_history_prompt": bark_history_prompt,
-                "elevenlabs_voice_name": elevenlabs_voice_name,
-                "elevenlabs_api_key": elevenlabs_api_key,
-                "elevenlabs_voice_id": elevenlabs_voice_id,
-                "elevenlabs_model": elevenlabs_model,
-                "elevenlabs_stability": elevenlabs_stability,
-                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
-                "elevenlabs_style": elevenlabs_style,
-                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
-                "azure_voice_name": azure_voice_name,
-                "openai_voice_name": openai_voice_name,
-                "openai_tts_model": openai_tts_model,
-                "input_face": input_face,
-                "face_padding_top": face_padding_top,
-                "face_padding_bottom": face_padding_bottom,
-                "face_padding_left": face_padding_left,
-                "face_padding_right": face_padding_right,
-                "sadtalker_settings": sadtalker_settings,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(LipsyncTtsPageResponse, parse_obj_as(type_=LipsyncTtsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormLipsyncTts, parse_obj_as(type_=BodyAsyncFormLipsyncTts, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -1867,6 +854,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1874,90 +865,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def text_to_speech(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[TextToSpeechPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[TextToSpeechPageRequestOpenaiTtsModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> TextToSpeechPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormTextToSpeech:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechPageRequestTtsProvider]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[TextToSpeechPageRequestOpenaiVoiceName]
-
-        openai_tts_model : typing.Optional[TextToSpeechPageRequestOpenaiTtsModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        TextToSpeechPageResponse
+        BodyAsyncFormTextToSpeech
             Successful Response
 
         Examples
@@ -1967,44 +887,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech(
-            text_prompt="text_prompt",
-        )
+        client.text_to_speech()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/TextToSpeech/async",
+            "v3/TextToSpeech/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "tts_provider": tts_provider,
-                "uberduck_voice_name": uberduck_voice_name,
-                "uberduck_speaking_rate": uberduck_speaking_rate,
-                "google_voice_name": google_voice_name,
-                "google_speaking_rate": google_speaking_rate,
-                "google_pitch": google_pitch,
-                "bark_history_prompt": bark_history_prompt,
-                "elevenlabs_voice_name": elevenlabs_voice_name,
-                "elevenlabs_api_key": elevenlabs_api_key,
-                "elevenlabs_voice_id": elevenlabs_voice_id,
-                "elevenlabs_model": elevenlabs_model,
-                "elevenlabs_stability": elevenlabs_stability,
-                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
-                "elevenlabs_style": elevenlabs_style,
-                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
-                "azure_voice_name": azure_voice_name,
-                "openai_voice_name": openai_voice_name,
-                "openai_tts_model": openai_tts_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(TextToSpeechPageResponse, parse_obj_as(type_=TextToSpeechPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormTextToSpeech, parse_obj_as(type_=BodyAsyncFormTextToSpeech, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2016,6 +913,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2023,62 +924,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def speech_recognition(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[AsrPageRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[AsrPageRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[AsrPageRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsrPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormAsr:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[AsrPageRequestSelectedModel]
-
-        language : typing.Optional[str]
-
-        translation_model : typing.Optional[AsrPageRequestTranslationModel]
-
-        output_format : typing.Optional[AsrPageRequestOutputFormat]
-
-        google_translate_target : typing.Optional[str]
-            use `translation_model` & `translation_target` instead.
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsrPageResponse
+        BodyAsyncFormAsr
             Successful Response
 
         Examples
@@ -2088,34 +946,18 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.speech_recognition(
-            documents=["documents"],
-        )
+        client.speech_recognition()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/asr/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "selected_model": selected_model,
-                "language": language,
-                "translation_model": translation_model,
-                "output_format": output_format,
-                "google_translate_target": google_translate_target,
-                "translation_source": translation_source,
-                "translation_target": translation_target,
-                "glossary_document": glossary_document,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/asr/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(AsrPageResponse, parse_obj_as(type_=AsrPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormAsr, parse_obj_as(type_=BodyAsyncFormAsr, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2127,6 +969,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2134,59 +980,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def text_to_music(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        duration_sec: typing.Optional[float] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> Text2AudioPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormText2Audio:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        duration_sec : typing.Optional[float]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Text2AudioPageResponse
+        BodyAsyncFormText2Audio
             Successful Response
 
         Examples
@@ -2196,34 +1002,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_music(
-            text_prompt="text_prompt",
-        )
+        client.text_to_music()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/text2audio/async",
+            "v3/text2audio/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "duration_sec": duration_sec,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "sd_2_upscaling": sd2upscaling,
-                "selected_models": selected_models,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Text2AudioPageResponse, parse_obj_as(type_=Text2AudioPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormText2Audio, parse_obj_as(type_=BodyAsyncFormText2Audio, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2236,55 +1029,29 @@ class Gooey:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def translate(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[TranslationPageRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> TranslationPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormTranslate:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        texts : typing.Optional[typing.Sequence[str]]
-
-        selected_model : typing.Optional[TranslationPageRequestSelectedModel]
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        TranslationPageResponse
+        BodyAsyncFormTranslate
             Successful Response
 
         Examples
@@ -2297,25 +1064,15 @@ class Gooey:
         client.translate()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/translate/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "translation_source": translation_source,
-                "translation_target": translation_target,
-                "glossary_document": glossary_document,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/translate/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(TranslationPageResponse, parse_obj_as(type_=TranslationPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormTranslate, parse_obj_as(type_=BodyAsyncFormTranslate, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2327,6 +1084,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2334,74 +1095,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def remix_image(
-        self,
-        *,
-        input_image: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[Img2ImgPageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[Img2ImgPageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> Img2ImgPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormImg2Img:
         """
         Parameters
         ----------
-        input_image : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        text_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[Img2ImgPageRequestSelectedModel]
-
-        selected_controlnet_model : typing.Optional[Img2ImgPageRequestSelectedControlnetModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.Sequence[float]]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Img2ImgPageResponse
+        BodyAsyncFormImg2Img
             Successful Response
 
         Examples
@@ -2411,39 +1117,18 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.remix_image(
-            input_image="input_image",
-        )
+        client.remix_image()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/Img2Img/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "selected_model": selected_model,
-                "selected_controlnet_model": selected_controlnet_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "prompt_strength": prompt_strength,
-                "controlnet_conditioning_scale": controlnet_conditioning_scale,
-                "seed": seed,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/Img2Img/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Img2ImgPageResponse, parse_obj_as(type_=Img2ImgPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormImg2Img, parse_obj_as(type_=BodyAsyncFormImg2Img, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2455,6 +1140,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2462,77 +1151,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def text_to_image(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        dall_e3quality: typing.Optional[str] = OMIT,
-        dall_e3style: typing.Optional[str] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
-        edit_instruction: typing.Optional[str] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareText2ImgPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareText2Img:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        dall_e3quality : typing.Optional[str]
-
-        dall_e3style : typing.Optional[str]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
-
-        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
-
-        edit_instruction : typing.Optional[str]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareText2ImgPageResponse
+        BodyAsyncFormCompareText2Img
             Successful Response
 
         Examples
@@ -2542,40 +1173,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_image(
-            text_prompt="text_prompt",
-        )
+        client.text_to_image()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/CompareText2Img/async",
+            "v3/CompareText2Img/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "output_width": output_width,
-                "output_height": output_height,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "dall_e_3_quality": dall_e3quality,
-                "dall_e_3_style": dall_e3style,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "sd_2_upscaling": sd2upscaling,
-                "selected_models": selected_models,
-                "scheduler": scheduler,
-                "edit_instruction": edit_instruction,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareText2ImgPageResponse, parse_obj_as(type_=CompareText2ImgPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareText2Img, parse_obj_as(type_=BodyAsyncFormCompareText2Img, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2587,6 +1199,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2594,77 +1210,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def product_image(
-        self,
-        *,
-        input_image: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ObjectInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormObjectInpainting:
         """
         Parameters
         ----------
-        input_image : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        mask_threshold : typing.Optional[float]
-
-        selected_model : typing.Optional[ObjectInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ObjectInpaintingPageResponse
+        BodyAsyncFormObjectInpainting
             Successful Response
 
         Examples
@@ -2674,41 +1232,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.product_image(
-            input_image="input_image",
-            text_prompt="text_prompt",
-        )
+        client.product_image()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/ObjectInpainting/async",
+            "v3/ObjectInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "mask_threshold": mask_threshold,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "sd_2_upscaling": sd2upscaling,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectInpaintingPageResponse, parse_obj_as(type_=ObjectInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormObjectInpainting, parse_obj_as(type_=BodyAsyncFormObjectInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2720,6 +1258,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2727,74 +1269,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def portrait(
-        self,
-        *,
-        input_image: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[FaceInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> FaceInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormFaceInpainting:
         """
         Parameters
         ----------
-        input_image : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[FaceInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        FaceInpaintingPageResponse
+        BodyAsyncFormFaceInpainting
             Successful Response
 
         Examples
@@ -2804,40 +1291,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.portrait(
-            input_image="input_image",
-            text_prompt="tony stark from the iron man",
-        )
+        client.portrait()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/FaceInpainting/async",
+            "v3/FaceInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "face_scale": face_scale,
-                "face_pos_x": face_pos_x,
-                "face_pos_y": face_pos_y,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "upscale_factor": upscale_factor,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(FaceInpaintingPageResponse, parse_obj_as(type_=FaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormFaceInpainting, parse_obj_as(type_=BodyAsyncFormFaceInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -2849,6 +1317,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -2856,101 +1328,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def image_from_email(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        email_address: typing.Optional[str] = OMIT,
-        twitter_handle: typing.Optional[str] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[EmailFaceInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        should_send_email: typing.Optional[bool] = OMIT,
-        email_from: typing.Optional[str] = OMIT,
-        email_cc: typing.Optional[str] = OMIT,
-        email_bcc: typing.Optional[str] = OMIT,
-        email_subject: typing.Optional[str] = OMIT,
-        email_body: typing.Optional[str] = OMIT,
-        email_body_enable_html: typing.Optional[bool] = OMIT,
-        fallback_email_body: typing.Optional[str] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmailFaceInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormEmailFaceInpainting:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        email_address : typing.Optional[str]
-
-        twitter_handle : typing.Optional[str]
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        should_send_email : typing.Optional[bool]
-
-        email_from : typing.Optional[str]
-
-        email_cc : typing.Optional[str]
-
-        email_bcc : typing.Optional[str]
-
-        email_subject : typing.Optional[str]
-
-        email_body : typing.Optional[str]
-
-        email_body_enable_html : typing.Optional[bool]
-
-        fallback_email_body : typing.Optional[str]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmailFaceInpaintingPageResponse
+        BodyAsyncFormEmailFaceInpainting
             Successful Response
 
         Examples
@@ -2960,49 +1350,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.image_from_email(
-            email_address="sean@dara.network",
-            text_prompt="winter's day in paris",
-        )
+        client.image_from_email()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/EmailFaceInpainting/async",
+            "v3/EmailFaceInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "email_address": email_address,
-                "twitter_handle": twitter_handle,
-                "text_prompt": text_prompt,
-                "face_scale": face_scale,
-                "face_pos_x": face_pos_x,
-                "face_pos_y": face_pos_y,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "upscale_factor": upscale_factor,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "should_send_email": should_send_email,
-                "email_from": email_from,
-                "email_cc": email_cc,
-                "email_bcc": email_bcc,
-                "email_subject": email_subject,
-                "email_body": email_body,
-                "email_body_enable_html": email_body_enable_html,
-                "fallback_email_body": fallback_email_body,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmailFaceInpaintingPageResponse, parse_obj_as(type_=EmailFaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormEmailFaceInpainting, parse_obj_as(type_=BodyAsyncFormEmailFaceInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3014,6 +1376,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3021,72 +1387,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def image_from_web_search(
-        self,
-        *,
-        search_query: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> GoogleImageGenPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormGoogleImageGen:
         """
         Parameters
         ----------
-        search_query : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        selected_model : typing.Optional[GoogleImageGenPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GoogleImageGenPageResponse
+        BodyAsyncFormGoogleImageGen
             Successful Response
 
         Examples
@@ -3096,39 +1409,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.image_from_web_search(
-            search_query="search_query",
-            text_prompt="text_prompt",
-        )
+        client.image_from_web_search()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/GoogleImageGen/async",
+            "v3/GoogleImageGen/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "search_query": search_query,
-                "text_prompt": text_prompt,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "guidance_scale": guidance_scale,
-                "prompt_strength": prompt_strength,
-                "sd_2_upscaling": sd2upscaling,
-                "seed": seed,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(GoogleImageGenPageResponse, parse_obj_as(type_=GoogleImageGenPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormGoogleImageGen, parse_obj_as(type_=BodyAsyncFormGoogleImageGen, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3140,6 +1435,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3147,56 +1446,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def remove_background(
-        self,
-        *,
-        input_image: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[ImageSegmentationPageRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> ImageSegmentationPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormImageSegmentation:
         """
         Parameters
         ----------
-        input_image : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[ImageSegmentationPageRequestSelectedModel]
-
-        mask_threshold : typing.Optional[float]
-
-        rect_persepective_transform : typing.Optional[bool]
-
-        reflection_opacity : typing.Optional[float]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ImageSegmentationPageResponse
+        BodyAsyncFormImageSegmentation
             Successful Response
 
         Examples
@@ -3206,33 +1468,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.remove_background(
-            input_image="input_image",
-        )
+        client.remove_background()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/ImageSegmentation/async",
+            "v3/ImageSegmentation/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "selected_model": selected_model,
-                "mask_threshold": mask_threshold,
-                "rect_persepective_transform": rect_persepective_transform,
-                "reflection_opacity": reflection_opacity,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ImageSegmentationPageResponse, parse_obj_as(type_=ImageSegmentationPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormImageSegmentation, parse_obj_as(type_=BodyAsyncFormImageSegmentation, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3244,6 +1494,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3251,50 +1505,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def upscale(
-        self,
-        *,
-        scale: int,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_image: typing.Optional[str] = OMIT,
-        input_video: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareUpscalerPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareAiUpscalers:
         """
         Parameters
         ----------
-        scale : int
-            The final upsampling scale of the image
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_image : typing.Optional[str]
-            Input Image
-
-        input_video : typing.Optional[str]
-            Input Video
-
-        selected_models : typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]]
-
-        selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareUpscalerPageResponse
+        BodyAsyncFormCompareAiUpscalers
             Successful Response
 
         Examples
@@ -3304,30 +1527,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.upscale(
-            scale=1,
-        )
+        client.upscale()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/compare-ai-upscalers/async",
+            "v3/compare-ai-upscalers/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "input_video": input_video,
-                "scale": scale,
-                "selected_models": selected_models,
-                "selected_bg_model": selected_bg_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareUpscalerPageResponse, parse_obj_as(type_=CompareUpscalerPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareAiUpscalers, parse_obj_as(type_=BodyAsyncFormCompareAiUpscalers, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3339,6 +1553,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3346,38 +1564,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def embed(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormEmbeddings:
         """
         Parameters
         ----------
-        texts : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmbeddingsPageResponse
+        BodyAsyncFormEmbeddings
             Successful Response
 
         Examples
@@ -3387,27 +1586,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.embed(
-            texts=["texts"],
-        )
+        client.embed()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/embeddings/async",
+            "v3/embeddings/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormEmbeddings, parse_obj_as(type_=BodyAsyncFormEmbeddings, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3419,6 +1612,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3426,107 +1623,19 @@ class Gooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def seo_people_also_ask_doc(
-        self,
-        *,
-        search_query: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        keyword_query: typing.Optional[RelatedQnADocPageRequestKeywordQuery] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[RelatedQnADocPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnADocPageRequestSelectedModel] = OMIT,
-        citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> RelatedQnADocPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormRelatedQnaMakerDoc:
         """
         Parameters
         ----------
-        search_query : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[RelatedQnADocPageRequestKeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[RelatedQnADocPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[RelatedQnADocPageRequestSelectedModel]
-
-        citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RelatedQnADocPageResponse
+        BodyAsyncFormRelatedQnaMakerDoc
             Successful Response
 
         Examples
@@ -3536,48 +1645,21 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.seo_people_also_ask_doc(
-            search_query="search_query",
-        )
+        client.seo_people_also_ask_doc()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/related-qna-maker-doc/async",
+            "v3/related-qna-maker-doc/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "keyword_query": keyword_query,
-                "documents": documents,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "doc_extract_url": doc_extract_url,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "citation_style": citation_style,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(RelatedQnADocPageResponse, parse_obj_as(type_=RelatedQnADocPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormRelatedQnaMakerDoc, parse_obj_as(type_=BodyAsyncFormRelatedQnaMakerDoc, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3589,6 +1671,10 @@ class Gooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3620,6 +1706,1122 @@ class Gooey:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3chyron_plant_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChyronPlantPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChyronPlantPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3chyron_plant_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/ChyronPlant/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ChyronPlantPageResponse, parse_obj_as(type_=ChyronPlantPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3compare_llm_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareLlmPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareLlmPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3compare_llm_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/CompareLLM/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareLlmPageResponse, parse_obj_as(type_=CompareLlmPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3compare_text2img_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareText2ImgPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareText2ImgPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3compare_text2img_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/CompareText2Img/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareText2ImgPageResponse, parse_obj_as(type_=CompareText2ImgPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3deforum_sd_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeforumSdPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeforumSdPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3deforum_sd_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/DeforumSD/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DeforumSdPageResponse, parse_obj_as(type_=DeforumSdPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3email_face_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmailFaceInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmailFaceInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3email_face_inpainting_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/EmailFaceInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(EmailFaceInpaintingPageResponse, parse_obj_as(type_=EmailFaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3face_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> FaceInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FaceInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3face_inpainting_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/FaceInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(FaceInpaintingPageResponse, parse_obj_as(type_=FaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3google_image_gen_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GoogleImageGenPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GoogleImageGenPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3google_image_gen_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/GoogleImageGen/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(GoogleImageGenPageResponse, parse_obj_as(type_=GoogleImageGenPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3image_segmentation_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ImageSegmentationPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImageSegmentationPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3image_segmentation_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/ImageSegmentation/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ImageSegmentationPageResponse, parse_obj_as(type_=ImageSegmentationPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3img2img_async(self, *, request_options: typing.Optional[RequestOptions] = None) -> Img2ImgPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Img2ImgPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3img2img_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/Img2Img/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(Img2ImgPageResponse, parse_obj_as(type_=Img2ImgPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3letter_writer_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LetterWriterPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LetterWriterPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3letter_writer_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/LetterWriter/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LetterWriterPageResponse, parse_obj_as(type_=LetterWriterPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3lipsync_async(self, *, request_options: typing.Optional[RequestOptions] = None) -> LipsyncPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3lipsync_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncPageResponse, parse_obj_as(type_=LipsyncPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3lipsync_tts_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncTtsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncTtsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3lipsync_tts_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/LipsyncTTS/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncTtsPageResponse, parse_obj_as(type_=LipsyncTtsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3object_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3object_inpainting_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/ObjectInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectInpaintingPageResponse, parse_obj_as(type_=ObjectInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3seo_summary_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SeoSummaryPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SeoSummaryPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3seo_summary_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/SEOSummary/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SeoSummaryPageResponse, parse_obj_as(type_=SeoSummaryPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3smart_gpt_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SmartGptPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3smart_gpt_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/SmartGPT/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SmartGptPageResponse, parse_obj_as(type_=SmartGptPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3social_lookup_email_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SocialLookupEmailPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SocialLookupEmailPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3social_lookup_email_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/SocialLookupEmail/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SocialLookupEmailPageResponse, parse_obj_as(type_=SocialLookupEmailPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3text_to_speech_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> TextToSpeechPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TextToSpeechPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3text_to_speech_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/TextToSpeech/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(TextToSpeechPageResponse, parse_obj_as(type_=TextToSpeechPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3art_qr_code_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> QrCodeGeneratorPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QrCodeGeneratorPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3art_qr_code_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/art-qr-code/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(QrCodeGeneratorPageResponse, parse_obj_as(type_=QrCodeGeneratorPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3asr_async(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsrPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsrPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3asr_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/asr/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(AsrPageResponse, parse_obj_as(type_=AsrPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3bulk_eval_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3bulk_eval_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkEvalPageResponse, parse_obj_as(type_=BulkEvalPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3bulk_runner_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkRunnerPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkRunnerPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3bulk_runner_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/bulk-runner/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3compare_ai_upscalers_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareUpscalerPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareUpscalerPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3compare_ai_upscalers_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/compare-ai-upscalers/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareUpscalerPageResponse, parse_obj_as(type_=CompareUpscalerPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3doc_extract_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocExtractPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocExtractPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3doc_extract_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/doc-extract/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocExtractPageResponse, parse_obj_as(type_=DocExtractPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3doc_search_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocSearchPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocSearchPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3doc_search_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/doc-search/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocSearchPageResponse, parse_obj_as(type_=DocSearchPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3doc_summary_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocSummaryPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocSummaryPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3doc_summary_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/doc-summary/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocSummaryPageResponse, parse_obj_as(type_=DocSummaryPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3embeddings_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmbeddingsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmbeddingsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3embeddings_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/embeddings/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3functions_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FunctionsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3functions_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/functions/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(FunctionsPageResponse, parse_obj_as(type_=FunctionsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3google_gpt_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GoogleGptPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GoogleGptPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3google_gpt_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/google-gpt/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(GoogleGptPageResponse, parse_obj_as(type_=GoogleGptPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3related_qna_maker_doc_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RelatedQnADocPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RelatedQnADocPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3related_qna_maker_doc_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/related-qna-maker-doc/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(RelatedQnADocPageResponse, parse_obj_as(type_=RelatedQnADocPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3related_qna_maker_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RelatedQnAPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RelatedQnAPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3related_qna_maker_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/related-qna-maker/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(RelatedQnAPageResponse, parse_obj_as(type_=RelatedQnAPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3text2audio_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Text2AudioPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Text2AudioPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3text2audio_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/text2audio/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(Text2AudioPageResponse, parse_obj_as(type_=Text2AudioPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3translate_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> TranslationPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TranslationPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3translate_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/translate/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(TranslationPageResponse, parse_obj_as(type_=TranslationPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_v3video_bots_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VideoBotsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v3video_bots_async()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/video-bots/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(VideoBotsPageResponse, parse_obj_as(type_=VideoBotsPageResponse, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -3697,75 +2899,26 @@ class AsyncGooey:
         self.embeddings = AsyncEmbeddingsClient(client_wrapper=self._client_wrapper)
 
     async def animate(
-        self,
-        *,
-        animation_prompts: typing.Sequence[AnimationPrompt],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        max_frames: typing.Optional[int] = OMIT,
-        selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
-        animation_mode: typing.Optional[str] = OMIT,
-        zoom: typing.Optional[str] = OMIT,
-        translation_x: typing.Optional[str] = OMIT,
-        translation_y: typing.Optional[str] = OMIT,
-        rotation3d_x: typing.Optional[str] = OMIT,
-        rotation3d_y: typing.Optional[str] = OMIT,
-        rotation3d_z: typing.Optional[str] = OMIT,
-        fps: typing.Optional[int] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DeforumSdPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDeforumSd:
         """
         Parameters
         ----------
-        animation_prompts : typing.Sequence[AnimationPrompt]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        max_frames : typing.Optional[int]
-
-        selected_model : typing.Optional[DeforumSdPageRequestSelectedModel]
-
-        animation_mode : typing.Optional[str]
-
-        zoom : typing.Optional[str]
-
-        translation_x : typing.Optional[str]
-
-        translation_y : typing.Optional[str]
-
-        rotation3d_x : typing.Optional[str]
-
-        rotation3d_y : typing.Optional[str]
-
-        rotation3d_z : typing.Optional[str]
-
-        fps : typing.Optional[int]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DeforumSdPageResponse
+        BodyAsyncFormDeforumSd
             Successful Response
 
         Examples
         --------
         import asyncio
 
-        from gooey import AnimationPrompt, AsyncGooey
+        from gooey import AsyncGooey
 
         client = AsyncGooey(
             api_key="YOUR_API_KEY",
@@ -3773,45 +2926,21 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.animate(
-                animation_prompts=[
-                    AnimationPrompt(
-                        frame="frame",
-                        prompt="prompt",
-                    )
-                ],
-            )
+            await client.animate()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/DeforumSD/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "animation_prompts": animation_prompts,
-                "max_frames": max_frames,
-                "selected_model": selected_model,
-                "animation_mode": animation_mode,
-                "zoom": zoom,
-                "translation_x": translation_x,
-                "translation_y": translation_y,
-                "rotation_3d_x": rotation3d_x,
-                "rotation_3d_y": rotation3d_y,
-                "rotation_3d_z": rotation3d_z,
-                "fps": fps,
-                "seed": seed,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/DeforumSD/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DeforumSdPageResponse, parse_obj_as(type_=DeforumSdPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDeforumSd, parse_obj_as(type_=BodyAsyncFormDeforumSd, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -3823,6 +2952,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -3830,114 +2963,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def qr_code(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[str] = OMIT,
-        qr_code_vcard: typing.Optional[Vcard] = OMIT,
-        qr_code_file: typing.Optional[str] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
-        image_prompt_controlnet_models: typing.Optional[
-            typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeGeneratorPageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[
-            typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]
-        ] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> QrCodeGeneratorPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormArtQrCode:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        qr_code_data : typing.Optional[str]
-
-        qr_code_input_image : typing.Optional[str]
-
-        qr_code_vcard : typing.Optional[Vcard]
-
-        qr_code_file : typing.Optional[str]
-
-        use_url_shortener : typing.Optional[bool]
-
-        negative_prompt : typing.Optional[str]
-
-        image_prompt : typing.Optional[str]
-
-        image_prompt_controlnet_models : typing.Optional[typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]]
-
-        image_prompt_strength : typing.Optional[float]
-
-        image_prompt_scale : typing.Optional[float]
-
-        image_prompt_pos_x : typing.Optional[float]
-
-        image_prompt_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[QrCodeGeneratorPageRequestSelectedModel]
-
-        selected_controlnet_model : typing.Optional[typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.Sequence[float]]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        scheduler : typing.Optional[QrCodeGeneratorPageRequestScheduler]
-
-        seed : typing.Optional[int]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        QrCodeGeneratorPageResponse
+        BodyAsyncFormArtQrCode
             Successful Response
 
         Examples
@@ -3952,54 +2990,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.qr_code(
-                text_prompt="text_prompt",
-            )
+            await client.qr_code()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/art-qr-code/async",
+            "v3/art-qr-code/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "qr_code_data": qr_code_data,
-                "qr_code_input_image": qr_code_input_image,
-                "qr_code_vcard": qr_code_vcard,
-                "qr_code_file": qr_code_file,
-                "use_url_shortener": use_url_shortener,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "image_prompt": image_prompt,
-                "image_prompt_controlnet_models": image_prompt_controlnet_models,
-                "image_prompt_strength": image_prompt_strength,
-                "image_prompt_scale": image_prompt_scale,
-                "image_prompt_pos_x": image_prompt_pos_x,
-                "image_prompt_pos_y": image_prompt_pos_y,
-                "selected_model": selected_model,
-                "selected_controlnet_model": selected_controlnet_model,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "controlnet_conditioning_scale": controlnet_conditioning_scale,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "scheduler": scheduler,
-                "seed": seed,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(QrCodeGeneratorPageResponse, parse_obj_as(type_=QrCodeGeneratorPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormArtQrCode, parse_obj_as(type_=BodyAsyncFormArtQrCode, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4011,6 +3019,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4018,101 +3030,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def seo_people_also_ask(
-        self,
-        *,
-        search_query: str,
-        site_filter: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnAPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[RelatedQnAPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> RelatedQnAPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormRelatedQnaMaker:
         """
         Parameters
         ----------
-        search_query : str
-
-        site_filter : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[RelatedQnAPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[RelatedQnAPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RelatedQnAPageResponse
+        BodyAsyncFormRelatedQnaMaker
             Successful Response
 
         Examples
@@ -4127,50 +3057,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.seo_people_also_ask(
-                search_query="search_query",
-                site_filter="site_filter",
-            )
+            await client.seo_people_also_ask()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/related-qna-maker/async",
+            "v3/related-qna-maker/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "site_filter": site_filter,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(RelatedQnAPageResponse, parse_obj_as(type_=RelatedQnAPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormRelatedQnaMaker, parse_obj_as(type_=BodyAsyncFormRelatedQnaMaker, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4182,6 +3086,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4189,87 +3097,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def seo_content(
-        self,
-        *,
-        search_query: str,
-        keywords: str,
-        title: str,
-        company_url: str,
-        example_id: typing.Optional[str] = None,
-        task_instructions: typing.Optional[str] = OMIT,
-        enable_html: typing.Optional[bool] = OMIT,
-        selected_model: typing.Optional[SeoSummaryPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        enable_crosslinks: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SeoSummaryPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormSeoSummary:
         """
         Parameters
         ----------
-        search_query : str
-
-        keywords : str
-
-        title : str
-
-        company_url : str
-
         example_id : typing.Optional[str]
-
-        task_instructions : typing.Optional[str]
-
-        enable_html : typing.Optional[bool]
-
-        selected_model : typing.Optional[SeoSummaryPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        enable_crosslinks : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SeoSummaryPageResponse
+        BodyAsyncFormSeoSummary
             Successful Response
 
         Examples
@@ -4284,49 +3124,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.seo_content(
-                search_query="search_query",
-                keywords="keywords",
-                title="title",
-                company_url="company_url",
-            )
+            await client.seo_content()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/SEOSummary/async",
+            "v3/SEOSummary/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "search_query": search_query,
-                "keywords": keywords,
-                "title": title,
-                "company_url": company_url,
-                "task_instructions": task_instructions,
-                "enable_html": enable_html,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "enable_crosslinks": enable_crosslinks,
-                "seed": seed,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(SeoSummaryPageResponse, parse_obj_as(type_=SeoSummaryPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormSeoSummary, parse_obj_as(type_=BodyAsyncFormSeoSummary, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4338,6 +3153,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4345,101 +3164,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def web_search_llm(
-        self,
-        *,
-        search_query: str,
-        site_filter: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[GoogleGptPageRequestSelectedModel] = OMIT,
-        max_search_urls: typing.Optional[int] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[GoogleGptPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> GoogleGptPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormGoogleGpt:
         """
         Parameters
         ----------
-        search_query : str
-
-        site_filter : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[GoogleGptPageRequestSelectedModel]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[GoogleGptPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GoogleGptPageResponse
+        BodyAsyncFormGoogleGpt
             Successful Response
 
         Examples
@@ -4454,50 +3191,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.web_search_llm(
-                search_query="search_query",
-                site_filter="site_filter",
-            )
+            await client.web_search_llm()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/google-gpt/async",
+            "v3/google-gpt/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "site_filter": site_filter,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "max_search_urls": max_search_urls,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(GoogleGptPageResponse, parse_obj_as(type_=GoogleGptPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormGoogleGpt, parse_obj_as(type_=BodyAsyncFormGoogleGpt, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4509,6 +3220,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4516,59 +3231,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def personalize_email(
-        self,
-        *,
-        email_address: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SocialLookupEmailPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SocialLookupEmailPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> SocialLookupEmailPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormSocialLookupEmail:
         """
         Parameters
         ----------
-        email_address : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[SocialLookupEmailPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[SocialLookupEmailPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SocialLookupEmailPageResponse
+        BodyAsyncFormSocialLookupEmail
             Successful Response
 
         Examples
@@ -4583,37 +3258,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.personalize_email(
-                email_address="email_address",
-            )
+            await client.personalize_email()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/SocialLookupEmail/async",
+            "v3/SocialLookupEmail/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "email_address": email_address,
-                "input_prompt": input_prompt,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(SocialLookupEmailPageResponse, parse_obj_as(type_=SocialLookupEmailPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormSocialLookupEmail, parse_obj_as(type_=BodyAsyncFormSocialLookupEmail, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4625,6 +3287,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4632,65 +3298,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def bulk_run(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormBulkRunner:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-
-        run_urls : typing.Sequence[str]
-
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-
-        input_columns : typing.Dict[str, str]
-
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-
-        output_columns : typing.Dict[str, str]
-
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BulkRunnerPageResponse
+        BodyAsyncFormBulkRunner
             Successful Response
 
         Examples
@@ -4705,36 +3325,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.bulk_run(
-                documents=["documents"],
-                run_urls=["run_urls"],
-                input_columns={"key": "value"},
-                output_columns={"key": "value"},
-            )
+            await client.bulk_run()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/async",
+            "v3/bulk-runner/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormBulkRunner, parse_obj_as(type_=BodyAsyncFormBulkRunner, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4746,6 +3354,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4753,73 +3365,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def synthesize_data(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        sheet_url: typing.Optional[str] = OMIT,
-        selected_asr_model: typing.Optional[DocExtractPageRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocExtractPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocExtractPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocExtractPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocExtract:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        sheet_url : typing.Optional[str]
-
-        selected_asr_model : typing.Optional[DocExtractPageRequestSelectedAsrModel]
-
-        google_translate_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        task_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocExtractPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocExtractPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocExtractPageResponse
+        BodyAsyncFormDocExtract
             Successful Response
 
         Examples
@@ -4834,41 +3392,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.synthesize_data(
-                documents=["documents"],
-            )
+            await client.synthesize_data()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/doc-extract/async",
+            "v3/doc-extract/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "sheet_url": sheet_url,
-                "selected_asr_model": selected_asr_model,
-                "google_translate_target": google_translate_target,
-                "glossary_document": glossary_document,
-                "task_instructions": task_instructions,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocExtractPageResponse, parse_obj_as(type_=DocExtractPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocExtract, parse_obj_as(type_=BodyAsyncFormDocExtract, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4881,62 +3422,29 @@ class AsyncGooey:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def llm(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CompareLlmPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareLlmPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareLlm:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_models : typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[CompareLlmPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareLlmPageResponse
+        BodyAsyncFormCompareLlm
             Successful Response
 
         Examples
@@ -4957,28 +3465,18 @@ class AsyncGooey:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/CompareLLM/async",
+            "v3/CompareLLM/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_prompt": input_prompt,
-                "selected_models": selected_models,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareLlmPageResponse, parse_obj_as(type_=CompareLlmPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareLlm, parse_obj_as(type_=BodyAsyncFormCompareLlm, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -4990,6 +3488,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -4997,93 +3499,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def rag(
-        self,
-        *,
-        search_query: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        keyword_query: typing.Optional[DocSearchPageRequestKeywordQuery] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[DocSearchPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSearchPageRequestSelectedModel] = OMIT,
-        citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSearchPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocSearchPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocSearch:
         """
         Parameters
         ----------
-        search_query : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[DocSearchPageRequestKeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[DocSearchPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocSearchPageRequestSelectedModel]
-
-        citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocSearchPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocSearchPageResponse
+        BodyAsyncFormDocSearch
             Successful Response
 
         Examples
@@ -5098,47 +3526,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.rag(
-                search_query="search_query",
-            )
+            await client.rag()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/doc-search/async",
+            "v3/doc-search/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "keyword_query": keyword_query,
-                "documents": documents,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "doc_extract_url": doc_extract_url,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "citation_style": citation_style,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocSearchPageResponse, parse_obj_as(type_=DocSearchPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocSearch, parse_obj_as(type_=BodyAsyncFormDocSearch, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5150,6 +3555,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5157,71 +3566,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def doc_summary(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryPageRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryPageRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryPageRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> DocSummaryPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormDocSummary:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        merge_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[DocSummaryPageRequestSelectedModel]
-
-        chain_type : typing.Optional[typing.Literal["map_reduce"]]
-
-        selected_asr_model : typing.Optional[DocSummaryPageRequestSelectedAsrModel]
-
-        google_translate_target : typing.Optional[str]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[DocSummaryPageRequestResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        DocSummaryPageResponse
+        BodyAsyncFormDocSummary
             Successful Response
 
         Examples
@@ -5236,41 +3593,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.doc_summary(
-                documents=["documents"],
-            )
+            await client.doc_summary()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/doc-summary/async",
+            "v3/doc-summary/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "task_instructions": task_instructions,
-                "merge_instructions": merge_instructions,
-                "selected_model": selected_model,
-                "chain_type": chain_type,
-                "selected_asr_model": selected_asr_model,
-                "google_translate_target": google_translate_target,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(DocSummaryPageResponse, parse_obj_as(type_=DocSummaryPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormDocSummary, parse_obj_as(type_=BodyAsyncFormDocSummary, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5282,6 +3622,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5289,111 +3633,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def lipsync_tts(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[str] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[SadTalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> LipsyncTtsPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormLipsyncTts:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[LipsyncTtsPageRequestTtsProvider]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName]
-
-        openai_tts_model : typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel]
-
-        input_face : typing.Optional[str]
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncTtsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LipsyncTtsPageResponse
+        BodyAsyncFormLipsyncTts
             Successful Response
 
         Examples
@@ -5408,54 +3660,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.lipsync_tts(
-                text_prompt="text_prompt",
-            )
+            await client.lipsync_tts()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/LipsyncTTS/async",
+            "v3/LipsyncTTS/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "tts_provider": tts_provider,
-                "uberduck_voice_name": uberduck_voice_name,
-                "uberduck_speaking_rate": uberduck_speaking_rate,
-                "google_voice_name": google_voice_name,
-                "google_speaking_rate": google_speaking_rate,
-                "google_pitch": google_pitch,
-                "bark_history_prompt": bark_history_prompt,
-                "elevenlabs_voice_name": elevenlabs_voice_name,
-                "elevenlabs_api_key": elevenlabs_api_key,
-                "elevenlabs_voice_id": elevenlabs_voice_id,
-                "elevenlabs_model": elevenlabs_model,
-                "elevenlabs_stability": elevenlabs_stability,
-                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
-                "elevenlabs_style": elevenlabs_style,
-                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
-                "azure_voice_name": azure_voice_name,
-                "openai_voice_name": openai_voice_name,
-                "openai_tts_model": openai_tts_model,
-                "input_face": input_face,
-                "face_padding_top": face_padding_top,
-                "face_padding_bottom": face_padding_bottom,
-                "face_padding_left": face_padding_left,
-                "face_padding_right": face_padding_right,
-                "sadtalker_settings": sadtalker_settings,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(LipsyncTtsPageResponse, parse_obj_as(type_=LipsyncTtsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormLipsyncTts, parse_obj_as(type_=BodyAsyncFormLipsyncTts, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5467,6 +3689,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5474,90 +3700,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def text_to_speech(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[TextToSpeechPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[TextToSpeechPageRequestOpenaiTtsModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> TextToSpeechPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormTextToSpeech:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechPageRequestTtsProvider]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[TextToSpeechPageRequestOpenaiVoiceName]
-
-        openai_tts_model : typing.Optional[TextToSpeechPageRequestOpenaiTtsModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        TextToSpeechPageResponse
+        BodyAsyncFormTextToSpeech
             Successful Response
 
         Examples
@@ -5572,47 +3727,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.text_to_speech(
-                text_prompt="text_prompt",
-            )
+            await client.text_to_speech()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/TextToSpeech/async",
+            "v3/TextToSpeech/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "tts_provider": tts_provider,
-                "uberduck_voice_name": uberduck_voice_name,
-                "uberduck_speaking_rate": uberduck_speaking_rate,
-                "google_voice_name": google_voice_name,
-                "google_speaking_rate": google_speaking_rate,
-                "google_pitch": google_pitch,
-                "bark_history_prompt": bark_history_prompt,
-                "elevenlabs_voice_name": elevenlabs_voice_name,
-                "elevenlabs_api_key": elevenlabs_api_key,
-                "elevenlabs_voice_id": elevenlabs_voice_id,
-                "elevenlabs_model": elevenlabs_model,
-                "elevenlabs_stability": elevenlabs_stability,
-                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
-                "elevenlabs_style": elevenlabs_style,
-                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
-                "azure_voice_name": azure_voice_name,
-                "openai_voice_name": openai_voice_name,
-                "openai_tts_model": openai_tts_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(TextToSpeechPageResponse, parse_obj_as(type_=TextToSpeechPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormTextToSpeech, parse_obj_as(type_=BodyAsyncFormTextToSpeech, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5624,6 +3756,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5631,62 +3767,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def speech_recognition(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[AsrPageRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[AsrPageRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[AsrPageRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsrPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormAsr:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[AsrPageRequestSelectedModel]
-
-        language : typing.Optional[str]
-
-        translation_model : typing.Optional[AsrPageRequestTranslationModel]
-
-        output_format : typing.Optional[AsrPageRequestOutputFormat]
-
-        google_translate_target : typing.Optional[str]
-            use `translation_model` & `translation_target` instead.
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsrPageResponse
+        BodyAsyncFormAsr
             Successful Response
 
         Examples
@@ -5701,37 +3794,21 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.speech_recognition(
-                documents=["documents"],
-            )
+            await client.speech_recognition()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/asr/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "selected_model": selected_model,
-                "language": language,
-                "translation_model": translation_model,
-                "output_format": output_format,
-                "google_translate_target": google_translate_target,
-                "translation_source": translation_source,
-                "translation_target": translation_target,
-                "glossary_document": glossary_document,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/asr/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(AsrPageResponse, parse_obj_as(type_=AsrPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormAsr, parse_obj_as(type_=BodyAsyncFormAsr, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5743,6 +3820,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5750,59 +3831,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def text_to_music(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        duration_sec: typing.Optional[float] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> Text2AudioPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormText2Audio:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        duration_sec : typing.Optional[float]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Text2AudioPageResponse
+        BodyAsyncFormText2Audio
             Successful Response
 
         Examples
@@ -5817,37 +3858,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.text_to_music(
-                text_prompt="text_prompt",
-            )
+            await client.text_to_music()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/text2audio/async",
+            "v3/text2audio/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "duration_sec": duration_sec,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "sd_2_upscaling": sd2upscaling,
-                "selected_models": selected_models,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Text2AudioPageResponse, parse_obj_as(type_=Text2AudioPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormText2Audio, parse_obj_as(type_=BodyAsyncFormText2Audio, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5860,55 +3888,29 @@ class AsyncGooey:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def translate(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[TranslationPageRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> TranslationPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormTranslate:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        texts : typing.Optional[typing.Sequence[str]]
-
-        selected_model : typing.Optional[TranslationPageRequestSelectedModel]
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[str]
-            Provide a glossary to customize translation and improve accuracy of domain-specific terms.
-            If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        TranslationPageResponse
+        BodyAsyncFormTranslate
             Successful Response
 
         Examples
@@ -5929,25 +3931,15 @@ class AsyncGooey:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/translate/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "translation_source": translation_source,
-                "translation_target": translation_target,
-                "glossary_document": glossary_document,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/translate/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(TranslationPageResponse, parse_obj_as(type_=TranslationPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormTranslate, parse_obj_as(type_=BodyAsyncFormTranslate, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -5959,6 +3951,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -5966,74 +3962,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def remix_image(
-        self,
-        *,
-        input_image: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[Img2ImgPageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[Img2ImgPageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.Sequence[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> Img2ImgPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormImg2Img:
         """
         Parameters
         ----------
-        input_image : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        text_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[Img2ImgPageRequestSelectedModel]
-
-        selected_controlnet_model : typing.Optional[Img2ImgPageRequestSelectedControlnetModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.Sequence[float]]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Img2ImgPageResponse
+        BodyAsyncFormImg2Img
             Successful Response
 
         Examples
@@ -6048,42 +3989,21 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.remix_image(
-                input_image="input_image",
-            )
+            await client.remix_image()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/Img2Img/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "selected_model": selected_model,
-                "selected_controlnet_model": selected_controlnet_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "prompt_strength": prompt_strength,
-                "controlnet_conditioning_scale": controlnet_conditioning_scale,
-                "seed": seed,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v3/Img2Img/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Img2ImgPageResponse, parse_obj_as(type_=Img2ImgPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormImg2Img, parse_obj_as(type_=BodyAsyncFormImg2Img, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6095,6 +4015,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6102,77 +4026,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def text_to_image(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        dall_e3quality: typing.Optional[str] = OMIT,
-        dall_e3style: typing.Optional[str] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
-        edit_instruction: typing.Optional[str] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareText2ImgPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareText2Img:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        dall_e3quality : typing.Optional[str]
-
-        dall_e3style : typing.Optional[str]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
-
-        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
-
-        edit_instruction : typing.Optional[str]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareText2ImgPageResponse
+        BodyAsyncFormCompareText2Img
             Successful Response
 
         Examples
@@ -6187,43 +4053,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.text_to_image(
-                text_prompt="text_prompt",
-            )
+            await client.text_to_image()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/CompareText2Img/async",
+            "v3/CompareText2Img/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "text_prompt": text_prompt,
-                "negative_prompt": negative_prompt,
-                "output_width": output_width,
-                "output_height": output_height,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "dall_e_3_quality": dall_e3quality,
-                "dall_e_3_style": dall_e3style,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "sd_2_upscaling": sd2upscaling,
-                "selected_models": selected_models,
-                "scheduler": scheduler,
-                "edit_instruction": edit_instruction,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareText2ImgPageResponse, parse_obj_as(type_=CompareText2ImgPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareText2Img, parse_obj_as(type_=BodyAsyncFormCompareText2Img, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6235,6 +4082,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6242,77 +4093,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def product_image(
-        self,
-        *,
-        input_image: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ObjectInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormObjectInpainting:
         """
         Parameters
         ----------
-        input_image : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        mask_threshold : typing.Optional[float]
-
-        selected_model : typing.Optional[ObjectInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ObjectInpaintingPageResponse
+        BodyAsyncFormObjectInpainting
             Successful Response
 
         Examples
@@ -6327,44 +4120,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.product_image(
-                input_image="input_image",
-                text_prompt="text_prompt",
-            )
+            await client.product_image()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/ObjectInpainting/async",
+            "v3/ObjectInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "mask_threshold": mask_threshold,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "sd_2_upscaling": sd2upscaling,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectInpaintingPageResponse, parse_obj_as(type_=ObjectInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormObjectInpainting, parse_obj_as(type_=BodyAsyncFormObjectInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6376,6 +4149,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6383,74 +4160,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def portrait(
-        self,
-        *,
-        input_image: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[FaceInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> FaceInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormFaceInpainting:
         """
         Parameters
         ----------
-        input_image : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[FaceInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        FaceInpaintingPageResponse
+        BodyAsyncFormFaceInpainting
             Successful Response
 
         Examples
@@ -6465,43 +4187,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.portrait(
-                input_image="input_image",
-                text_prompt="tony stark from the iron man",
-            )
+            await client.portrait()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/FaceInpainting/async",
+            "v3/FaceInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "text_prompt": text_prompt,
-                "face_scale": face_scale,
-                "face_pos_x": face_pos_x,
-                "face_pos_y": face_pos_y,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "upscale_factor": upscale_factor,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(FaceInpaintingPageResponse, parse_obj_as(type_=FaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormFaceInpainting, parse_obj_as(type_=BodyAsyncFormFaceInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6513,6 +4216,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6520,101 +4227,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def image_from_email(
-        self,
-        *,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        email_address: typing.Optional[str] = OMIT,
-        twitter_handle: typing.Optional[str] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[EmailFaceInpaintingPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        should_send_email: typing.Optional[bool] = OMIT,
-        email_from: typing.Optional[str] = OMIT,
-        email_cc: typing.Optional[str] = OMIT,
-        email_bcc: typing.Optional[str] = OMIT,
-        email_subject: typing.Optional[str] = OMIT,
-        email_body: typing.Optional[str] = OMIT,
-        email_body_enable_html: typing.Optional[bool] = OMIT,
-        fallback_email_body: typing.Optional[str] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmailFaceInpaintingPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormEmailFaceInpainting:
         """
         Parameters
         ----------
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        email_address : typing.Optional[str]
-
-        twitter_handle : typing.Optional[str]
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        should_send_email : typing.Optional[bool]
-
-        email_from : typing.Optional[str]
-
-        email_cc : typing.Optional[str]
-
-        email_bcc : typing.Optional[str]
-
-        email_subject : typing.Optional[str]
-
-        email_body : typing.Optional[str]
-
-        email_body_enable_html : typing.Optional[bool]
-
-        fallback_email_body : typing.Optional[str]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmailFaceInpaintingPageResponse
+        BodyAsyncFormEmailFaceInpainting
             Successful Response
 
         Examples
@@ -6629,52 +4254,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.image_from_email(
-                email_address="sean@dara.network",
-                text_prompt="winter's day in paris",
-            )
+            await client.image_from_email()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/EmailFaceInpainting/async",
+            "v3/EmailFaceInpainting/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "email_address": email_address,
-                "twitter_handle": twitter_handle,
-                "text_prompt": text_prompt,
-                "face_scale": face_scale,
-                "face_pos_x": face_pos_x,
-                "face_pos_y": face_pos_y,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "upscale_factor": upscale_factor,
-                "output_width": output_width,
-                "output_height": output_height,
-                "guidance_scale": guidance_scale,
-                "should_send_email": should_send_email,
-                "email_from": email_from,
-                "email_cc": email_cc,
-                "email_bcc": email_bcc,
-                "email_subject": email_subject,
-                "email_body": email_body,
-                "email_body_enable_html": email_body_enable_html,
-                "fallback_email_body": fallback_email_body,
-                "seed": seed,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmailFaceInpaintingPageResponse, parse_obj_as(type_=EmailFaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormEmailFaceInpainting, parse_obj_as(type_=BodyAsyncFormEmailFaceInpainting, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6686,6 +4283,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6693,72 +4294,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def image_from_web_search(
-        self,
-        *,
-        search_query: str,
-        text_prompt: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> GoogleImageGenPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormGoogleImageGen:
         """
         Parameters
         ----------
-        search_query : str
-
-        text_prompt : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        selected_model : typing.Optional[GoogleImageGenPageRequestSelectedModel]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GoogleImageGenPageResponse
+        BodyAsyncFormGoogleImageGen
             Successful Response
 
         Examples
@@ -6773,42 +4321,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.image_from_web_search(
-                search_query="search_query",
-                text_prompt="text_prompt",
-            )
+            await client.image_from_web_search()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/GoogleImageGen/async",
+            "v3/GoogleImageGen/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "search_query": search_query,
-                "text_prompt": text_prompt,
-                "selected_model": selected_model,
-                "negative_prompt": negative_prompt,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "guidance_scale": guidance_scale,
-                "prompt_strength": prompt_strength,
-                "sd_2_upscaling": sd2upscaling,
-                "seed": seed,
-                "image_guidance_scale": image_guidance_scale,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(GoogleImageGenPageResponse, parse_obj_as(type_=GoogleImageGenPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormGoogleImageGen, parse_obj_as(type_=BodyAsyncFormGoogleImageGen, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6820,6 +4350,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6827,56 +4361,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def remove_background(
-        self,
-        *,
-        input_image: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[ImageSegmentationPageRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> ImageSegmentationPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormImageSegmentation:
         """
         Parameters
         ----------
-        input_image : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[ImageSegmentationPageRequestSelectedModel]
-
-        mask_threshold : typing.Optional[float]
-
-        rect_persepective_transform : typing.Optional[bool]
-
-        reflection_opacity : typing.Optional[float]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ImageSegmentationPageResponse
+        BodyAsyncFormImageSegmentation
             Successful Response
 
         Examples
@@ -6891,36 +4388,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.remove_background(
-                input_image="input_image",
-            )
+            await client.remove_background()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/ImageSegmentation/async",
+            "v3/ImageSegmentation/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "selected_model": selected_model,
-                "mask_threshold": mask_threshold,
-                "rect_persepective_transform": rect_persepective_transform,
-                "reflection_opacity": reflection_opacity,
-                "obj_scale": obj_scale,
-                "obj_pos_x": obj_pos_x,
-                "obj_pos_y": obj_pos_y,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ImageSegmentationPageResponse, parse_obj_as(type_=ImageSegmentationPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormImageSegmentation, parse_obj_as(type_=BodyAsyncFormImageSegmentation, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -6932,6 +4417,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -6939,50 +4428,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def upscale(
-        self,
-        *,
-        scale: int,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        input_image: typing.Optional[str] = OMIT,
-        input_video: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> CompareUpscalerPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormCompareAiUpscalers:
         """
         Parameters
         ----------
-        scale : int
-            The final upsampling scale of the image
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_image : typing.Optional[str]
-            Input Image
-
-        input_video : typing.Optional[str]
-            Input Video
-
-        selected_models : typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]]
-
-        selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CompareUpscalerPageResponse
+        BodyAsyncFormCompareAiUpscalers
             Successful Response
 
         Examples
@@ -6997,33 +4455,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.upscale(
-                scale=1,
-            )
+            await client.upscale()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/compare-ai-upscalers/async",
+            "v3/compare-ai-upscalers/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "input_image": input_image,
-                "input_video": input_video,
-                "scale": scale,
-                "selected_models": selected_models,
-                "selected_bg_model": selected_bg_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(CompareUpscalerPageResponse, parse_obj_as(type_=CompareUpscalerPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormCompareAiUpscalers, parse_obj_as(type_=BodyAsyncFormCompareAiUpscalers, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -7035,6 +4484,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -7042,38 +4495,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def embed(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormEmbeddings:
         """
         Parameters
         ----------
-        texts : typing.Sequence[str]
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmbeddingsPageResponse
+        BodyAsyncFormEmbeddings
             Successful Response
 
         Examples
@@ -7088,30 +4522,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.embed(
-                texts=["texts"],
-            )
+            await client.embed()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/embeddings/async",
+            "v3/embeddings/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormEmbeddings, parse_obj_as(type_=BodyAsyncFormEmbeddings, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -7123,6 +4551,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -7130,107 +4562,19 @@ class AsyncGooey:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def seo_people_also_ask_doc(
-        self,
-        *,
-        search_query: str,
-        example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        keyword_query: typing.Optional[RelatedQnADocPageRequestKeywordQuery] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[RelatedQnADocPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnADocPageRequestSelectedModel] = OMIT,
-        citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
-        scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        serp_search_type: typing.Optional[SerpSearchType] = OMIT,
-        scaleserp_search_field: typing.Optional[str] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> RelatedQnADocPageResponse:
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormRelatedQnaMakerDoc:
         """
         Parameters
         ----------
-        search_query : str
-
         example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[RelatedQnADocPageRequestKeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[RelatedQnADocPageRequestEmbeddingModel]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[RelatedQnADocPageRequestSelectedModel]
-
-        citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocation]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RelatedQnADocPageResponse
+        BodyAsyncFormRelatedQnaMakerDoc
             Successful Response
 
         Examples
@@ -7245,51 +4589,24 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.seo_people_also_ask_doc(
-                search_query="search_query",
-            )
+            await client.seo_people_also_ask_doc()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/related-qna-maker-doc/async",
+            "v3/related-qna-maker-doc/async/form",
             method="POST",
             params={"example_id": example_id},
-            json={
-                "functions": functions,
-                "variables": variables,
-                "search_query": search_query,
-                "keyword_query": keyword_query,
-                "documents": documents,
-                "max_references": max_references,
-                "max_context_words": max_context_words,
-                "scroll_jump": scroll_jump,
-                "doc_extract_url": doc_extract_url,
-                "embedding_model": embedding_model,
-                "dense_weight": dense_weight,
-                "task_instructions": task_instructions,
-                "query_instructions": query_instructions,
-                "selected_model": selected_model,
-                "citation_style": citation_style,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "response_format_type": response_format_type,
-                "serp_search_location": serp_search_location,
-                "scaleserp_locations": scaleserp_locations,
-                "serp_search_type": serp_search_type,
-                "scaleserp_search_field": scaleserp_search_field,
-                "settings": settings,
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(RelatedQnADocPageResponse, parse_obj_as(type_=RelatedQnADocPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormRelatedQnaMakerDoc, parse_obj_as(type_=BodyAsyncFormRelatedQnaMakerDoc, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -7301,6 +4618,10 @@ class AsyncGooey:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -7342,6 +4663,1390 @@ class AsyncGooey:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3chyron_plant_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChyronPlantPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChyronPlantPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3chyron_plant_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/ChyronPlant/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ChyronPlantPageResponse, parse_obj_as(type_=ChyronPlantPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3compare_llm_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareLlmPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareLlmPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3compare_llm_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/CompareLLM/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareLlmPageResponse, parse_obj_as(type_=CompareLlmPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3compare_text2img_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareText2ImgPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareText2ImgPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3compare_text2img_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/CompareText2Img/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareText2ImgPageResponse, parse_obj_as(type_=CompareText2ImgPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3deforum_sd_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeforumSdPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeforumSdPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3deforum_sd_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/DeforumSD/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DeforumSdPageResponse, parse_obj_as(type_=DeforumSdPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3email_face_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmailFaceInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmailFaceInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3email_face_inpainting_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/EmailFaceInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(EmailFaceInpaintingPageResponse, parse_obj_as(type_=EmailFaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3face_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> FaceInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FaceInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3face_inpainting_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/FaceInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(FaceInpaintingPageResponse, parse_obj_as(type_=FaceInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3google_image_gen_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GoogleImageGenPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GoogleImageGenPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3google_image_gen_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/GoogleImageGen/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(GoogleImageGenPageResponse, parse_obj_as(type_=GoogleImageGenPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3image_segmentation_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ImageSegmentationPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImageSegmentationPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3image_segmentation_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/ImageSegmentation/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ImageSegmentationPageResponse, parse_obj_as(type_=ImageSegmentationPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3img2img_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Img2ImgPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Img2ImgPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3img2img_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/Img2Img/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(Img2ImgPageResponse, parse_obj_as(type_=Img2ImgPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3letter_writer_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LetterWriterPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LetterWriterPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3letter_writer_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/LetterWriter/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LetterWriterPageResponse, parse_obj_as(type_=LetterWriterPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3lipsync_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3lipsync_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncPageResponse, parse_obj_as(type_=LipsyncPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3lipsync_tts_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncTtsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncTtsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3lipsync_tts_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/LipsyncTTS/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncTtsPageResponse, parse_obj_as(type_=LipsyncTtsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3object_inpainting_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectInpaintingPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectInpaintingPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3object_inpainting_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/ObjectInpainting/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectInpaintingPageResponse, parse_obj_as(type_=ObjectInpaintingPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3seo_summary_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SeoSummaryPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SeoSummaryPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3seo_summary_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/SEOSummary/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SeoSummaryPageResponse, parse_obj_as(type_=SeoSummaryPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3smart_gpt_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SmartGptPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3smart_gpt_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/SmartGPT/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SmartGptPageResponse, parse_obj_as(type_=SmartGptPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3social_lookup_email_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SocialLookupEmailPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SocialLookupEmailPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3social_lookup_email_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/SocialLookupEmail/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(SocialLookupEmailPageResponse, parse_obj_as(type_=SocialLookupEmailPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3text_to_speech_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> TextToSpeechPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TextToSpeechPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3text_to_speech_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/TextToSpeech/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(TextToSpeechPageResponse, parse_obj_as(type_=TextToSpeechPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3art_qr_code_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> QrCodeGeneratorPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QrCodeGeneratorPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3art_qr_code_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/art-qr-code/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(QrCodeGeneratorPageResponse, parse_obj_as(type_=QrCodeGeneratorPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3asr_async(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsrPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsrPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3asr_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/asr/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(AsrPageResponse, parse_obj_as(type_=AsrPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3bulk_eval_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3bulk_eval_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkEvalPageResponse, parse_obj_as(type_=BulkEvalPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3bulk_runner_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkRunnerPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkRunnerPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3bulk_runner_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/bulk-runner/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3compare_ai_upscalers_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompareUpscalerPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompareUpscalerPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3compare_ai_upscalers_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/compare-ai-upscalers/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(CompareUpscalerPageResponse, parse_obj_as(type_=CompareUpscalerPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3doc_extract_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocExtractPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocExtractPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3doc_extract_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/doc-extract/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocExtractPageResponse, parse_obj_as(type_=DocExtractPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3doc_search_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocSearchPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocSearchPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3doc_search_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/doc-search/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocSearchPageResponse, parse_obj_as(type_=DocSearchPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3doc_summary_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocSummaryPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocSummaryPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3doc_summary_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/doc-summary/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(DocSummaryPageResponse, parse_obj_as(type_=DocSummaryPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3embeddings_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmbeddingsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmbeddingsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3embeddings_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/embeddings/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3functions_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FunctionsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3functions_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/functions/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(FunctionsPageResponse, parse_obj_as(type_=FunctionsPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3google_gpt_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GoogleGptPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GoogleGptPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3google_gpt_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/google-gpt/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(GoogleGptPageResponse, parse_obj_as(type_=GoogleGptPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3related_qna_maker_doc_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RelatedQnADocPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RelatedQnADocPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3related_qna_maker_doc_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/related-qna-maker-doc/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(RelatedQnADocPageResponse, parse_obj_as(type_=RelatedQnADocPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3related_qna_maker_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RelatedQnAPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RelatedQnAPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3related_qna_maker_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/related-qna-maker/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(RelatedQnAPageResponse, parse_obj_as(type_=RelatedQnAPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3text2audio_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Text2AudioPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Text2AudioPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3text2audio_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/text2audio/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(Text2AudioPageResponse, parse_obj_as(type_=Text2AudioPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3translate_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> TranslationPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TranslationPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3translate_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/translate/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(TranslationPageResponse, parse_obj_as(type_=TranslationPageResponse, object_=_response.json()))  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_v3video_bots_async(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VideoBotsPageResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v3video_bots_async()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/video-bots/async", method="POST", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(VideoBotsPageResponse, parse_obj_as(type_=VideoBotsPageResponse, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

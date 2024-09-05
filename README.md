@@ -16,19 +16,12 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import AnimationPrompt, Gooey
+from gooey import Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.animate(
-    animation_prompts=[
-        AnimationPrompt(
-            frame="frame",
-            prompt="prompt",
-        )
-    ],
-)
+client.animate()
 ```
 
 ## Async Client
@@ -38,7 +31,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AnimationPrompt, AsyncGooey
+from gooey import AsyncGooey
 
 client = AsyncGooey(
     api_key="YOUR_API_KEY",
@@ -46,14 +39,7 @@ client = AsyncGooey(
 
 
 async def main() -> None:
-    await client.animate(
-        animation_prompts=[
-            AnimationPrompt(
-                frame="frame",
-                prompt="prompt",
-            )
-        ],
-    )
+    await client.animate()
 
 
 asyncio.run(main())

@@ -7,50 +7,35 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..errors.bad_request_error import BadRequestError
+from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.functions_page_response import FunctionsPageResponse
+from ..types.body_async_form_functions import BodyAsyncFormFunctions
+from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
-from ..types.run_settings import RunSettings
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class FunctionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def async_functions(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        code: typing.Optional[str] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> FunctionsPageResponse:
+    def async_form_functions(
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormFunctions:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        code : typing.Optional[str]
-            The JS code to be executed.
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used in the code
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        FunctionsPageResponse
+        BodyAsyncFormFunctions
             Successful Response
 
         Examples
@@ -60,19 +45,18 @@ class FunctionsClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.functions.async_functions()
+        client.functions.async_form_functions()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/functions/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={"code": code, "variables": variables, "settings": settings},
-            request_options=request_options,
-            omit=OMIT,
+            "v3/functions/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(FunctionsPageResponse, parse_obj_as(type_=FunctionsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormFunctions, parse_obj_as(type_=BodyAsyncFormFunctions, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -84,6 +68,10 @@ class FunctionsClient:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -126,34 +114,20 @@ class AsyncFunctionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def async_functions(
-        self,
-        *,
-        example_id: typing.Optional[str] = None,
-        code: typing.Optional[str] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> FunctionsPageResponse:
+    async def async_form_functions(
+        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> BodyAsyncFormFunctions:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
-
-        code : typing.Optional[str]
-            The JS code to be executed.
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used in the code
-
-        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        FunctionsPageResponse
+        BodyAsyncFormFunctions
             Successful Response
 
         Examples
@@ -168,22 +142,21 @@ class AsyncFunctionsClient:
 
 
         async def main() -> None:
-            await client.functions.async_functions()
+            await client.functions.async_form_functions()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/functions/async",
-            method="POST",
-            params={"example_id": example_id},
-            json={"code": code, "variables": variables, "settings": settings},
-            request_options=request_options,
-            omit=OMIT,
+            "v3/functions/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(FunctionsPageResponse, parse_obj_as(type_=FunctionsPageResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BodyAsyncFormFunctions, parse_obj_as(type_=BodyAsyncFormFunctions, object_=_response.json()))  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -195,6 +168,10 @@ class AsyncFunctionsClient:
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
