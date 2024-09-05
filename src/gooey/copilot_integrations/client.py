@@ -23,6 +23,7 @@ from .types.create_stream_request_embedding_model import CreateStreamRequestEmbe
 from .types.create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
 from .types.create_stream_request_openai_tts_model import CreateStreamRequestOpenaiTtsModel
 from .types.create_stream_request_openai_voice_name import CreateStreamRequestOpenaiVoiceName
+from .types.create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
 from .types.create_stream_request_selected_model import CreateStreamRequestSelectedModel
 from .types.create_stream_request_translation_model import CreateStreamRequestTranslationModel
 from .types.create_stream_request_tts_provider import CreateStreamRequestTtsProvider
@@ -55,11 +56,6 @@ class CopilotIntegrationsClient:
         bot_script: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[CreateStreamRequestSelectedModel] = OMIT,
         document_model: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         keyword_instructions: typing.Optional[str] = OMIT,
@@ -79,6 +75,12 @@ class CopilotIntegrationsClient:
         output_glossary_document: typing.Optional[str] = OMIT,
         lipsync_model: typing.Optional[CreateStreamRequestLipsyncModel] = OMIT,
         tools: typing.Optional[typing.Sequence[LlmTools]] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[CreateStreamRequestResponseFormatType] = OMIT,
         tts_provider: typing.Optional[CreateStreamRequestTtsProvider] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
         uberduck_speaking_rate: typing.Optional[float] = OMIT,
@@ -157,16 +159,6 @@ class CopilotIntegrationsClient:
         document_model : typing.Optional[str]
             When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
 
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
         task_instructions : typing.Optional[str]
 
         query_instructions : typing.Optional[str]
@@ -218,6 +210,18 @@ class CopilotIntegrationsClient:
 
         tools : typing.Optional[typing.Sequence[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[CreateStreamRequestResponseFormatType]
 
         tts_provider : typing.Optional[CreateStreamRequestTtsProvider]
 
@@ -284,7 +288,6 @@ class CopilotIntegrationsClient:
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
         client.copilot_integrations.video_bots_stream_create(
@@ -292,7 +295,7 @@ class CopilotIntegrationsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/integrations/stream/",
+            "v3/integrations/stream",
             method="POST",
             json={
                 "integration_id": integration_id,
@@ -311,11 +314,6 @@ class CopilotIntegrationsClient:
                 "bot_script": bot_script,
                 "selected_model": selected_model,
                 "document_model": document_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
                 "task_instructions": task_instructions,
                 "query_instructions": query_instructions,
                 "keyword_instructions": keyword_instructions,
@@ -335,6 +333,12 @@ class CopilotIntegrationsClient:
                 "output_glossary_document": output_glossary_document,
                 "lipsync_model": lipsync_model,
                 "tools": tools,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
                 "tts_provider": tts_provider,
                 "uberduck_voice_name": uberduck_voice_name,
                 "uberduck_speaking_rate": uberduck_speaking_rate,
@@ -401,7 +405,6 @@ class CopilotIntegrationsClient:
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
         client.copilot_integrations.video_bots_stream(
@@ -409,7 +412,7 @@ class CopilotIntegrationsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v3/integrations/stream/{jsonable_encoder(request_id)}/", method="GET", request_options=request_options
+            f"v3/integrations/stream/{jsonable_encoder(request_id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -451,11 +454,6 @@ class AsyncCopilotIntegrationsClient:
         bot_script: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[CreateStreamRequestSelectedModel] = OMIT,
         document_model: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         keyword_instructions: typing.Optional[str] = OMIT,
@@ -475,6 +473,12 @@ class AsyncCopilotIntegrationsClient:
         output_glossary_document: typing.Optional[str] = OMIT,
         lipsync_model: typing.Optional[CreateStreamRequestLipsyncModel] = OMIT,
         tools: typing.Optional[typing.Sequence[LlmTools]] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[CreateStreamRequestResponseFormatType] = OMIT,
         tts_provider: typing.Optional[CreateStreamRequestTtsProvider] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
         uberduck_speaking_rate: typing.Optional[float] = OMIT,
@@ -553,16 +557,6 @@ class AsyncCopilotIntegrationsClient:
         document_model : typing.Optional[str]
             When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
 
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
         task_instructions : typing.Optional[str]
 
         query_instructions : typing.Optional[str]
@@ -614,6 +608,18 @@ class AsyncCopilotIntegrationsClient:
 
         tools : typing.Optional[typing.Sequence[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[CreateStreamRequestResponseFormatType]
 
         tts_provider : typing.Optional[CreateStreamRequestTtsProvider]
 
@@ -682,7 +688,6 @@ class AsyncCopilotIntegrationsClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
@@ -696,7 +701,7 @@ class AsyncCopilotIntegrationsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/integrations/stream/",
+            "v3/integrations/stream",
             method="POST",
             json={
                 "integration_id": integration_id,
@@ -715,11 +720,6 @@ class AsyncCopilotIntegrationsClient:
                 "bot_script": bot_script,
                 "selected_model": selected_model,
                 "document_model": document_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
                 "task_instructions": task_instructions,
                 "query_instructions": query_instructions,
                 "keyword_instructions": keyword_instructions,
@@ -739,6 +739,12 @@ class AsyncCopilotIntegrationsClient:
                 "output_glossary_document": output_glossary_document,
                 "lipsync_model": lipsync_model,
                 "tools": tools,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
                 "tts_provider": tts_provider,
                 "uberduck_voice_name": uberduck_voice_name,
                 "uberduck_speaking_rate": uberduck_speaking_rate,
@@ -807,7 +813,6 @@ class AsyncCopilotIntegrationsClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
@@ -821,7 +826,7 @@ class AsyncCopilotIntegrationsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v3/integrations/stream/{jsonable_encoder(request_id)}/", method="GET", request_options=request_options
+            f"v3/integrations/stream/{jsonable_encoder(request_id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:

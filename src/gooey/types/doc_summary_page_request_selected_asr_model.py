@@ -15,8 +15,9 @@ DocSummaryPageRequestSelectedAsrModel = typing.Union[
         "usm",
         "deepgram",
         "azure",
-        "seamless_m4t",
+        "seamless_m4t_v2",
         "mms_1b_all",
+        "seamless_m4t",
     ],
     typing.Any,
 ]

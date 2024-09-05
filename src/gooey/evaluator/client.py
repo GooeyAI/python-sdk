@@ -7,21 +7,18 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.agg_function import AggFunction
-from ..types.async_api_response_model_v3 import AsyncApiResponseModelV3
-from ..types.bulk_eval_page_request_selected_model import BulkEvalPageRequestSelectedModel
 from ..types.bulk_eval_page_response import BulkEvalPageResponse
-from ..types.bulk_eval_page_status_response import BulkEvalPageStatusResponse
 from ..types.eval_prompt import EvalPrompt
-from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.recipe_function import RecipeFunction
 from ..types.run_settings import RunSettings
+from .types.bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
+from .types.bulk_eval_page_request_selected_model import BulkEvalPageRequestSelectedModel
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,20 +28,22 @@ class EvaluatorClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def bulk_eval(
+    def async_bulk_eval(
         self,
         *,
         documents: typing.Sequence[str],
+        example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
         selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
+        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> BulkEvalPageResponse:
@@ -52,14 +51,29 @@ class EvaluatorClient:
         Parameters
         ----------
         documents : typing.Sequence[str]
+
             Upload or link to a CSV or google sheet that contains your sample input data.
             For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
             Remember to includes header names in your CSV too.
+
+
+        example_id : typing.Optional[str]
 
         functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Any]]
             Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
 
         selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
 
@@ -73,13 +87,7 @@ class EvaluatorClient:
 
         sampling_temperature : typing.Optional[float]
 
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -96,28 +104,29 @@ class EvaluatorClient:
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
-        client.evaluator.bulk_eval(
+        client.evaluator.async_bulk_eval(
             documents=["documents"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/bulk-eval/",
+            "v3/bulk-eval/async",
             method="POST",
+            params={"example_id": example_id},
             json={
                 "functions": functions,
                 "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
                 "selected_model": selected_model,
                 "avoid_repetition": avoid_repetition,
                 "num_outputs": num_outputs,
                 "quality": quality,
                 "max_tokens": max_tokens,
                 "sampling_temperature": sampling_temperature,
-                "documents": documents,
-                "eval_prompts": eval_prompts,
-                "agg_functions": agg_functions,
+                "response_format_type": response_format_type,
                 "settings": settings,
             },
             request_options=request_options,
@@ -126,173 +135,6 @@ class EvaluatorClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(BulkEvalPageResponse, parse_obj_as(type_=BulkEvalPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def async_bulk_eval(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.evaluator.async_bulk_eval(
-            documents=["documents"],
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/async/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "documents": documents,
-                "eval_prompts": eval_prompts,
-                "agg_functions": agg_functions,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def status_bulk_eval(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkEvalPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkEvalPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.evaluator.status_bulk_eval(
-            run_id="run_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
@@ -315,20 +157,22 @@ class AsyncEvaluatorClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def bulk_eval(
+    async def async_bulk_eval(
         self,
         *,
         documents: typing.Sequence[str],
+        example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
         selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
+        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> BulkEvalPageResponse:
@@ -336,14 +180,29 @@ class AsyncEvaluatorClient:
         Parameters
         ----------
         documents : typing.Sequence[str]
+
             Upload or link to a CSV or google sheet that contains your sample input data.
             For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
             Remember to includes header names in your CSV too.
+
+
+        example_id : typing.Optional[str]
 
         functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Any]]
             Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
 
         selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
 
@@ -357,13 +216,7 @@ class AsyncEvaluatorClient:
 
         sampling_temperature : typing.Optional[float]
 
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -382,131 +235,6 @@ class AsyncEvaluatorClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.evaluator.bulk_eval(
-                documents=["documents"],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v2/bulk-eval/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "selected_model": selected_model,
-                "avoid_repetition": avoid_repetition,
-                "num_outputs": num_outputs,
-                "quality": quality,
-                "max_tokens": max_tokens,
-                "sampling_temperature": sampling_temperature,
-                "documents": documents,
-                "eval_prompts": eval_prompts,
-                "agg_functions": agg_functions,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(BulkEvalPageResponse, parse_obj_as(type_=BulkEvalPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def async_bulk_eval(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
@@ -520,20 +248,22 @@ class AsyncEvaluatorClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/async/",
+            "v3/bulk-eval/async",
             method="POST",
+            params={"example_id": example_id},
             json={
                 "functions": functions,
                 "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
                 "selected_model": selected_model,
                 "avoid_repetition": avoid_repetition,
                 "num_outputs": num_outputs,
                 "quality": quality,
                 "max_tokens": max_tokens,
                 "sampling_temperature": sampling_temperature,
-                "documents": documents,
-                "eval_prompts": eval_prompts,
-                "agg_functions": agg_functions,
+                "response_format_type": response_format_type,
                 "settings": settings,
             },
             request_options=request_options,
@@ -541,66 +271,7 @@ class AsyncEvaluatorClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def status_bulk_eval(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkEvalPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkEvalPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.evaluator.status_bulk_eval(
-                run_id="run_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
+                return typing.cast(BulkEvalPageResponse, parse_obj_as(type_=BulkEvalPageResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore

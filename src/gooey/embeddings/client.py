@@ -5,234 +5,39 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.internal_server_error import InternalServerError
-from ..errors.payment_required_error import PaymentRequiredError
-from ..errors.too_many_requests_error import TooManyRequestsError
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.async_api_response_model_v3 import AsyncApiResponseModelV3
-from ..types.embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
-from ..types.embeddings_page_response import EmbeddingsPageResponse
-from ..types.embeddings_page_status_response import EmbeddingsPageStatusResponse
-from ..types.failed_reponse_model_v2 import FailedReponseModelV2
-from ..types.generic_error_response import GenericErrorResponse
-from ..types.http_validation_error import HttpValidationError
-from ..types.recipe_function import RecipeFunction
-from ..types.run_settings import RunSettings
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class EmbeddingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageResponse:
+    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        texts : typing.Sequence[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmbeddingsPageResponse
-            Successful Response
+        None
 
         Examples
         --------
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
-        client.embeddings.post(
-            texts=["texts"],
-        )
+        client.embeddings.post()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/embeddings/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v2/embeddings/", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def async_embeddings(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        texts : typing.Sequence[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.embeddings.async_embeddings(
-            texts=["texts"],
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/embeddings/async/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def status_embeddings(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmbeddingsPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.embeddings.status_embeddings(
-            run_id="run_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/embeddings/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageStatusResponse, parse_obj_as(type_=EmbeddingsPageStatusResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -243,37 +48,16 @@ class AsyncEmbeddingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageResponse:
+    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        texts : typing.Sequence[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmbeddingsPageResponse
-            Successful Response
+        None
 
         Examples
         --------
@@ -282,195 +66,22 @@ class AsyncEmbeddingsClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.embeddings.post(
-                texts=["texts"],
-            )
+            await client.embeddings.post()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v2/embeddings/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v2/embeddings/", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageResponse, parse_obj_as(type_=EmbeddingsPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def async_embeddings(
-        self,
-        *,
-        texts: typing.Sequence[str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        texts : typing.Sequence[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.embeddings.async_embeddings(
-                texts=["texts"],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v3/embeddings/async/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "texts": texts,
-                "selected_model": selected_model,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def status_embeddings(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> EmbeddingsPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmbeddingsPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.embeddings.status_embeddings(
-                run_id="run_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v3/embeddings/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(EmbeddingsPageStatusResponse, parse_obj_as(type_=EmbeddingsPageStatusResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

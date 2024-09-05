@@ -25,7 +25,7 @@ class DocExtractPageStatusResponse(UniversalBaseModel):
     Time when the run was created as ISO format
     """
 
-    run_time_sec: int = pydantic.Field()
+    run_time_sec: float = pydantic.Field()
     """
     Total run time in seconds
     """

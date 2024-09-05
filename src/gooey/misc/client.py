@@ -38,7 +38,6 @@ class MiscClient:
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
         client.misc.get_balance()
@@ -49,10 +48,6 @@ class MiscClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(BalanceResponse, parse_obj_as(type_=BalanceResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -109,7 +104,6 @@ class MiscClient:
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
         client.misc.video_bots_broadcast(
@@ -143,37 +137,6 @@ class MiscClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def health(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Any
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.misc.health()
-        """
-        _response = self._client_wrapper.httpx_client.request(method="GET", request_options=request_options)
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncMiscClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -198,7 +161,6 @@ class AsyncMiscClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
@@ -215,10 +177,6 @@ class AsyncMiscClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(BalanceResponse, parse_obj_as(type_=BalanceResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -277,7 +235,6 @@ class AsyncMiscClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
@@ -312,45 +269,6 @@ class AsyncMiscClient:
                 raise UnprocessableEntityError(
                     typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def health(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Any
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.misc.health()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(method="GET", request_options=request_options)
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

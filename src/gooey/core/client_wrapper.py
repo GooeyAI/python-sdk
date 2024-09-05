@@ -11,12 +11,10 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        authorization: typing.Optional[str] = None,
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
-        self._authorization = authorization
         self._api_key = api_key
         self._base_url = base_url
         self._timeout = timeout
@@ -25,10 +23,8 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "gooeyai",
-            "X-Fern-SDK-Version": "0.0.1b1",
+            "X-Fern-SDK-Version": "0.0.1-beta3",
         }
-        if self._authorization is not None:
-            headers["Authorization"] = self._authorization
         headers["Authorization"] = f"Bearer {self._get_api_key()}"
         return headers
 
@@ -49,13 +45,12 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        authorization: typing.Optional[str] = None,
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(authorization=authorization, api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),
@@ -68,13 +63,12 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        authorization: typing.Optional[str] = None,
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(authorization=authorization, api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers(),

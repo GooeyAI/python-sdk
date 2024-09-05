@@ -9,6 +9,7 @@ from .called_function_response import CalledFunctionResponse
 
 
 class DocExtractPageOutput(UniversalBaseModel):
+    output_documents: typing.Optional[typing.List[str]] = None
     called_functions: typing.Optional[typing.List[CalledFunctionResponse]] = None
 
     if IS_PYDANTIC_V2:

@@ -5,279 +5,39 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.internal_server_error import InternalServerError
-from ..errors.payment_required_error import PaymentRequiredError
-from ..errors.too_many_requests_error import TooManyRequestsError
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.async_api_response_model_v3 import AsyncApiResponseModelV3
-from ..types.bulk_runner_page_response import BulkRunnerPageResponse
-from ..types.bulk_runner_page_status_response import BulkRunnerPageStatusResponse
-from ..types.failed_reponse_model_v2 import FailedReponseModelV2
-from ..types.generic_error_response import GenericErrorResponse
-from ..types.http_validation_error import HttpValidationError
-from ..types.recipe_function import RecipeFunction
-from ..types.run_settings import RunSettings
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class BulkRunnerClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageResponse:
+    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        run_urls : typing.Sequence[str]
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-        input_columns : typing.Dict[str, str]
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-        output_columns : typing.Dict[str, str]
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-        settings : typing.Optional[RunSettings]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BulkRunnerPageResponse
-            Successful Response
+        None
 
         Examples
         --------
         from gooey import Gooey
 
         client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
-        client.bulk_runner.post(
-            documents=["documents"],
-            run_urls=["run_urls"],
-            input_columns={"key": "value"},
-            output_columns={"key": "value"},
-        )
+        client.bulk_runner.post()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/bulk-runner/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v2/bulk-runner/", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def async_bulk_runner(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        run_urls : typing.Sequence[str]
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-        input_columns : typing.Dict[str, str]
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-        output_columns : typing.Dict[str, str]
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.bulk_runner.async_bulk_runner(
-            documents=["documents"],
-            run_urls=["run_urls"],
-            input_columns={"key": "value"},
-            output_columns={"key": "value"},
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/async/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def status_bulk_runner(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkRunnerPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        from gooey import Gooey
-
-        client = Gooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-        client.bulk_runner.status_bulk_runner(
-            run_id="run_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageStatusResponse, parse_obj_as(type_=BulkRunnerPageStatusResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -288,54 +48,16 @@ class AsyncBulkRunnerClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageResponse:
+    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        run_urls : typing.Sequence[str]
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-        input_columns : typing.Dict[str, str]
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-        output_columns : typing.Dict[str, str]
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-        settings : typing.Optional[RunSettings]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BulkRunnerPageResponse
-            Successful Response
+        None
 
         Examples
         --------
@@ -344,224 +66,22 @@ class AsyncBulkRunnerClient:
         from gooey import AsyncGooey
 
         client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.bulk_runner.post(
-                documents=["documents"],
-                run_urls=["run_urls"],
-                input_columns={"key": "value"},
-                output_columns={"key": "value"},
-            )
+            await client.bulk_runner.post()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v2/bulk-runner/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "v2/bulk-runner/", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageResponse, parse_obj_as(type_=BulkRunnerPageResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def async_bulk_runner(
-        self,
-        *,
-        documents: typing.Sequence[str],
-        run_urls: typing.Sequence[str],
-        input_columns: typing.Dict[str, str],
-        output_columns: typing.Dict[str, str],
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
-        eval_urls: typing.Optional[typing.Sequence[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncApiResponseModelV3:
-        """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-        run_urls : typing.Sequence[str]
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-        input_columns : typing.Dict[str, str]
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-        output_columns : typing.Dict[str, str]
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Any]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.Sequence[str]]
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncApiResponseModelV3
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.bulk_runner.async_bulk_runner(
-                documents=["documents"],
-                run_urls=["run_urls"],
-                input_columns={"key": "value"},
-                output_columns={"key": "value"},
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/async/",
-            method="POST",
-            json={
-                "functions": functions,
-                "variables": variables,
-                "documents": documents,
-                "run_urls": run_urls,
-                "input_columns": input_columns,
-                "output_columns": output_columns,
-                "eval_urls": eval_urls,
-                "settings": settings,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(AsyncApiResponseModelV3, parse_obj_as(type_=AsyncApiResponseModelV3, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def status_bulk_runner(
-        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkRunnerPageStatusResponse:
-        """
-        Parameters
-        ----------
-        run_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkRunnerPageStatusResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from gooey import AsyncGooey
-
-        client = AsyncGooey(
-            authorization="YOUR_AUTHORIZATION",
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.bulk_runner.status_bulk_runner(
-                run_id="run_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-runner/status/", method="GET", params={"run_id": run_id}, request_options=request_options
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(BulkRunnerPageStatusResponse, parse_obj_as(type_=BulkRunnerPageStatusResponse, object_=_response.json()))  # type: ignore
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

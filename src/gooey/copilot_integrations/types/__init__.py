@@ -6,6 +6,7 @@ from .create_stream_request_embedding_model import CreateStreamRequestEmbeddingM
 from .create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
 from .create_stream_request_openai_tts_model import CreateStreamRequestOpenaiTtsModel
 from .create_stream_request_openai_voice_name import CreateStreamRequestOpenaiVoiceName
+from .create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
 from .create_stream_request_selected_model import CreateStreamRequestSelectedModel
 from .create_stream_request_translation_model import CreateStreamRequestTranslationModel
 from .create_stream_request_tts_provider import CreateStreamRequestTtsProvider
@@ -18,6 +19,7 @@ __all__ = [
     "CreateStreamRequestLipsyncModel",
     "CreateStreamRequestOpenaiTtsModel",
     "CreateStreamRequestOpenaiVoiceName",
+    "CreateStreamRequestResponseFormatType",
     "CreateStreamRequestSelectedModel",
     "CreateStreamRequestTranslationModel",
     "CreateStreamRequestTtsProvider",

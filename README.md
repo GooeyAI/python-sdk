@@ -16,14 +16,18 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import Gooey
+from gooey import AnimationPrompt, Gooey
 
 client = Gooey(
-    authorization="YOUR_AUTHORIZATION",
     api_key="YOUR_API_KEY",
 )
-client.copilot_integrations.video_bots_stream_create(
-    integration_id="integration_id",
+client.animate(
+    animation_prompts=[
+        AnimationPrompt(
+            frame="frame",
+            prompt="prompt",
+        )
+    ],
 )
 ```
 
@@ -34,17 +38,21 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AsyncGooey
+from gooey import AnimationPrompt, AsyncGooey
 
 client = AsyncGooey(
-    authorization="YOUR_AUTHORIZATION",
     api_key="YOUR_API_KEY",
 )
 
 
 async def main() -> None:
-    await client.copilot_integrations.video_bots_stream_create(
-        integration_id="integration_id",
+    await client.animate(
+        animation_prompts=[
+            AnimationPrompt(
+                frame="frame",
+                prompt="prompt",
+            )
+        ],
     )
 
 
@@ -60,7 +68,7 @@ will be thrown.
 from gooey.core.api_error import ApiError
 
 try:
-    client.copilot_integrations.video_bots_stream_create(...)
+    client.animate(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -83,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.copilot_integrations.video_bots_stream_create(..., {
+client.animate(..., {
     "max_retries": 1
 })
 ```
@@ -103,7 +111,7 @@ client = Gooey(
 
 
 # Override timeout for a specific method
-client.copilot_integrations.video_bots_stream_create(..., {
+client.animate(..., {
     "timeout_in_seconds": 1
 })
 ```

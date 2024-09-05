@@ -189,7 +189,7 @@ SerpSearchLocation = typing.Union[
         "vc",
         "ws",
         "sm",
-        "st",
+        "gui",
         "sa",
         "sn",
         "rs",
