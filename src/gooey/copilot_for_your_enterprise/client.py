@@ -12,10 +12,28 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.body_async_form_video_bots import BodyAsyncFormVideoBots
+from ..types.conversation_entry import ConversationEntry
 from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.llm_tools import LlmTools
+from ..types.recipe_function import RecipeFunction
+from ..types.run_settings import RunSettings
+from ..types.sad_talker_settings import SadTalkerSettings
+from ..types.video_bots_page_status_response import VideoBotsPageStatusResponse
+from .types.async_form_video_bots_request_asr_model import AsyncFormVideoBotsRequestAsrModel
+from .types.async_form_video_bots_request_citation_style import AsyncFormVideoBotsRequestCitationStyle
+from .types.async_form_video_bots_request_embedding_model import AsyncFormVideoBotsRequestEmbeddingModel
+from .types.async_form_video_bots_request_lipsync_model import AsyncFormVideoBotsRequestLipsyncModel
+from .types.async_form_video_bots_request_openai_tts_model import AsyncFormVideoBotsRequestOpenaiTtsModel
+from .types.async_form_video_bots_request_openai_voice_name import AsyncFormVideoBotsRequestOpenaiVoiceName
+from .types.async_form_video_bots_request_response_format_type import AsyncFormVideoBotsRequestResponseFormatType
+from .types.async_form_video_bots_request_selected_model import AsyncFormVideoBotsRequestSelectedModel
+from .types.async_form_video_bots_request_translation_model import AsyncFormVideoBotsRequestTranslationModel
+from .types.async_form_video_bots_request_tts_provider import AsyncFormVideoBotsRequestTtsProvider
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class CopilotForYourEnterpriseClient:
@@ -23,19 +41,223 @@ class CopilotForYourEnterpriseClient:
         self._client_wrapper = client_wrapper
 
     def async_form_video_bots(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormVideoBots:
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[str]] = None,
+        input_documents: typing.Optional[typing.List[str]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[AsyncFormVideoBotsRequestSelectedModel] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[str]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[AsyncFormVideoBotsRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[AsyncFormVideoBotsRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[AsyncFormVideoBotsRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[AsyncFormVideoBotsRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[str] = None,
+        output_glossary_document: typing.Optional[str] = None,
+        lipsync_model: typing.Optional[AsyncFormVideoBotsRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormVideoBotsRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[AsyncFormVideoBotsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[AsyncFormVideoBotsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[AsyncFormVideoBotsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[str] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageStatusResponse:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_prompt : typing.Optional[str]
+
+        input_audio : typing.Optional[str]
+
+        input_images : typing.Optional[typing.List[str]]
+
+        input_documents : typing.Optional[typing.List[str]]
+
+        doc_extract_url : typing.Optional[str]
+            Select a workflow to extract text from documents and images.
+
+        messages : typing.Optional[typing.List[ConversationEntry]]
+
+        bot_script : typing.Optional[str]
+
+        selected_model : typing.Optional[AsyncFormVideoBotsRequestSelectedModel]
+
+        document_model : typing.Optional[str]
+            When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
+
+        task_instructions : typing.Optional[str]
+
+        query_instructions : typing.Optional[str]
+
+        keyword_instructions : typing.Optional[str]
+
+        documents : typing.Optional[typing.List[str]]
+
+        max_references : typing.Optional[int]
+
+        max_context_words : typing.Optional[int]
+
+        scroll_jump : typing.Optional[int]
+
+        embedding_model : typing.Optional[AsyncFormVideoBotsRequestEmbeddingModel]
+
+        dense_weight : typing.Optional[float]
+
+            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+
+
+        citation_style : typing.Optional[AsyncFormVideoBotsRequestCitationStyle]
+
+        use_url_shortener : typing.Optional[bool]
+
+        asr_model : typing.Optional[AsyncFormVideoBotsRequestAsrModel]
+            Choose a model to transcribe incoming audio messages to text.
+
+        asr_language : typing.Optional[str]
+            Choose a language to transcribe incoming audio messages to text.
+
+        translation_model : typing.Optional[AsyncFormVideoBotsRequestTranslationModel]
+
+        user_language : typing.Optional[str]
+            Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
+
+        input_glossary_document : typing.Optional[str]
+
+            Translation Glossary for User Langauge -> LLM Language (English)
+
+
+        output_glossary_document : typing.Optional[str]
+
+            Translation Glossary for LLM Language (English) -> User Langauge
+
+
+        lipsync_model : typing.Optional[AsyncFormVideoBotsRequestLipsyncModel]
+
+        tools : typing.Optional[typing.List[LlmTools]]
+            Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormVideoBotsRequestResponseFormatType]
+
+        tts_provider : typing.Optional[AsyncFormVideoBotsRequestTtsProvider]
+
+        uberduck_voice_name : typing.Optional[str]
+
+        uberduck_speaking_rate : typing.Optional[float]
+
+        google_voice_name : typing.Optional[str]
+
+        google_speaking_rate : typing.Optional[float]
+
+        google_pitch : typing.Optional[float]
+
+        bark_history_prompt : typing.Optional[str]
+
+        elevenlabs_voice_name : typing.Optional[str]
+            Use `elevenlabs_voice_id` instead
+
+        elevenlabs_api_key : typing.Optional[str]
+
+        elevenlabs_voice_id : typing.Optional[str]
+
+        elevenlabs_model : typing.Optional[str]
+
+        elevenlabs_stability : typing.Optional[float]
+
+        elevenlabs_similarity_boost : typing.Optional[float]
+
+        elevenlabs_style : typing.Optional[float]
+
+        elevenlabs_speaker_boost : typing.Optional[bool]
+
+        azure_voice_name : typing.Optional[str]
+
+        openai_voice_name : typing.Optional[AsyncFormVideoBotsRequestOpenaiVoiceName]
+
+        openai_tts_model : typing.Optional[AsyncFormVideoBotsRequestOpenaiTtsModel]
+
+        input_face : typing.Optional[str]
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormVideoBots
+        VideoBotsPageStatusResponse
             Successful Response
 
         Examples
@@ -51,11 +273,76 @@ class CopilotForYourEnterpriseClient:
             "v3/video-bots/async/form",
             method="POST",
             params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "input_audio": input_audio,
+                "input_images": input_images,
+                "input_documents": input_documents,
+                "doc_extract_url": doc_extract_url,
+                "messages": messages,
+                "bot_script": bot_script,
+                "selected_model": selected_model,
+                "document_model": document_model,
+                "task_instructions": task_instructions,
+                "query_instructions": query_instructions,
+                "keyword_instructions": keyword_instructions,
+                "documents": documents,
+                "max_references": max_references,
+                "max_context_words": max_context_words,
+                "scroll_jump": scroll_jump,
+                "embedding_model": embedding_model,
+                "dense_weight": dense_weight,
+                "citation_style": citation_style,
+                "use_url_shortener": use_url_shortener,
+                "asr_model": asr_model,
+                "asr_language": asr_language,
+                "translation_model": translation_model,
+                "user_language": user_language,
+                "input_glossary_document": input_glossary_document,
+                "output_glossary_document": output_glossary_document,
+                "lipsync_model": lipsync_model,
+                "tools": tools,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "tts_provider": tts_provider,
+                "uberduck_voice_name": uberduck_voice_name,
+                "uberduck_speaking_rate": uberduck_speaking_rate,
+                "google_voice_name": google_voice_name,
+                "google_speaking_rate": google_speaking_rate,
+                "google_pitch": google_pitch,
+                "bark_history_prompt": bark_history_prompt,
+                "elevenlabs_voice_name": elevenlabs_voice_name,
+                "elevenlabs_api_key": elevenlabs_api_key,
+                "elevenlabs_voice_id": elevenlabs_voice_id,
+                "elevenlabs_model": elevenlabs_model,
+                "elevenlabs_stability": elevenlabs_stability,
+                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
+                "elevenlabs_style": elevenlabs_style,
+                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
+                "azure_voice_name": azure_voice_name,
+                "openai_voice_name": openai_voice_name,
+                "openai_tts_model": openai_tts_model,
+                "input_face": input_face,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "settings": settings,
+            },
+            files={},
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormVideoBots, parse_obj_as(type_=BodyAsyncFormVideoBots, object_=_response.json()))  # type: ignore
+                return typing.cast(VideoBotsPageStatusResponse, parse_obj_as(type_=VideoBotsPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -81,25 +368,279 @@ class CopilotForYourEnterpriseClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncCopilotForYourEnterpriseClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def async_form_video_bots(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormVideoBots:
+    def status_video_bots(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageStatusResponse:
         """
         Parameters
         ----------
-        example_id : typing.Optional[str]
+        run_id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormVideoBots
+        VideoBotsPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.copilot_for_your_enterprise.status_video_bots(
+            run_id="run_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/video-bots/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(VideoBotsPageStatusResponse, parse_obj_as(type_=VideoBotsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncCopilotForYourEnterpriseClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def async_form_video_bots(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[str]] = None,
+        input_documents: typing.Optional[typing.List[str]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[AsyncFormVideoBotsRequestSelectedModel] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[str]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[AsyncFormVideoBotsRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[AsyncFormVideoBotsRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[AsyncFormVideoBotsRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[AsyncFormVideoBotsRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[str] = None,
+        output_glossary_document: typing.Optional[str] = None,
+        lipsync_model: typing.Optional[AsyncFormVideoBotsRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormVideoBotsRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[AsyncFormVideoBotsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[AsyncFormVideoBotsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[AsyncFormVideoBotsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[str] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageStatusResponse:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_prompt : typing.Optional[str]
+
+        input_audio : typing.Optional[str]
+
+        input_images : typing.Optional[typing.List[str]]
+
+        input_documents : typing.Optional[typing.List[str]]
+
+        doc_extract_url : typing.Optional[str]
+            Select a workflow to extract text from documents and images.
+
+        messages : typing.Optional[typing.List[ConversationEntry]]
+
+        bot_script : typing.Optional[str]
+
+        selected_model : typing.Optional[AsyncFormVideoBotsRequestSelectedModel]
+
+        document_model : typing.Optional[str]
+            When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
+
+        task_instructions : typing.Optional[str]
+
+        query_instructions : typing.Optional[str]
+
+        keyword_instructions : typing.Optional[str]
+
+        documents : typing.Optional[typing.List[str]]
+
+        max_references : typing.Optional[int]
+
+        max_context_words : typing.Optional[int]
+
+        scroll_jump : typing.Optional[int]
+
+        embedding_model : typing.Optional[AsyncFormVideoBotsRequestEmbeddingModel]
+
+        dense_weight : typing.Optional[float]
+
+            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+
+
+        citation_style : typing.Optional[AsyncFormVideoBotsRequestCitationStyle]
+
+        use_url_shortener : typing.Optional[bool]
+
+        asr_model : typing.Optional[AsyncFormVideoBotsRequestAsrModel]
+            Choose a model to transcribe incoming audio messages to text.
+
+        asr_language : typing.Optional[str]
+            Choose a language to transcribe incoming audio messages to text.
+
+        translation_model : typing.Optional[AsyncFormVideoBotsRequestTranslationModel]
+
+        user_language : typing.Optional[str]
+            Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
+
+        input_glossary_document : typing.Optional[str]
+
+            Translation Glossary for User Langauge -> LLM Language (English)
+
+
+        output_glossary_document : typing.Optional[str]
+
+            Translation Glossary for LLM Language (English) -> User Langauge
+
+
+        lipsync_model : typing.Optional[AsyncFormVideoBotsRequestLipsyncModel]
+
+        tools : typing.Optional[typing.List[LlmTools]]
+            Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormVideoBotsRequestResponseFormatType]
+
+        tts_provider : typing.Optional[AsyncFormVideoBotsRequestTtsProvider]
+
+        uberduck_voice_name : typing.Optional[str]
+
+        uberduck_speaking_rate : typing.Optional[float]
+
+        google_voice_name : typing.Optional[str]
+
+        google_speaking_rate : typing.Optional[float]
+
+        google_pitch : typing.Optional[float]
+
+        bark_history_prompt : typing.Optional[str]
+
+        elevenlabs_voice_name : typing.Optional[str]
+            Use `elevenlabs_voice_id` instead
+
+        elevenlabs_api_key : typing.Optional[str]
+
+        elevenlabs_voice_id : typing.Optional[str]
+
+        elevenlabs_model : typing.Optional[str]
+
+        elevenlabs_stability : typing.Optional[float]
+
+        elevenlabs_similarity_boost : typing.Optional[float]
+
+        elevenlabs_style : typing.Optional[float]
+
+        elevenlabs_speaker_boost : typing.Optional[bool]
+
+        azure_voice_name : typing.Optional[str]
+
+        openai_voice_name : typing.Optional[AsyncFormVideoBotsRequestOpenaiVoiceName]
+
+        openai_tts_model : typing.Optional[AsyncFormVideoBotsRequestOpenaiTtsModel]
+
+        input_face : typing.Optional[str]
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VideoBotsPageStatusResponse
             Successful Response
 
         Examples
@@ -123,11 +664,76 @@ class AsyncCopilotForYourEnterpriseClient:
             "v3/video-bots/async/form",
             method="POST",
             params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "input_audio": input_audio,
+                "input_images": input_images,
+                "input_documents": input_documents,
+                "doc_extract_url": doc_extract_url,
+                "messages": messages,
+                "bot_script": bot_script,
+                "selected_model": selected_model,
+                "document_model": document_model,
+                "task_instructions": task_instructions,
+                "query_instructions": query_instructions,
+                "keyword_instructions": keyword_instructions,
+                "documents": documents,
+                "max_references": max_references,
+                "max_context_words": max_context_words,
+                "scroll_jump": scroll_jump,
+                "embedding_model": embedding_model,
+                "dense_weight": dense_weight,
+                "citation_style": citation_style,
+                "use_url_shortener": use_url_shortener,
+                "asr_model": asr_model,
+                "asr_language": asr_language,
+                "translation_model": translation_model,
+                "user_language": user_language,
+                "input_glossary_document": input_glossary_document,
+                "output_glossary_document": output_glossary_document,
+                "lipsync_model": lipsync_model,
+                "tools": tools,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "tts_provider": tts_provider,
+                "uberduck_voice_name": uberduck_voice_name,
+                "uberduck_speaking_rate": uberduck_speaking_rate,
+                "google_voice_name": google_voice_name,
+                "google_speaking_rate": google_speaking_rate,
+                "google_pitch": google_pitch,
+                "bark_history_prompt": bark_history_prompt,
+                "elevenlabs_voice_name": elevenlabs_voice_name,
+                "elevenlabs_api_key": elevenlabs_api_key,
+                "elevenlabs_voice_id": elevenlabs_voice_id,
+                "elevenlabs_model": elevenlabs_model,
+                "elevenlabs_stability": elevenlabs_stability,
+                "elevenlabs_similarity_boost": elevenlabs_similarity_boost,
+                "elevenlabs_style": elevenlabs_style,
+                "elevenlabs_speaker_boost": elevenlabs_speaker_boost,
+                "azure_voice_name": azure_voice_name,
+                "openai_voice_name": openai_voice_name,
+                "openai_tts_model": openai_tts_model,
+                "input_face": input_face,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "settings": settings,
+            },
+            files={},
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormVideoBots, parse_obj_as(type_=BodyAsyncFormVideoBots, object_=_response.json()))  # type: ignore
+                return typing.cast(VideoBotsPageStatusResponse, parse_obj_as(type_=VideoBotsPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -147,6 +753,64 @@ class AsyncCopilotForYourEnterpriseClient:
             if _response.status_code == 500:
                 raise InternalServerError(
                     typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def status_video_bots(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> VideoBotsPageStatusResponse:
+        """
+        Parameters
+        ----------
+        run_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VideoBotsPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.copilot_for_your_enterprise.status_video_bots(
+                run_id="run_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/video-bots/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(VideoBotsPageStatusResponse, parse_obj_as(type_=VideoBotsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

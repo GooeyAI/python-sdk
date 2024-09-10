@@ -12,10 +12,17 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.body_async_form_smart_gpt import BodyAsyncFormSmartGpt
 from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.recipe_function import RecipeFunction
+from ..types.run_settings import RunSettings
+from ..types.smart_gpt_page_status_response import SmartGptPageStatusResponse
+from .types.async_form_smart_gpt_request_response_format_type import AsyncFormSmartGptRequestResponseFormatType
+from .types.async_form_smart_gpt_request_selected_model import AsyncFormSmartGptRequestSelectedModel
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class SmartGptClient:
@@ -23,19 +30,65 @@ class SmartGptClient:
         self._client_wrapper = client_wrapper
 
     def async_form_smart_gpt(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormSmartGpt:
+        self,
+        *,
+        input_prompt: str,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        cot_prompt: typing.Optional[str] = None,
+        reflexion_prompt: typing.Optional[str] = None,
+        dera_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[AsyncFormSmartGptRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormSmartGptRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageStatusResponse:
         """
         Parameters
         ----------
+        input_prompt : str
+
         example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        cot_prompt : typing.Optional[str]
+
+        reflexion_prompt : typing.Optional[str]
+
+        dera_prompt : typing.Optional[str]
+
+        selected_model : typing.Optional[AsyncFormSmartGptRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormSmartGptRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormSmartGpt
+        SmartGptPageStatusResponse
             Successful Response
 
         Examples
@@ -45,14 +98,37 @@ class SmartGptClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.smart_gpt.async_form_smart_gpt()
+        client.smart_gpt.async_form_smart_gpt(
+            input_prompt="input_prompt",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/SmartGPT/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/SmartGPT/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "cot_prompt": cot_prompt,
+                "reflexion_prompt": reflexion_prompt,
+                "dera_prompt": dera_prompt,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormSmartGpt, parse_obj_as(type_=BodyAsyncFormSmartGpt, object_=_response.json()))  # type: ignore
+                return typing.cast(SmartGptPageStatusResponse, parse_obj_as(type_=SmartGptPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -78,16 +154,21 @@ class SmartGptClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def status_smart_gpt(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        SmartGptPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -96,14 +177,28 @@ class SmartGptClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.smart_gpt.post()
+        client.smart_gpt.status_smart_gpt(
+            run_id="run_id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/SmartGPT/", method="POST", request_options=request_options
+            "v3/SmartGPT/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(SmartGptPageStatusResponse, parse_obj_as(type_=SmartGptPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -115,19 +210,65 @@ class AsyncSmartGptClient:
         self._client_wrapper = client_wrapper
 
     async def async_form_smart_gpt(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormSmartGpt:
+        self,
+        *,
+        input_prompt: str,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        cot_prompt: typing.Optional[str] = None,
+        reflexion_prompt: typing.Optional[str] = None,
+        dera_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[AsyncFormSmartGptRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormSmartGptRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageStatusResponse:
         """
         Parameters
         ----------
+        input_prompt : str
+
         example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        cot_prompt : typing.Optional[str]
+
+        reflexion_prompt : typing.Optional[str]
+
+        dera_prompt : typing.Optional[str]
+
+        selected_model : typing.Optional[AsyncFormSmartGptRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormSmartGptRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormSmartGpt
+        SmartGptPageStatusResponse
             Successful Response
 
         Examples
@@ -142,17 +283,40 @@ class AsyncSmartGptClient:
 
 
         async def main() -> None:
-            await client.smart_gpt.async_form_smart_gpt()
+            await client.smart_gpt.async_form_smart_gpt(
+                input_prompt="input_prompt",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/SmartGPT/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/SmartGPT/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "cot_prompt": cot_prompt,
+                "reflexion_prompt": reflexion_prompt,
+                "dera_prompt": dera_prompt,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormSmartGpt, parse_obj_as(type_=BodyAsyncFormSmartGpt, object_=_response.json()))  # type: ignore
+                return typing.cast(SmartGptPageStatusResponse, parse_obj_as(type_=SmartGptPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -178,16 +342,21 @@ class AsyncSmartGptClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def status_smart_gpt(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> SmartGptPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        SmartGptPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -201,17 +370,31 @@ class AsyncSmartGptClient:
 
 
         async def main() -> None:
-            await client.smart_gpt.post()
+            await client.smart_gpt.status_smart_gpt(
+                run_id="run_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v2/SmartGPT/", method="POST", request_options=request_options
+            "v3/SmartGPT/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(SmartGptPageStatusResponse, parse_obj_as(type_=SmartGptPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

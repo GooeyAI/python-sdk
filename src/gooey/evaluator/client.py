@@ -12,10 +12,19 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.body_async_form_bulk_eval import BodyAsyncFormBulkEval
+from ..types.agg_function import AggFunction
+from ..types.bulk_eval_page_status_response import BulkEvalPageStatusResponse
+from ..types.eval_prompt import EvalPrompt
 from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.recipe_function import RecipeFunction
+from ..types.run_settings import RunSettings
+from .types.async_form_bulk_eval_request_response_format_type import AsyncFormBulkEvalRequestResponseFormatType
+from .types.async_form_bulk_eval_request_selected_model import AsyncFormBulkEvalRequestSelectedModel
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class EvaluatorClient:
@@ -23,19 +32,74 @@ class EvaluatorClient:
         self._client_wrapper = client_wrapper
 
     def async_form_bulk_eval(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormBulkEval:
+        self,
+        *,
+        documents: typing.List[str],
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        eval_prompts: typing.Optional[typing.List[EvalPrompt]] = None,
+        agg_functions: typing.Optional[typing.List[AggFunction]] = None,
+        selected_model: typing.Optional[AsyncFormBulkEvalRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormBulkEvalRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageStatusResponse:
         """
         Parameters
         ----------
+        documents : typing.List[str]
+
+            Upload or link to a CSV or google sheet that contains your sample input data.
+            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+            Remember to includes header names in your CSV too.
+
+
         example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.List[EvalPrompt]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.List[AggFunction]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
+
+        selected_model : typing.Optional[AsyncFormBulkEvalRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormBulkEvalRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormBulkEval
+        BulkEvalPageStatusResponse
             Successful Response
 
         Examples
@@ -45,14 +109,36 @@ class EvaluatorClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.evaluator.async_form_bulk_eval()
+        client.evaluator.async_form_bulk_eval(
+            documents=["documents"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/bulk-eval/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormBulkEval, parse_obj_as(type_=BodyAsyncFormBulkEval, object_=_response.json()))  # type: ignore
+                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -78,25 +164,130 @@ class EvaluatorClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncEvaluatorClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def async_form_bulk_eval(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormBulkEval:
+    def status_bulk_eval(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageStatusResponse:
         """
         Parameters
         ----------
-        example_id : typing.Optional[str]
+        run_id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormBulkEval
+        BulkEvalPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.evaluator.status_bulk_eval(
+            run_id="run_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncEvaluatorClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def async_form_bulk_eval(
+        self,
+        *,
+        documents: typing.List[str],
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        eval_prompts: typing.Optional[typing.List[EvalPrompt]] = None,
+        agg_functions: typing.Optional[typing.List[AggFunction]] = None,
+        selected_model: typing.Optional[AsyncFormBulkEvalRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[AsyncFormBulkEvalRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageStatusResponse:
+        """
+        Parameters
+        ----------
+        documents : typing.List[str]
+
+            Upload or link to a CSV or google sheet that contains your sample input data.
+            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+            Remember to includes header names in your CSV too.
+
+
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.List[EvalPrompt]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.List[AggFunction]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
+
+        selected_model : typing.Optional[AsyncFormBulkEvalRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[AsyncFormBulkEvalRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageStatusResponse
             Successful Response
 
         Examples
@@ -111,17 +302,39 @@ class AsyncEvaluatorClient:
 
 
         async def main() -> None:
-            await client.evaluator.async_form_bulk_eval()
+            await client.evaluator.async_form_bulk_eval(
+                documents=["documents"],
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/bulk-eval/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/bulk-eval/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormBulkEval, parse_obj_as(type_=BodyAsyncFormBulkEval, object_=_response.json()))  # type: ignore
+                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -141,6 +354,64 @@ class AsyncEvaluatorClient:
             if _response.status_code == 500:
                 raise InternalServerError(
                     typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def status_bulk_eval(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> BulkEvalPageStatusResponse:
+        """
+        Parameters
+        ----------
+        run_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.evaluator.status_bulk_eval(
+                run_id="run_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(BulkEvalPageStatusResponse, parse_obj_as(type_=BulkEvalPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

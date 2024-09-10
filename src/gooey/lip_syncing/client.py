@@ -12,10 +12,17 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.body_async_form_lipsync import BodyAsyncFormLipsync
 from ..types.failed_reponse_model_v2 import FailedReponseModelV2
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.lipsync_page_status_response import LipsyncPageStatusResponse
+from ..types.recipe_function import RecipeFunction
+from ..types.run_settings import RunSettings
+from ..types.sad_talker_settings import SadTalkerSettings
+from .types.async_form_lipsync_request_selected_model import AsyncFormLipsyncRequestSelectedModel
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class LipSyncingClient:
@@ -23,19 +30,56 @@ class LipSyncingClient:
         self._client_wrapper = client_wrapper
 
     def async_form_lipsync(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormLipsync:
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        input_face: typing.Optional[str] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[AsyncFormLipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[str] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncPageStatusResponse:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_face : typing.Optional[str]
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
+
+        selected_model : typing.Optional[AsyncFormLipsyncRequestSelectedModel]
+
+        input_audio : typing.Optional[str]
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormLipsync
+        LipsyncPageStatusResponse
             Successful Response
 
         Examples
@@ -48,11 +92,29 @@ class LipSyncingClient:
         client.lip_syncing.async_form_lipsync()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/Lipsync/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/Lipsync/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_face": input_face,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "selected_model": selected_model,
+                "input_audio": input_audio,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormLipsync, parse_obj_as(type_=BodyAsyncFormLipsync, object_=_response.json()))  # type: ignore
+                return typing.cast(LipsyncPageStatusResponse, parse_obj_as(type_=LipsyncPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -78,25 +140,112 @@ class LipSyncingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncLipSyncingClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def async_form_lipsync(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormLipsync:
+    def status_lipsync(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncPageStatusResponse:
         """
         Parameters
         ----------
-        example_id : typing.Optional[str]
+        run_id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormLipsync
+        LipsyncPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.lip_syncing.status_lipsync(
+            run_id="run_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncPageStatusResponse, parse_obj_as(type_=LipsyncPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncLipSyncingClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def async_form_lipsync(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        input_face: typing.Optional[str] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[AsyncFormLipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[str] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncPageStatusResponse:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[RecipeFunction]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_face : typing.Optional[str]
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
+
+        selected_model : typing.Optional[AsyncFormLipsyncRequestSelectedModel]
+
+        input_audio : typing.Optional[str]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageStatusResponse
             Successful Response
 
         Examples
@@ -117,11 +266,29 @@ class AsyncLipSyncingClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/Lipsync/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/Lipsync/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={
+                "functions": functions,
+                "variables": variables,
+                "input_face": input_face,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "selected_model": selected_model,
+                "input_audio": input_audio,
+                "settings": settings,
+            },
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormLipsync, parse_obj_as(type_=BodyAsyncFormLipsync, object_=_response.json()))  # type: ignore
+                return typing.cast(LipsyncPageStatusResponse, parse_obj_as(type_=LipsyncPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -141,6 +308,64 @@ class AsyncLipSyncingClient:
             if _response.status_code == 500:
                 raise InternalServerError(
                     typing.cast(FailedReponseModelV2, parse_obj_as(type_=FailedReponseModelV2, object_=_response.json()))  # type: ignore
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def status_lipsync(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> LipsyncPageStatusResponse:
+        """
+        Parameters
+        ----------
+        run_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageStatusResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.lip_syncing.status_lipsync(
+                run_id="run_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/status", method="GET", params={"run_id": run_id}, request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(LipsyncPageStatusResponse, parse_obj_as(type_=LipsyncPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

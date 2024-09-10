@@ -12,10 +12,14 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.body_async_form_functions import BodyAsyncFormFunctions
 from ..types.failed_reponse_model_v2 import FailedReponseModelV2
+from ..types.functions_page_status_response import FunctionsPageStatusResponse
 from ..types.generic_error_response import GenericErrorResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.run_settings import RunSettings
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class FunctionsClient:
@@ -23,19 +27,33 @@ class FunctionsClient:
         self._client_wrapper = client_wrapper
 
     def async_form_functions(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormFunctions:
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        code: typing.Optional[str] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageStatusResponse:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
+
+        code : typing.Optional[str]
+            The JS code to be executed.
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used in the code
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormFunctions
+        FunctionsPageStatusResponse
             Successful Response
 
         Examples
@@ -48,11 +66,17 @@ class FunctionsClient:
         client.functions.async_form_functions()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v3/functions/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/functions/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={"code": code, "variables": variables, "settings": settings},
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormFunctions, parse_obj_as(type_=BodyAsyncFormFunctions, object_=_response.json()))  # type: ignore
+                return typing.cast(FunctionsPageStatusResponse, parse_obj_as(type_=FunctionsPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -78,16 +102,21 @@ class FunctionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def status_functions(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        FunctionsPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -96,14 +125,28 @@ class FunctionsClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.functions.post()
+        client.functions.status_functions(
+            run_id="run_id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/functions/", method="POST", request_options=request_options
+            "v3/functions/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(FunctionsPageStatusResponse, parse_obj_as(type_=FunctionsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -115,19 +158,33 @@ class AsyncFunctionsClient:
         self._client_wrapper = client_wrapper
 
     async def async_form_functions(
-        self, *, example_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BodyAsyncFormFunctions:
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        code: typing.Optional[str] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageStatusResponse:
         """
         Parameters
         ----------
         example_id : typing.Optional[str]
+
+        code : typing.Optional[str]
+            The JS code to be executed.
+
+        variables : typing.Optional[typing.Dict[str, typing.Any]]
+            Variables to be used in the code
+
+        settings : typing.Optional[RunSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BodyAsyncFormFunctions
+        FunctionsPageStatusResponse
             Successful Response
 
         Examples
@@ -148,11 +205,17 @@ class AsyncFunctionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v3/functions/async/form", method="POST", params={"example_id": example_id}, request_options=request_options
+            "v3/functions/async/form",
+            method="POST",
+            params={"example_id": example_id},
+            data={"code": code, "variables": variables, "settings": settings},
+            files={},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(BodyAsyncFormFunctions, parse_obj_as(type_=BodyAsyncFormFunctions, object_=_response.json()))  # type: ignore
+                return typing.cast(FunctionsPageStatusResponse, parse_obj_as(type_=FunctionsPageStatusResponse, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
@@ -178,16 +241,21 @@ class AsyncFunctionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def status_functions(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> FunctionsPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        FunctionsPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -201,17 +269,31 @@ class AsyncFunctionsClient:
 
 
         async def main() -> None:
-            await client.functions.post()
+            await client.functions.status_functions(
+                run_id="run_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v2/functions/", method="POST", request_options=request_options
+            "v3/functions/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(FunctionsPageStatusResponse, parse_obj_as(type_=FunctionsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

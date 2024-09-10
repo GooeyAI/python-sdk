@@ -59,11 +59,11 @@ class MiscClient:
         text: str,
         example_id: typing.Optional[str] = None,
         run_id: typing.Optional[str] = None,
-        audio: typing.Optional[str] = OMIT,
-        video: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        buttons: typing.Optional[typing.Sequence[ReplyButton]] = OMIT,
-        filters: typing.Optional[BotBroadcastFilters] = OMIT,
+        audio: typing.Optional[str] = None,
+        video: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[str]] = None,
+        buttons: typing.Optional[typing.List[ReplyButton]] = None,
+        filters: typing.Optional[BotBroadcastFilters] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Any:
         """
@@ -82,10 +82,10 @@ class MiscClient:
         video : typing.Optional[str]
             Video URL to send to all users
 
-        documents : typing.Optional[typing.Sequence[str]]
+        documents : typing.Optional[typing.List[str]]
             Video URL to send to all users
 
-        buttons : typing.Optional[typing.Sequence[ReplyButton]]
+        buttons : typing.Optional[typing.List[ReplyButton]]
             Buttons to send to all users
 
         filters : typing.Optional[BotBroadcastFilters]
@@ -114,7 +114,7 @@ class MiscClient:
             "v2/video-bots/broadcast/send/",
             method="POST",
             params={"example_id": example_id, "run_id": run_id},
-            json={
+            data={
                 "text": text,
                 "audio": audio,
                 "video": video,
@@ -122,6 +122,7 @@ class MiscClient:
                 "buttons": buttons,
                 "filters": filters,
             },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -188,11 +189,11 @@ class AsyncMiscClient:
         text: str,
         example_id: typing.Optional[str] = None,
         run_id: typing.Optional[str] = None,
-        audio: typing.Optional[str] = OMIT,
-        video: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        buttons: typing.Optional[typing.Sequence[ReplyButton]] = OMIT,
-        filters: typing.Optional[BotBroadcastFilters] = OMIT,
+        audio: typing.Optional[str] = None,
+        video: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[str]] = None,
+        buttons: typing.Optional[typing.List[ReplyButton]] = None,
+        filters: typing.Optional[BotBroadcastFilters] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Any:
         """
@@ -211,10 +212,10 @@ class AsyncMiscClient:
         video : typing.Optional[str]
             Video URL to send to all users
 
-        documents : typing.Optional[typing.Sequence[str]]
+        documents : typing.Optional[typing.List[str]]
             Video URL to send to all users
 
-        buttons : typing.Optional[typing.Sequence[ReplyButton]]
+        buttons : typing.Optional[typing.List[ReplyButton]]
             Buttons to send to all users
 
         filters : typing.Optional[BotBroadcastFilters]
@@ -251,7 +252,7 @@ class AsyncMiscClient:
             "v2/video-bots/broadcast/send/",
             method="POST",
             params={"example_id": example_id, "run_id": run_id},
-            json={
+            data={
                 "text": text,
                 "audio": audio,
                 "video": video,
@@ -259,6 +260,7 @@ class AsyncMiscClient:
                 "buttons": buttons,
                 "filters": filters,
             },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )

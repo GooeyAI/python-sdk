@@ -5,23 +5,35 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..errors.payment_required_error import PaymentRequiredError
+from ..errors.too_many_requests_error import TooManyRequestsError
+from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.embeddings_page_status_response import EmbeddingsPageStatusResponse
+from ..types.generic_error_response import GenericErrorResponse
+from ..types.http_validation_error import HttpValidationError
 
 
 class EmbeddingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def status_embeddings(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmbeddingsPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        EmbeddingsPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -30,14 +42,28 @@ class EmbeddingsClient:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.embeddings.post()
+        client.embeddings.status_embeddings(
+            run_id="run_id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v2/embeddings/", method="POST", request_options=request_options
+            "v3/embeddings/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(EmbeddingsPageStatusResponse, parse_obj_as(type_=EmbeddingsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -48,16 +74,21 @@ class AsyncEmbeddingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def status_embeddings(
+        self, *, run_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmbeddingsPageStatusResponse:
         """
         Parameters
         ----------
+        run_id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        EmbeddingsPageStatusResponse
+            Successful Response
 
         Examples
         --------
@@ -71,17 +102,31 @@ class AsyncEmbeddingsClient:
 
 
         async def main() -> None:
-            await client.embeddings.post()
+            await client.embeddings.status_embeddings(
+                run_id="run_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v2/embeddings/", method="POST", request_options=request_options
+            "v3/embeddings/status", method="GET", params={"run_id": run_id}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(EmbeddingsPageStatusResponse, parse_obj_as(type_=EmbeddingsPageStatusResponse, object_=_response.json()))  # type: ignore
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(typing.Any, parse_obj_as(type_=typing.Any, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, parse_obj_as(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(GenericErrorResponse, parse_obj_as(type_=GenericErrorResponse, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
