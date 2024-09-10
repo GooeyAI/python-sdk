@@ -2,7 +2,7 @@
 
 import asyncio
 import email.utils
-import json
+import json as json_module
 import re
 import time
 import typing
@@ -188,6 +188,8 @@ class HttpClient:
             else self.base_timeout
         )
 
+        if not json and isinstance(data, typing.Mapping):
+            data = {"json": json_module.dumps(data)}
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
         response = self.httpx_client.request(
@@ -244,7 +246,24 @@ class HttpClient:
                     omit=omit,
                 )
 
-        return response
+        location = response.headers.get("location")
+        if not location:
+            return response
+
+        while True:
+            response = self.request(location, method="get")
+            if not response.is_success:
+                print(response)
+                print("body", response.json())
+                return response
+            else:
+                body = response.json()
+                if body.get("status") in ["starting", "running"]:
+                    continue
+                else:  # failed, completed, or something not in the spec
+                    print(response)
+                    print("body", body)
+                    return response
 
     @contextmanager
     def stream(
