@@ -532,24 +532,27 @@ def gooey_process_request_params(
     if json or not isinstance(data, typing.MutableMapping) or not path or not path.rstrip("/").endswith("/async"):
         return GooeyRequestParams(path=path, json=json, data=data, files=files)
 
+    new_files = files and files.copy() or {}
     if files and isinstance(files, typing.MutableMapping):
         for k, v in files.items():
             if v and isinstance(v, list) and all(isinstance(item, str) and os.path.exists(item) for item in v):
-                files[k] = [open(item, "rb") for item in v]
+                new_files[k] = [open(item, "rb") for item in v]
             elif v and isinstance(v, str) and os.path.exists(v):
-                files[k] = open(v, "rb")
+                new_files[k] = open(v, "rb")
             elif isinstance(v, str) or v is omit or not v:
                 # a URL, None, or omitted value
-                data[k] = files.pop(k)
+                data[k] = new_files.pop(k)
+            else:
+                new_files[k] = v
 
-    if files:
+    if new_files:
         return GooeyRequestParams(
             path=path.rstrip("/") + "/form",
             json=None,
             data={
                 "json": json_module.dumps(maybe_filter_request_body(data, request_options=None, omit=omit)),
             },
-            files=files,
+            files=new_files,
         )
     else:
         return GooeyRequestParams(path=path, json=data, data=None, files=None)
