@@ -2,7 +2,7 @@
 
 import asyncio
 import email.utils
-import json as json_module
+import json
 import re
 import time
 import typing
@@ -90,7 +90,8 @@ def _should_retry(response: httpx.Response) -> bool:
 
 
 def remove_omit_from_dict(
-    original: typing.Dict[str, typing.Optional[typing.Any]], omit: typing.Optional[typing.Any]
+    original: typing.Dict[str, typing.Optional[typing.Any]],
+    omit: typing.Optional[typing.Any],
 ) -> typing.Dict[str, typing.Any]:
     if omit is None:
         return original
@@ -142,7 +143,8 @@ def get_request_body(
         # If both data and json are None, we send json data in the event extra properties are specified
         json_body = maybe_filter_request_body(json, request_options, omit)
 
-    return json_body, data_body
+    # If you have an empty JSON body, you should just send None
+    return (json_body if json_body != {} else None), data_body if data_body != {} else None
 
 
 class HttpClient:
@@ -188,8 +190,6 @@ class HttpClient:
             else self.base_timeout
         )
 
-        if not json and isinstance(data, typing.Mapping):
-            data = {"json": json_module.dumps(data)}
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
         response = self.httpx_client.request(
@@ -246,24 +246,7 @@ class HttpClient:
                     omit=omit,
                 )
 
-        location = response.headers.get("location")
-        if not location:
-            return response
-
-        while True:
-            response = self.request(location, method="get")
-            if not response.is_success:
-                print(response)
-                print("body", response.json())
-                return response
-            else:
-                body = response.json()
-                if body.get("status") in ["starting", "running"]:
-                    continue
-                else:  # failed, completed, or something not in the spec
-                    print(response)
-                    print("body", body)
-                    return response
+        return response
 
     @contextmanager
     def stream(
