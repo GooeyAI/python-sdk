@@ -7,7 +7,6 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .copilot.client import CopilotClient
-from .misc.client import MiscClient
 from .types.deforum_sd_page_request_animation_prompts_item import DeforumSdPageRequestAnimationPromptsItem
 from .types.deforum_sd_page_request_functions_item import DeforumSdPageRequestFunctionsItem
 from .types.deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
@@ -144,9 +143,9 @@ from .types.related_qn_a_doc_page_request_selected_model import RelatedQnADocPag
 from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
 from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .types.related_qn_a_doc_page_output import RelatedQnADocPageOutput
+from .types.balance_response import BalanceResponse
 from .core.client_wrapper import AsyncClientWrapper
 from .copilot.client import AsyncCopilotClient
-from .misc.client import AsyncMiscClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -213,7 +212,6 @@ class Gooey:
             timeout=_defaulted_timeout,
         )
         self.copilot = CopilotClient(client_wrapper=self._client_wrapper)
-        self.misc = MiscClient(client_wrapper=self._client_wrapper)
 
     def animate(
         self,
@@ -4828,9 +4826,7 @@ class Gooey:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def health_status_get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def get_balance(self, *, request_options: typing.Optional[RequestOptions] = None) -> BalanceResponse:
         """
         Parameters
         ----------
@@ -4839,7 +4835,7 @@ class Gooey:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        BalanceResponse
             Successful Response
 
         Examples
@@ -4849,19 +4845,19 @@ class Gooey:
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
-        client.health_status_get()
+        client.get_balance()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "status",
+            "v1/balance/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    BalanceResponse,
                     parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=BalanceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -4932,7 +4928,6 @@ class AsyncGooey:
             timeout=_defaulted_timeout,
         )
         self.copilot = AsyncCopilotClient(client_wrapper=self._client_wrapper)
-        self.misc = AsyncMiscClient(client_wrapper=self._client_wrapper)
 
     async def animate(
         self,
@@ -9787,9 +9782,7 @@ class AsyncGooey:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def health_status_get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    async def get_balance(self, *, request_options: typing.Optional[RequestOptions] = None) -> BalanceResponse:
         """
         Parameters
         ----------
@@ -9798,7 +9791,7 @@ class AsyncGooey:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        BalanceResponse
             Successful Response
 
         Examples
@@ -9813,22 +9806,22 @@ class AsyncGooey:
 
 
         async def main() -> None:
-            await client.health_status_get()
+            await client.get_balance()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "status",
+            "v1/balance/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    BalanceResponse,
                     parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=BalanceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -20,6 +20,7 @@ from .types import (
     AsyncApiResponseModelV3,
     BalanceResponse,
     BotBroadcastFilters,
+    BotBroadcastRequestModel,
     BulkEvalPageOutput,
     BulkEvalPageRequestAggFunctionsItem,
     BulkEvalPageRequestAggFunctionsItemFunction,
@@ -365,7 +366,7 @@ from .types import (
     VideoBotsPageStatusResponse,
 )
 from .errors import PaymentRequiredError, TooManyRequestsError, UnprocessableEntityError
-from . import copilot, misc
+from . import copilot
 from .client import AsyncGooey, Gooey
 from .copilot import (
     CopilotCompletionRequestAsrModel,
@@ -413,6 +414,7 @@ __all__ = [
     "AsyncGooey",
     "BalanceResponse",
     "BotBroadcastFilters",
+    "BotBroadcastRequestModel",
     "BulkEvalPageOutput",
     "BulkEvalPageRequestAggFunctionsItem",
     "BulkEvalPageRequestAggFunctionsItemFunction",
@@ -783,5 +785,4 @@ __all__ = [
     "VideoBotsPageStatusResponse",
     "__version__",
     "copilot",
-    "misc",
 ]

@@ -5637,7 +5637,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/gooey/client.py">health_status_get</a>()</code></summary>
+<details><summary><code>client.<a href="src/gooey/client.py">get_balance</a>()</code></summary>
 <dl>
 <dd>
 
@@ -5655,7 +5655,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.health_status_get()
+client.get_balance()
 
 ```
 </dd>
@@ -6224,165 +6224,6 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Misc
-<details><summary><code>client.misc.<a href="src/gooey/misc/client.py">get_balance</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.misc.get_balance()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.misc.<a href="src/gooey/misc/client.py">video_bots_broadcast</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.misc.video_bots_broadcast(
-    text="text",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**text:** `str` — Message to broadcast to all users
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**example_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**run_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audio:** `typing.Optional[str]` — Audio URL to send to all users
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**video:** `typing.Optional[str]` — Video URL to send to all users
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**documents:** `typing.Optional[typing.Sequence[str]]` — Video URL to send to all users
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**buttons:** `typing.Optional[typing.Sequence[ReplyButton]]` — Buttons to send to all users
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[BotBroadcastFilters]` — Filters to select users to broadcast to. If not provided, will broadcast to all users of this bot.
     
 </dd>
 </dl>

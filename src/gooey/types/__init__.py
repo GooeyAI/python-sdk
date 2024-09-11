@@ -19,6 +19,7 @@ from .asr_page_status_response import AsrPageStatusResponse
 from .async_api_response_model_v3 import AsyncApiResponseModelV3
 from .balance_response import BalanceResponse
 from .bot_broadcast_filters import BotBroadcastFilters
+from .bot_broadcast_request_model import BotBroadcastRequestModel
 from .bulk_eval_page_output import BulkEvalPageOutput
 from .bulk_eval_page_request_agg_functions_item import BulkEvalPageRequestAggFunctionsItem
 from .bulk_eval_page_request_agg_functions_item_function import BulkEvalPageRequestAggFunctionsItemFunction
@@ -393,6 +394,7 @@ __all__ = [
     "AsyncApiResponseModelV3",
     "BalanceResponse",
     "BotBroadcastFilters",
+    "BotBroadcastRequestModel",
     "BulkEvalPageOutput",
     "BulkEvalPageRequestAggFunctionsItem",
     "BulkEvalPageRequestAggFunctionsItemFunction",
