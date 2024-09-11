@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gooeyai"
-version = "0.0.1-beta8"
+version = "0.0.1-beta9"
 description = ""
 readme = "README.md"
 authors = []
