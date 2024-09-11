@@ -40,7 +40,7 @@ client.animate(
 <dl>
 <dd>
 
-**animation_prompts:** `typing.List[AnimationPrompt]` 
+**animation_prompts:** `typing.Sequence[AnimationPrompt]` 
     
 </dd>
 </dl>
@@ -56,7 +56,7 @@ client.animate(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.animate(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -80,7 +80,7 @@ client.animate(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AnimateRequestSelectedModel]` 
+**selected_model:** `typing.Optional[DeforumSdPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -232,7 +232,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -240,7 +240,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -304,7 +304,9 @@ client.qr_code(
 <dl>
 <dd>
 
-**image_prompt_controlnet_models:** `typing.Optional[typing.List[QrCodeRequestImagePromptControlnetModelsItem]]` 
+**image_prompt_controlnet_models:** `typing.Optional[
+    typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]
+]` 
     
 </dd>
 </dl>
@@ -344,7 +346,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[QrCodeRequestSelectedModel]` 
+**selected_model:** `typing.Optional[QrCodeGeneratorPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -352,7 +354,9 @@ client.qr_code(
 <dl>
 <dd>
 
-**selected_controlnet_model:** `typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]]` 
+**selected_controlnet_model:** `typing.Optional[
+    typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]
+]` 
     
 </dd>
 </dl>
@@ -384,7 +388,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+**controlnet_conditioning_scale:** `typing.Optional[typing.Sequence[float]]` 
     
 </dd>
 </dl>
@@ -408,7 +412,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[QrCodeRequestScheduler]` 
+**scheduler:** `typing.Optional[QrCodeGeneratorPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -529,7 +533,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -537,7 +541,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -561,7 +565,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SeoPeopleAlsoAskRequestSelectedModel]` 
+**selected_model:** `typing.Optional[RelatedQnAPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -601,7 +605,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[SeoPeopleAlsoAskRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[RelatedQnAPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -662,7 +666,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[SeoPeopleAlsoAskRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[RelatedQnAPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -678,7 +682,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+**scaleserp_locations:** `typing.Optional[typing.Sequence[str]]` — DEPRECATED: use `serp_search_location` instead
     
 </dd>
 </dl>
@@ -817,7 +821,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SeoContentRequestSelectedModel]` 
+**selected_model:** `typing.Optional[SeoSummaryPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -889,7 +893,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[SeoContentRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[SeoSummaryPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -905,7 +909,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+**scaleserp_locations:** `typing.Optional[typing.Sequence[str]]` — DEPRECATED: use `serp_search_location` instead
     
 </dd>
 </dl>
@@ -1010,7 +1014,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1018,7 +1022,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1042,7 +1046,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[WebSearchLlmRequestSelectedModel]` 
+**selected_model:** `typing.Optional[GoogleGptPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -1082,7 +1086,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[WebSearchLlmRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[GoogleGptPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -1143,7 +1147,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[WebSearchLlmRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[GoogleGptPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1159,7 +1163,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+**scaleserp_locations:** `typing.Optional[typing.Sequence[str]]` — DEPRECATED: use `serp_search_location` instead
     
 </dd>
 </dl>
@@ -1255,7 +1259,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1263,7 +1267,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1279,7 +1283,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[PersonalizeEmailRequestSelectedModel]` 
+**selected_model:** `typing.Optional[SocialLookupEmailPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -1327,7 +1331,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[PersonalizeEmailRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[SocialLookupEmailPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1394,7 +1398,7 @@ client.bulk_run(
 <dl>
 <dd>
 
-**documents:** `typing.List[str]` 
+**documents:** `typing.Sequence[str]` 
 
 
 Upload or link to a CSV or google sheet that contains your sample input data.
@@ -1408,7 +1412,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**run_urls:** `typing.List[str]` 
+**run_urls:** `typing.Sequence[str]` 
 
 
 Provide one or more Gooey.AI workflow runs.
@@ -1453,7 +1457,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1461,7 +1465,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1469,7 +1473,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**eval_urls:** `typing.Optional[typing.List[str]]` 
+**eval_urls:** `typing.Optional[typing.Sequence[str]]` 
 
 
 _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
@@ -1537,7 +1541,7 @@ client.synthesize_data(
 <dl>
 <dd>
 
-**documents:** `typing.List[str]` 
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -1553,7 +1557,7 @@ client.synthesize_data(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1561,7 +1565,7 @@ client.synthesize_data(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1577,7 +1581,7 @@ client.synthesize_data(
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[SynthesizeDataRequestSelectedAsrModel]` 
+**selected_asr_model:** `typing.Optional[DocExtractPageRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -1612,7 +1616,7 @@ If not specified or invalid, no glossary will be used. Read about the expected f
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SynthesizeDataRequestSelectedModel]` 
+**selected_model:** `typing.Optional[DocExtractPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -1660,7 +1664,7 @@ If not specified or invalid, no glossary will be used. Read about the expected f
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[SynthesizeDataRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocExtractPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1730,7 +1734,7 @@ client.llm()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1738,7 +1742,7 @@ client.llm()
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1754,7 +1758,7 @@ client.llm()
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[LlmRequestSelectedModelsItem]]` 
+**selected_models:** `typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -1802,7 +1806,7 @@ client.llm()
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[LlmRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[CompareLlmPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1882,7 +1886,7 @@ client.rag(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1890,7 +1894,7 @@ client.rag(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -1898,7 +1902,7 @@ client.rag(
 <dl>
 <dd>
 
-**keyword_query:** `typing.Optional[RagRequestKeywordQuery]` 
+**keyword_query:** `typing.Optional[DocSearchPageRequestKeywordQuery]` 
     
 </dd>
 </dl>
@@ -1906,7 +1910,7 @@ client.rag(
 <dl>
 <dd>
 
-**documents:** `typing.Optional[typing.List[str]]` 
+**documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -1946,7 +1950,7 @@ client.rag(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[RagRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[DocSearchPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -1983,7 +1987,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RagRequestSelectedModel]` 
+**selected_model:** `typing.Optional[DocSearchPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -1991,7 +1995,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[RagRequestCitationStyle]` 
+**citation_style:** `typing.Optional[DocSearchPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -2039,7 +2043,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[RagRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocSearchPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2103,7 +2107,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**documents:** `typing.List[str]` 
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -2119,7 +2123,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2127,7 +2131,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -2151,7 +2155,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[DocSummaryRequestSelectedModel]` 
+**selected_model:** `typing.Optional[DocSummaryPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -2167,7 +2171,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[DocSummaryRequestSelectedAsrModel]` 
+**selected_asr_model:** `typing.Optional[DocSummaryPageRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -2223,7 +2227,7 @@ client.doc_summary(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[DocSummaryRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocSummaryPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2303,7 +2307,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2311,7 +2315,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -2319,7 +2323,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[LipsyncTtsRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[LipsyncTtsPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -2447,7 +2451,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[LipsyncTtsRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -2455,7 +2459,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[LipsyncTtsRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -2511,7 +2515,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[LipsyncTtsRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LipsyncTtsPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -2591,7 +2595,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2599,7 +2603,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -2607,7 +2611,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[TextToSpeechRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[TextToSpeechPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -2735,7 +2739,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[TextToSpeechRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[TextToSpeechPageRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -2743,7 +2747,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[TextToSpeechRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[TextToSpeechPageRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -2807,7 +2811,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**documents:** `typing.List[str]` 
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -2823,7 +2827,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2831,7 +2835,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -2839,7 +2843,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SpeechRecognitionRequestSelectedModel]` 
+**selected_model:** `typing.Optional[AsrPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -2855,7 +2859,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[SpeechRecognitionRequestTranslationModel]` 
+**translation_model:** `typing.Optional[AsrPageRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -2863,7 +2867,7 @@ client.speech_recognition(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[SpeechRecognitionRequestOutputFormat]` 
+**output_format:** `typing.Optional[AsrPageRequestOutputFormat]` 
     
 </dd>
 </dl>
@@ -2978,7 +2982,7 @@ client.text_to_music(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2986,7 +2990,7 @@ client.text_to_music(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3050,7 +3054,7 @@ client.text_to_music(
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[typing.Literal["audio_ldm"]]]` 
+**selected_models:** `typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]` 
     
 </dd>
 </dl>
@@ -3120,7 +3124,7 @@ client.translate()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3128,7 +3132,7 @@ client.translate()
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3136,7 +3140,7 @@ client.translate()
 <dl>
 <dd>
 
-**texts:** `typing.Optional[typing.List[str]]` 
+**texts:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -3144,7 +3148,7 @@ client.translate()
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[TranslateRequestSelectedModel]` 
+**selected_model:** `typing.Optional[TranslationPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3251,7 +3255,7 @@ client.remix_image(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3259,7 +3263,7 @@ client.remix_image(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3275,7 +3279,7 @@ client.remix_image(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RemixImageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[Img2ImgPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3283,7 +3287,7 @@ client.remix_image(
 <dl>
 <dd>
 
-**selected_controlnet_model:** `typing.Optional[RemixImageRequestSelectedControlnetModel]` 
+**selected_controlnet_model:** `typing.Optional[Img2ImgPageRequestSelectedControlnetModel]` 
     
 </dd>
 </dl>
@@ -3347,7 +3351,7 @@ client.remix_image(
 <dl>
 <dd>
 
-**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+**controlnet_conditioning_scale:** `typing.Optional[typing.Sequence[float]]` 
     
 </dd>
 </dl>
@@ -3443,7 +3447,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3451,7 +3455,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3539,7 +3543,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[TextToImageRequestSelectedModelsItem]]` 
+**selected_models:** `typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -3547,7 +3551,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[TextToImageRequestScheduler]` 
+**scheduler:** `typing.Optional[CompareText2ImgPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -3652,7 +3656,7 @@ client.product_image(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3660,7 +3664,7 @@ client.product_image(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3700,7 +3704,7 @@ client.product_image(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ProductImageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[ObjectInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3812,7 +3816,7 @@ client = Gooey(
 )
 client.portrait(
     input_image="input_image",
-    text_prompt="text_prompt",
+    text_prompt="tony stark from the iron man",
 )
 
 ```
@@ -3853,7 +3857,7 @@ client.portrait(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3861,7 +3865,7 @@ client.portrait(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -3893,7 +3897,7 @@ client.portrait(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[PortraitRequestSelectedModel]` 
+**selected_model:** `typing.Optional[FaceInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4004,7 +4008,8 @@ client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.image_from_email(
-    text_prompt="text_prompt",
+    email_address="sean@dara.network",
+    text_prompt="winter's day in paris",
 )
 
 ```
@@ -4037,7 +4042,7 @@ client.image_from_email(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4045,7 +4050,7 @@ client.image_from_email(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4093,7 +4098,7 @@ client.image_from_email(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ImageFromEmailRequestSelectedModel]` 
+**selected_model:** `typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4310,7 +4315,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4318,7 +4323,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4334,7 +4339,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+**scaleserp_locations:** `typing.Optional[typing.Sequence[str]]` — DEPRECATED: use `serp_search_location` instead
     
 </dd>
 </dl>
@@ -4342,7 +4347,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ImageFromWebSearchRequestSelectedModel]` 
+**selected_model:** `typing.Optional[GoogleImageGenPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4486,7 +4491,7 @@ client.remove_background(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4494,7 +4499,7 @@ client.remove_background(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4502,7 +4507,7 @@ client.remove_background(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RemoveBackgroundRequestSelectedModel]` 
+**selected_model:** `typing.Optional[ImageSegmentationPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4630,7 +4635,7 @@ client.upscale(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4638,7 +4643,7 @@ client.upscale(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4662,7 +4667,7 @@ client.upscale(
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]]` 
+**selected_models:** `typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -4734,7 +4739,7 @@ client.embed(
 <dl>
 <dd>
 
-**texts:** `typing.List[str]` 
+**texts:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -4750,7 +4755,7 @@ client.embed(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4758,7 +4763,7 @@ client.embed(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4766,7 +4771,7 @@ client.embed(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[EmbedRequestSelectedModel]` 
+**selected_model:** `typing.Optional[EmbeddingsPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4846,7 +4851,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4854,7 +4859,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -4862,7 +4867,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**keyword_query:** `typing.Optional[SeoPeopleAlsoAskDocRequestKeywordQuery]` 
+**keyword_query:** `typing.Optional[RelatedQnADocPageRequestKeywordQuery]` 
     
 </dd>
 </dl>
@@ -4870,7 +4875,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**documents:** `typing.Optional[typing.List[str]]` 
+**documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -4910,7 +4915,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[SeoPeopleAlsoAskDocRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[RelatedQnADocPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -4947,7 +4952,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SeoPeopleAlsoAskDocRequestSelectedModel]` 
+**selected_model:** `typing.Optional[RelatedQnADocPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4955,7 +4960,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[SeoPeopleAlsoAskDocRequestCitationStyle]` 
+**citation_style:** `typing.Optional[RelatedQnADocPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -5003,7 +5008,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[SeoPeopleAlsoAskDocRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[RelatedQnADocPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -5019,7 +5024,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+**scaleserp_locations:** `typing.Optional[typing.Sequence[str]]` — DEPRECATED: use `serp_search_location` instead
     
 </dd>
 </dl>
@@ -5109,7 +5114,7 @@ client.health_status_get()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3chyron_plant_async</a>()</code></summary>
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3chyron_plant_async_form</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5127,1527 +5132,8 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.post_v3chyron_plant_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_llm_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3compare_llm_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_text2img_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3compare_text2img_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3deforum_sd_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3deforum_sd_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3email_face_inpainting_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3email_face_inpainting_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3face_inpainting_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3face_inpainting_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3google_image_gen_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3google_image_gen_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3image_segmentation_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3image_segmentation_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3img2img_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3img2img_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3letter_writer_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3letter_writer_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3lipsync_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3lipsync_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3lipsync_tts_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3lipsync_tts_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3object_inpainting_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3object_inpainting_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3seo_summary_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3seo_summary_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3smart_gpt_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3smart_gpt_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3social_lookup_email_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3social_lookup_email_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3text_to_speech_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3text_to_speech_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3art_qr_code_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3art_qr_code_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3asr_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3asr_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3bulk_eval_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3bulk_eval_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3bulk_runner_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3bulk_runner_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_ai_upscalers_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3compare_ai_upscalers_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_extract_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3doc_extract_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_search_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3doc_search_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_summary_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3doc_summary_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3embeddings_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3embeddings_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3functions_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3functions_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3google_gpt_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3google_gpt_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3related_qna_maker_doc_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3related_qna_maker_doc_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3related_qna_maker_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3related_qna_maker_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3text2audio_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3text2audio_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3translate_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3translate_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/gooey/client.py">post_v3video_bots_async</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.post_v3video_bots_async()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CopilotIntegrations
-<details><summary><code>client.copilot_integrations.<a href="src/gooey/copilot_integrations/client.py">video_bots_stream_create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.copilot_integrations.video_bots_stream_create(
-    integration_id="integration_id",
+client.post_v3chyron_plant_async_form(
+    midi_notes="midi_notes",
 )
 
 ```
@@ -6664,53 +5150,7 @@ client.copilot_integrations.video_bots_stream_create(
 <dl>
 <dd>
 
-**integration_id:** `str` — Your Integration ID as shown in the Copilot Integrations tab
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**conversation_id:** `typing.Optional[str]` 
-
-The gooey conversation ID.
-
-If not provided, a new conversation will be started and a new ID will be returned in the response. Use this to maintain the state of the conversation between requests.
-
-Note that you may not provide a custom ID here, and must only use the `conversation_id` returned in a previous response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_id:** `typing.Optional[str]` 
-
-Your app's custom user ID.
-
-If not provided, a random user will be created and a new ID will be returned in the response. If a `conversation_id` is provided, this field is automatically set to the user's id associated with that conversation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_message_id:** `typing.Optional[str]` 
-
-Your app's custom message ID for the user message.
-
-If not provided, a random ID will be generated and returned in the response. This is useful for tracking messages in the conversation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**button_pressed:** `typing.Optional[ButtonPressed]` — The button that was pressed by the user.
+**midi_notes:** `str` 
     
 </dd>
 </dl>
@@ -6726,7 +5166,93 @@ If not provided, a random ID will be generated and returned in the response. Thi
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**midi_notes_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chyron_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_llm_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3compare_llm_async_form()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -6742,228 +5268,7 @@ If not provided, a random ID will be generated and returned in the response. Thi
 <dl>
 <dd>
 
-**input_audio:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_images:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_documents:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**doc_extract_url:** `typing.Optional[str]` — Select a workflow to extract text from documents and images.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**messages:** `typing.Optional[typing.List[ConversationEntry]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bot_script:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_model:** `typing.Optional[VideoBotsStreamCreateRequestSelectedModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**document_model:** `typing.Optional[str]` — When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**query_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**keyword_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**documents:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_references:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_context_words:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scroll_jump:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embedding_model:** `typing.Optional[VideoBotsStreamCreateRequestEmbeddingModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dense_weight:** `typing.Optional[float]` 
-
-
-Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-        
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**citation_style:** `typing.Optional[VideoBotsStreamCreateRequestCitationStyle]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_url_shortener:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**asr_model:** `typing.Optional[VideoBotsStreamCreateRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**asr_language:** `typing.Optional[str]` — Choose a language to transcribe incoming audio messages to text.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**translation_model:** `typing.Optional[VideoBotsStreamCreateRequestTranslationModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_language:** `typing.Optional[str]` — Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_glossary_document:** `typing.Optional[str]` 
-
-
-Translation Glossary for User Langauge -> LLM Language (English)
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_glossary_document:** `typing.Optional[str]` 
-
-
-Translation Glossary for LLM Language (English) -> User Langauge
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**lipsync_model:** `typing.Optional[VideoBotsStreamCreateRequestLipsyncModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tools:** `typing.Optional[typing.List[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+**selected_models:** `typing.Optional[typing.List[PostV3CompareLlmAsyncFormRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -7011,7 +5316,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[VideoBotsStreamCreateRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[PostV3CompareLlmAsyncFormRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -7019,7 +5324,1710 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[VideoBotsStreamCreateRequestTtsProvider]` 
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_text2img_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3compare_text2img_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dall_e3quality:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dall_e3style:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sd2upscaling:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_models:** `typing.Optional[
+    typing.List[PostV3CompareText2ImgAsyncFormRequestSelectedModelsItem]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scheduler:** `typing.Optional[PostV3CompareText2ImgAsyncFormRequestScheduler]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**edit_instruction:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3deforum_sd_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import AnimationPrompt, Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3deforum_sd_async_form(
+    animation_prompts=[
+        AnimationPrompt(
+            frame="frame",
+            prompt="prompt",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**animation_prompts:** `typing.List[AnimationPrompt]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_frames:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3DeforumSdAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**animation_mode:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**zoom:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_x:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_y:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rotation3d_x:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rotation3d_y:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rotation3d_z:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fps:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3email_face_inpainting_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3email_face_inpainting_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_address:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**twitter_handle:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3EmailFaceInpaintingAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**upscale_factor:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**should_send_email:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_from:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_cc:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_bcc:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_subject:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_body:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_body_enable_html:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fallback_email_body:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3face_inpainting_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3face_inpainting_async_form(
+    input_image="input_image",
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_image:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3FaceInpaintingAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**upscale_factor:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3google_image_gen_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3google_image_gen_async_form(
+    search_query="search_query",
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3GoogleImageGenAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_strength:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sd2upscaling:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3image_segmentation_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3image_segmentation_async_form(
+    input_image="input_image",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_image:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3ImageSegmentationAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mask_threshold:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rect_persepective_transform:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reflection_opacity:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3img2img_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3img2img_async_form(
+    input_image="input_image",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_image:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3Img2ImgAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_controlnet_model:** `typing.Optional[PostV3Img2ImgAsyncFormRequestSelectedControlnetModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_strength:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3letter_writer_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3letter_writer_async_form(
+    action_id="action_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**action_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_header:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**example_letters:** `typing.Optional[typing.List[TrainingDataModel]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lm_selected_api:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lm_selected_engine:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lm_sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_http_method:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_url:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_headers:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_json_body:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**strip_html2text:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3lipsync_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3lipsync_async_form()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_face:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_top:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_bottom:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_left:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_right:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3LipsyncAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_audio:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3lipsync_tts_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3lipsync_tts_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts_provider:** `typing.Optional[PostV3LipsyncTtsAsyncFormRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -7147,7 +7155,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[VideoBotsStreamCreateRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[PostV3LipsyncTtsAsyncFormRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -7155,7 +7163,4708 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[VideoBotsStreamCreateRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[PostV3LipsyncTtsAsyncFormRequestOpenaiTtsModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_face:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_top:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_bottom:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_left:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_right:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3LipsyncTtsAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3object_inpainting_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3object_inpainting_async_form(
+    input_image="input_image",
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_image:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mask_threshold:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3ObjectInpaintingAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sd2upscaling:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3seo_summary_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3seo_summary_async_form(
+    search_query="search_query",
+    keywords="keywords",
+    title="title",
+    company_url="company_url",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keywords:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**company_url:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_html:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3SeoSummaryAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_search_urls:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_crosslinks:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3SeoSummaryAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_type:** `typing.Optional[SerpSearchType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_search_field:** `typing.Optional[str]` — DEPRECATED: use `serp_search_type` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3smart_gpt_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3smart_gpt_async_form(
+    input_prompt="input_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cot_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reflexion_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dera_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3SmartGptAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3SmartGptAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3social_lookup_email_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3social_lookup_email_async_form(
+    email_address="email_address",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email_address:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3SocialLookupEmailAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3SocialLookupEmailAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3text_to_speech_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3text_to_speech_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts_provider:** `typing.Optional[PostV3TextToSpeechAsyncFormRequestTtsProvider]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_pitch:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bark_history_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_name:** `typing.Optional[str]` — Use `elevenlabs_voice_id` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_api_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_model:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_stability:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_similarity_boost:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_style:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_speaker_boost:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**azure_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_voice_name:** `typing.Optional[PostV3TextToSpeechAsyncFormRequestOpenaiVoiceName]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_tts_model:** `typing.Optional[PostV3TextToSpeechAsyncFormRequestOpenaiTtsModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3art_qr_code_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3art_qr_code_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qr_code_data:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qr_code_input_image:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qr_code_vcard:** `typing.Optional[Vcard]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qr_code_file:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_url_shortener:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt_controlnet_models:** `typing.Optional[
+    typing.List[PostV3ArtQrCodeAsyncFormRequestImagePromptControlnetModelsItem]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt_strength:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_prompt_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3ArtQrCodeAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_controlnet_model:** `typing.Optional[
+    typing.List[PostV3ArtQrCodeAsyncFormRequestSelectedControlnetModelItem]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_width:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_height:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scheduler:** `typing.Optional[PostV3ArtQrCodeAsyncFormRequestScheduler]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_x:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**obj_pos_y:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3asr_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3asr_async_form(
+    documents=["documents"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.List[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3AsrAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_model:** `typing.Optional[PostV3AsrAsyncFormRequestTranslationModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[PostV3AsrAsyncFormRequestOutputFormat]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_translate_target:** `typing.Optional[str]` — use `translation_model` & `translation_target` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_source:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_target:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**glossary_document:** `typing.Optional[str]` 
+
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3bulk_eval_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3bulk_eval_async_form(
+    documents=["documents"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.List[str]` 
+
+
+Upload or link to a CSV or google sheet that contains your sample input data. 
+For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs. 
+Remember to includes header names in your CSV too.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eval_prompts:** `typing.Optional[typing.List[EvalPrompt]]` 
+
+
+Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.  
+_The `columns` dictionary can be used to reference the spreadsheet columns._            
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agg_functions:** `typing.Optional[typing.List[AggFunction]]` 
+
+
+Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3BulkEvalAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3BulkEvalAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3bulk_runner_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3bulk_runner_async_form(
+    documents=["documents"],
+    run_urls=["run_urls"],
+    input_columns={"key": "value"},
+    output_columns={"key": "value"},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.List[str]` 
+
+
+Upload or link to a CSV or google sheet that contains your sample input data.
+For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+Remember to includes header names in your CSV too.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**run_urls:** `typing.List[str]` 
+
+
+Provide one or more Gooey.AI workflow runs.
+You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_columns:** `typing.Dict[str, str]` 
+
+
+For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_columns:** `typing.Dict[str, str]` 
+
+
+For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eval_urls:** `typing.Optional[typing.List[str]]` 
+
+
+_(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3compare_ai_upscalers_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3compare_ai_upscalers_async_form(
+    scale=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**scale:** `int` — The final upsampling scale of the image
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_image:** `typing.Optional[str]` — Input Image
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_video:** `typing.Optional[str]` — Input Video
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_models:** `typing.Optional[
+    typing.List[PostV3CompareAiUpscalersAsyncFormRequestSelectedModelsItem]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_bg_model:** `typing.Optional[typing.Literal["real_esrgan_x2"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_extract_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3doc_extract_async_form(
+    documents=["documents"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.List[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sheet_url:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_asr_model:** `typing.Optional[PostV3DocExtractAsyncFormRequestSelectedAsrModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_translate_target:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**glossary_document:** `typing.Optional[str]` 
+
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3DocExtractAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3DocExtractAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_search_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3doc_search_async_form(
+    search_query="search_query",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyword_query:** `typing.Optional[PostV3DocSearchAsyncFormRequestKeywordQuery]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documents:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**doc_extract_url:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[PostV3DocSearchAsyncFormRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3DocSearchAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**citation_style:** `typing.Optional[PostV3DocSearchAsyncFormRequestCitationStyle]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3DocSearchAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3doc_summary_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3doc_summary_async_form(
+    documents=["documents"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.List[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3DocSummaryAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chain_type:** `typing.Optional[typing.Literal["map_reduce"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_asr_model:** `typing.Optional[PostV3DocSummaryAsyncFormRequestSelectedAsrModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_translate_target:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3DocSummaryAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3embeddings_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3embeddings_async_form(
+    texts=["texts"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**texts:** `typing.List[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3EmbeddingsAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3functions_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3functions_async_form()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**code:** `typing.Optional[str]` — The JS code to be executed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used in the code
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3google_gpt_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3google_gpt_async_form(
+    search_query="search_query",
+    site_filter="site_filter",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**site_filter:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3GoogleGptAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_search_urls:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[PostV3GoogleGptAsyncFormRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3GoogleGptAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_type:** `typing.Optional[SerpSearchType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_search_field:** `typing.Optional[str]` — DEPRECATED: use `serp_search_type` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3related_qna_maker_doc_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3related_qna_maker_doc_async_form(
+    search_query="search_query",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyword_query:** `typing.Optional[PostV3RelatedQnaMakerDocAsyncFormRequestKeywordQuery]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documents:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**doc_extract_url:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[PostV3RelatedQnaMakerDocAsyncFormRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3RelatedQnaMakerDocAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**citation_style:** `typing.Optional[PostV3RelatedQnaMakerDocAsyncFormRequestCitationStyle]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3RelatedQnaMakerDocAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_type:** `typing.Optional[SerpSearchType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_search_field:** `typing.Optional[str]` — DEPRECATED: use `serp_search_type` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3related_qna_maker_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3related_qna_maker_async_form(
+    search_query="search_query",
+    site_filter="site_filter",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search_query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**site_filter:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3RelatedQnaMakerAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_search_urls:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[PostV3RelatedQnaMakerAsyncFormRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3RelatedQnaMakerAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_locations:** `typing.Optional[typing.List[str]]` — DEPRECATED: use `serp_search_location` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serp_search_type:** `typing.Optional[SerpSearchType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scaleserp_search_field:** `typing.Optional[str]` — DEPRECATED: use `serp_search_type` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3text2audio_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3text2audio_async_form(
+    text_prompt="text_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**negative_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_sec:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sd2upscaling:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_models:** `typing.Optional[typing.List[typing.Literal["audio_ldm"]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3translate_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3translate_async_form()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**texts:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3TranslateAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_source:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_target:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**glossary_document:** `typing.Optional[str]` 
+
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">post_v3video_bots_async_form</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.post_v3video_bots_async_form()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_audio:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_images:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_documents:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**doc_extract_url:** `typing.Optional[str]` — Select a workflow to extract text from documents and images.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messages:** `typing.Optional[typing.List[ConversationEntry]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bot_script:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**document_model:** `typing.Optional[str]` — When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyword_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documents:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**citation_style:** `typing.Optional[PostV3VideoBotsAsyncFormRequestCitationStyle]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_url_shortener:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr_language:** `typing.Optional[str]` — Choose a language to transcribe incoming audio messages to text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestTranslationModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_language:** `typing.Optional[str]` — Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_glossary_document:** `typing.Optional[str]` 
+
+
+Translation Glossary for User Langauge -> LLM Language (English)
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_glossary_document:** `typing.Optional[str]` 
+
+
+Translation Glossary for LLM Language (English) -> User Langauge
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lipsync_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestLipsyncModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tools:** `typing.Optional[typing.List[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[PostV3VideoBotsAsyncFormRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts_provider:** `typing.Optional[PostV3VideoBotsAsyncFormRequestTtsProvider]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_pitch:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bark_history_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_name:** `typing.Optional[str]` — Use `elevenlabs_voice_id` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_api_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_model:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_stability:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_similarity_boost:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_style:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_speaker_boost:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**azure_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_voice_name:** `typing.Optional[PostV3VideoBotsAsyncFormRequestOpenaiVoiceName]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_tts_model:** `typing.Optional[PostV3VideoBotsAsyncFormRequestOpenaiTtsModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_face:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_top:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_bottom:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_left:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_right:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CopilotIntegrations
+<details><summary><code>client.copilot_integrations.<a href="src/gooey/copilot_integrations/client.py">video_bots_stream_create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.copilot_integrations.video_bots_stream_create(
+    integration_id="integration_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**integration_id:** `str` — Your Integration ID as shown in the Copilot Integrations tab
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_id:** `typing.Optional[str]` 
+
+The gooey conversation ID.
+
+If not provided, a new conversation will be started and a new ID will be returned in the response. Use this to maintain the state of the conversation between requests.
+
+Note that you may not provide a custom ID here, and must only use the `conversation_id` returned in a previous response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `typing.Optional[str]` 
+
+Your app's custom user ID.
+
+If not provided, a random user will be created and a new ID will be returned in the response. If a `conversation_id` is provided, this field is automatically set to the user's id associated with that conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_message_id:** `typing.Optional[str]` 
+
+Your app's custom message ID for the user message.
+
+If not provided, a random ID will be generated and returned in the response. This is useful for tracking messages in the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**button_pressed:** `typing.Optional[ButtonPressed]` — The button that was pressed by the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_audio:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_images:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_documents:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**doc_extract_url:** `typing.Optional[str]` — Select a workflow to extract text from documents and images.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messages:** `typing.Optional[typing.Sequence[ConversationEntry]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bot_script:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[CreateStreamRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**document_model:** `typing.Optional[str]` — When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyword_instructions:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documents:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_references:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_context_words:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scroll_jump:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[CreateStreamRequestEmbeddingModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dense_weight:** `typing.Optional[float]` 
+
+
+Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
+Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
+        
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**citation_style:** `typing.Optional[CreateStreamRequestCitationStyle]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_url_shortener:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr_model:** `typing.Optional[CreateStreamRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr_language:** `typing.Optional[str]` — Choose a language to transcribe incoming audio messages to text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation_model:** `typing.Optional[CreateStreamRequestTranslationModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_language:** `typing.Optional[str]` — Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_glossary_document:** `typing.Optional[str]` 
+
+
+Translation Glossary for User Langauge -> LLM Language (English)
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_glossary_document:** `typing.Optional[str]` 
+
+
+Translation Glossary for LLM Language (English) -> User Langauge
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lipsync_model:** `typing.Optional[CreateStreamRequestLipsyncModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tools:** `typing.Optional[typing.Sequence[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[CreateStreamRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts_provider:** `typing.Optional[CreateStreamRequestTtsProvider]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**uberduck_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_speaking_rate:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_pitch:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bark_history_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_name:** `typing.Optional[str]` — Use `elevenlabs_voice_id` instead
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_api_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_voice_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_model:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_stability:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_similarity_boost:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_style:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**elevenlabs_speaker_boost:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**azure_voice_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_voice_name:** `typing.Optional[CreateStreamRequestOpenaiVoiceName]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**openai_tts_model:** `typing.Optional[CreateStreamRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -7288,7 +11997,7 @@ client.copilot_integrations.video_bots_stream(
 </details>
 
 ## CopilotForYourEnterprise
-<details><summary><code>client.copilot_for_your_enterprise.<a href="src/gooey/copilot_for_your_enterprise/client.py">async_form_video_bots</a>(...)</code></summary>
+<details><summary><code>client.copilot_for_your_enterprise.<a href="src/gooey/copilot_for_your_enterprise/client.py">async_video_bots</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7306,7 +12015,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.copilot_for_your_enterprise.async_form_video_bots()
+client.copilot_for_your_enterprise.async_video_bots()
 
 ```
 </dd>
@@ -7330,7 +12039,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -7338,7 +12047,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -7362,7 +12071,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**input_images:** `typing.Optional[typing.List[str]]` 
+**input_images:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -7370,7 +12079,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**input_documents:** `typing.Optional[typing.List[str]]` 
+**input_documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -7386,7 +12095,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.List[ConversationEntry]]` 
+**messages:** `typing.Optional[typing.Sequence[ConversationEntry]]` 
     
 </dd>
 </dl>
@@ -7402,7 +12111,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsyncFormVideoBotsRequestSelectedModel]` 
+**selected_model:** `typing.Optional[VideoBotsPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -7442,7 +12151,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**documents:** `typing.Optional[typing.List[str]]` 
+**documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -7474,7 +12183,7 @@ client.copilot_for_your_enterprise.async_form_video_bots()
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[AsyncFormVideoBotsRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[VideoBotsPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -7495,7 +12204,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[AsyncFormVideoBotsRequestCitationStyle]` 
+**citation_style:** `typing.Optional[VideoBotsPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -7511,7 +12220,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**asr_model:** `typing.Optional[AsyncFormVideoBotsRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
+**asr_model:** `typing.Optional[VideoBotsPageRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
     
 </dd>
 </dl>
@@ -7527,7 +12236,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[AsyncFormVideoBotsRequestTranslationModel]` 
+**translation_model:** `typing.Optional[VideoBotsPageRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -7567,7 +12276,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**lipsync_model:** `typing.Optional[AsyncFormVideoBotsRequestLipsyncModel]` 
+**lipsync_model:** `typing.Optional[VideoBotsPageRequestLipsyncModel]` 
     
 </dd>
 </dl>
@@ -7575,7 +12284,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**tools:** `typing.Optional[typing.List[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+**tools:** `typing.Optional[typing.Sequence[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
     
 </dd>
 </dl>
@@ -7623,7 +12332,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[AsyncFormVideoBotsRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[VideoBotsPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -7631,7 +12340,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[AsyncFormVideoBotsRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[VideoBotsPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -7759,7 +12468,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[AsyncFormVideoBotsRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[VideoBotsPageRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -7767,7 +12476,7 @@ Translation Glossary for LLM Language (English) -> User Langauge
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[AsyncFormVideoBotsRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[VideoBotsPageRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -7843,463 +12552,8 @@ Translation Glossary for LLM Language (English) -> User Langauge
 </dl>
 </details>
 
-<details><summary><code>client.copilot_for_your_enterprise.<a href="src/gooey/copilot_for_your_enterprise/client.py">status_video_bots</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.copilot_for_your_enterprise.status_video_bots(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AiAnimationGenerator
-<details><summary><code>client.ai_animation_generator.<a href="src/gooey/ai_animation_generator/client.py">status_deforum_sd</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.ai_animation_generator.status_deforum_sd(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AiArtQrCode
-<details><summary><code>client.ai_art_qr_code.<a href="src/gooey/ai_art_qr_code/client.py">status_art_qr_code</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.ai_art_qr_code.status_art_qr_code(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## GeneratePeopleAlsoAskSeoContent
-<details><summary><code>client.generate_people_also_ask_seo_content.<a href="src/gooey/generate_people_also_ask_seo_content/client.py">status_related_qna_maker</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.generate_people_also_ask_seo_content.status_related_qna_maker(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CreateAPerfectSeoOptimizedTitleParagraph
-<details><summary><code>client.create_a_perfect_seo_optimized_title_paragraph.<a href="src/gooey/create_a_perfect_seo_optimized_title_paragraph/client.py">status_seo_summary</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.create_a_perfect_seo_optimized_title_paragraph.status_seo_summary(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## WebSearchGpt3
-<details><summary><code>client.web_search_gpt3.<a href="src/gooey/web_search_gpt3/client.py">status_google_gpt</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.web_search_gpt3.status_google_gpt(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ProfileLookupGpt3ForAiPersonalizedEmails
-<details><summary><code>client.profile_lookup_gpt3for_ai_personalized_emails.<a href="src/gooey/profile_lookup_gpt3for_ai_personalized_emails/client.py">status_social_lookup_email</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.profile_lookup_gpt3for_ai_personalized_emails.status_social_lookup_email(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## BulkRunner
-<details><summary><code>client.bulk_runner.<a href="src/gooey/bulk_runner/client.py">status_bulk_runner</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.bulk_runner.status_bulk_runner(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Evaluator
-<details><summary><code>client.evaluator.<a href="src/gooey/evaluator/client.py">async_form_bulk_eval</a>(...)</code></summary>
+<details><summary><code>client.evaluator.<a href="src/gooey/evaluator/client.py">async_bulk_eval</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -8317,7 +12571,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.evaluator.async_form_bulk_eval(
+client.evaluator.async_bulk_eval(
     documents=["documents"],
 )
 
@@ -8335,7 +12589,7 @@ client.evaluator.async_form_bulk_eval(
 <dl>
 <dd>
 
-**documents:** `typing.List[str]` 
+**documents:** `typing.Sequence[str]` 
 
 
 Upload or link to a CSV or google sheet that contains your sample input data. 
@@ -8357,7 +12611,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -8365,7 +12619,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -8373,7 +12627,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**eval_prompts:** `typing.Optional[typing.List[EvalPrompt]]` 
+**eval_prompts:** `typing.Optional[typing.Sequence[EvalPrompt]]` 
 
 
 Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.  
@@ -8386,7 +12640,7 @@ _The `columns` dictionary can be used to reference the spreadsheet columns._
 <dl>
 <dd>
 
-**agg_functions:** `typing.Optional[typing.List[AggFunction]]` 
+**agg_functions:** `typing.Optional[typing.Sequence[AggFunction]]` 
 
 
 Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
@@ -8398,7 +12652,7 @@ Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsyncFormBulkEvalRequestSelectedModel]` 
+**selected_model:** `typing.Optional[BulkEvalPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -8446,7 +12700,7 @@ Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[AsyncFormBulkEvalRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[BulkEvalPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -8474,235 +12728,8 @@ Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/
 </dl>
 </details>
 
-<details><summary><code>client.evaluator.<a href="src/gooey/evaluator/client.py">status_bulk_eval</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.evaluator.status_bulk_eval(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SyntheticDataMakerForVideosPdFs
-<details><summary><code>client.synthetic_data_maker_for_videos_pd_fs.<a href="src/gooey/synthetic_data_maker_for_videos_pd_fs/client.py">status_doc_extract</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.synthetic_data_maker_for_videos_pd_fs.status_doc_extract(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## LargeLanguageModelsGpt3
-<details><summary><code>client.large_language_models_gpt3.<a href="src/gooey/large_language_models_gpt3/client.py">status_compare_llm</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.large_language_models_gpt3.status_compare_llm(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SearchYourDocsWithGpt
-<details><summary><code>client.search_your_docs_with_gpt.<a href="src/gooey/search_your_docs_with_gpt/client.py">status_doc_search</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.search_your_docs_with_gpt.status_doc_search(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## SmartGpt
-<details><summary><code>client.smart_gpt.<a href="src/gooey/smart_gpt/client.py">async_form_smart_gpt</a>(...)</code></summary>
+<details><summary><code>client.smart_gpt.<a href="src/gooey/smart_gpt/client.py">async_smart_gpt</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -8720,7 +12747,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.smart_gpt.async_form_smart_gpt(
+client.smart_gpt.async_smart_gpt(
     input_prompt="input_prompt",
 )
 
@@ -8754,7 +12781,7 @@ client.smart_gpt.async_form_smart_gpt(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -8762,7 +12789,7 @@ client.smart_gpt.async_form_smart_gpt(
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -8794,7 +12821,7 @@ client.smart_gpt.async_form_smart_gpt(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsyncFormSmartGptRequestSelectedModel]` 
+**selected_model:** `typing.Optional[SmartGptPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -8842,7 +12869,7 @@ client.smart_gpt.async_form_smart_gpt(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[AsyncFormSmartGptRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[SmartGptPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -8870,121 +12897,8 @@ client.smart_gpt.async_form_smart_gpt(
 </dl>
 </details>
 
-<details><summary><code>client.smart_gpt.<a href="src/gooey/smart_gpt/client.py">status_smart_gpt</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.smart_gpt.status_smart_gpt(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SummarizeYourDocsWithGpt
-<details><summary><code>client.summarize_your_docs_with_gpt.<a href="src/gooey/summarize_your_docs_with_gpt/client.py">status_doc_summary</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.summarize_your_docs_with_gpt.status_doc_summary(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Functions
-<details><summary><code>client.functions.<a href="src/gooey/functions/client.py">async_form_functions</a>(...)</code></summary>
+<details><summary><code>client.functions.<a href="src/gooey/functions/client.py">async_functions</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -9002,7 +12916,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.functions.async_form_functions()
+client.functions.async_functions()
 
 ```
 </dd>
@@ -9034,7 +12948,7 @@ client.functions.async_form_functions()
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used in the code
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used in the code
     
 </dd>
 </dl>
@@ -9062,64 +12976,8 @@ client.functions.async_form_functions()
 </dl>
 </details>
 
-<details><summary><code>client.functions.<a href="src/gooey/functions/client.py">status_functions</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.functions.status_functions(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## LipSyncing
-<details><summary><code>client.lip_syncing.<a href="src/gooey/lip_syncing/client.py">async_form_lipsync</a>(...)</code></summary>
+<details><summary><code>client.lip_syncing.<a href="src/gooey/lip_syncing/client.py">async_lipsync</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -9137,7 +12995,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.lip_syncing.async_form_lipsync()
+client.lip_syncing.async_lipsync()
 
 ```
 </dd>
@@ -9161,7 +13019,7 @@ client.lip_syncing.async_form_lipsync()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -9169,7 +13027,7 @@ client.lip_syncing.async_form_lipsync()
 <dl>
 <dd>
 
-**variables:** `typing.Optional[typing.Dict[str, typing.Any]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
     
 </dd>
 </dl>
@@ -9225,7 +13083,7 @@ client.lip_syncing.async_form_lipsync()
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsyncFormLipsyncRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LipsyncPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -9242,1031 +13100,6 @@ client.lip_syncing.async_form_lipsync()
 <dd>
 
 **settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.lip_syncing.<a href="src/gooey/lip_syncing/client.py">status_lipsync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.lip_syncing.status_lipsync(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## LipsyncVideoWithAnyText
-<details><summary><code>client.lipsync_video_with_any_text.<a href="src/gooey/lipsync_video_with_any_text/client.py">status_lipsync_tts</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.lipsync_video_with_any_text.status_lipsync_tts(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CompareAiVoiceGenerators
-<details><summary><code>client.compare_ai_voice_generators.<a href="src/gooey/compare_ai_voice_generators/client.py">status_text_to_speech</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.compare_ai_voice_generators.status_text_to_speech(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SpeechRecognitionTranslation
-<details><summary><code>client.speech_recognition_translation.<a href="src/gooey/speech_recognition_translation/client.py">status_asr</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.speech_recognition_translation.status_asr(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## TextGuidedAudioGenerator
-<details><summary><code>client.text_guided_audio_generator.<a href="src/gooey/text_guided_audio_generator/client.py">status_text2audio</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.text_guided_audio_generator.status_text2audio(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CompareAiTranslations
-<details><summary><code>client.compare_ai_translations.<a href="src/gooey/compare_ai_translations/client.py">status_translate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.compare_ai_translations.status_translate(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EditAnImageWithAiPrompt
-<details><summary><code>client.edit_an_image_with_ai_prompt.<a href="src/gooey/edit_an_image_with_ai_prompt/client.py">status_img2img</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.edit_an_image_with_ai_prompt.status_img2img(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CompareAiImageGenerators
-<details><summary><code>client.compare_ai_image_generators.<a href="src/gooey/compare_ai_image_generators/client.py">status_compare_text2img</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.compare_ai_image_generators.status_compare_text2img(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## GenerateProductPhotoBackgrounds
-<details><summary><code>client.generate_product_photo_backgrounds.<a href="src/gooey/generate_product_photo_backgrounds/client.py">status_object_inpainting</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.generate_product_photo_backgrounds.status_object_inpainting(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AiImageWithAFace
-<details><summary><code>client.ai_image_with_a_face.<a href="src/gooey/ai_image_with_a_face/client.py">status_face_inpainting</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.ai_image_with_a_face.status_face_inpainting(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AiGeneratedPhotoFromEmailProfileLookup
-<details><summary><code>client.ai_generated_photo_from_email_profile_lookup.<a href="src/gooey/ai_generated_photo_from_email_profile_lookup/client.py">status_email_face_inpainting</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.ai_generated_photo_from_email_profile_lookup.status_email_face_inpainting(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## RenderImageSearchResultsWithAi
-<details><summary><code>client.render_image_search_results_with_ai.<a href="src/gooey/render_image_search_results_with_ai/client.py">status_google_image_gen</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.render_image_search_results_with_ai.status_google_image_gen(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AiBackgroundChanger
-<details><summary><code>client.ai_background_changer.<a href="src/gooey/ai_background_changer/client.py">status_image_segmentation</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.ai_background_changer.status_image_segmentation(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CompareAiImageUpscalers
-<details><summary><code>client.compare_ai_image_upscalers.<a href="src/gooey/compare_ai_image_upscalers/client.py">status_compare_ai_upscalers</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.compare_ai_image_upscalers.status_compare_ai_upscalers(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ChyronPlantBot
-<details><summary><code>client.chyron_plant_bot.<a href="src/gooey/chyron_plant_bot/client.py">status_chyron_plant</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.chyron_plant_bot.status_chyron_plant(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## LetterWriter
-<details><summary><code>client.letter_writer.<a href="src/gooey/letter_writer/client.py">status_letter_writer</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.letter_writer.status_letter_writer(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Embeddings
-<details><summary><code>client.embeddings.<a href="src/gooey/embeddings/client.py">status_embeddings</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.embeddings.status_embeddings(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## PeopleAlsoAskAnswersFromADoc
-<details><summary><code>client.people_also_ask_answers_from_a_doc.<a href="src/gooey/people_also_ask_answers_from_a_doc/client.py">status_related_qna_maker_doc</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.people_also_ask_answers_from_a_doc.status_related_qna_maker_doc(
-    run_id="run_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_id:** `str` 
     
 </dd>
 </dl>
@@ -10409,7 +13242,7 @@ client.misc.video_bots_broadcast(
 <dl>
 <dd>
 
-**documents:** `typing.Optional[typing.List[str]]` — Video URL to send to all users
+**documents:** `typing.Optional[typing.Sequence[str]]` — Video URL to send to all users
     
 </dd>
 </dl>
@@ -10417,7 +13250,7 @@ client.misc.video_bots_broadcast(
 <dl>
 <dd>
 
-**buttons:** `typing.Optional[typing.List[ReplyButton]]` — Buttons to send to all users
+**buttons:** `typing.Optional[typing.Sequence[ReplyButton]]` — Buttons to send to all users
     
 </dd>
 </dl>
