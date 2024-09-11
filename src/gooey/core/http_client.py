@@ -86,8 +86,8 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 
 
 def _should_retry(response: httpx.Response) -> bool:
-    retriable_400s = [429, 408, 409]
-    return response.status_code >= 500 or response.status_code in retriable_400s
+    retry_on_codes = [429, 408, 502, 503, 504]
+    return response.status_code in retry_on_codes
 
 
 def remove_omit_from_dict(
