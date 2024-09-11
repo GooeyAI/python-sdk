@@ -56,6 +56,13 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
+    if type_.__name__.endswith("Output") and isinstance(object_, typing.Mapping) and "output" in object_:
+        return _parse_obj_as(type_, object_["output"])
+
+    return _parse_obj_as(type_, object_)
+
+
+def _parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
         return adapter.validate_python(object_)

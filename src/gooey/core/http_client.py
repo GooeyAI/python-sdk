@@ -2,7 +2,8 @@
 
 import asyncio
 import email.utils
-import json
+import json as json_module
+import os
 import re
 import time
 import typing
@@ -144,7 +145,7 @@ def get_request_body(
         json_body = maybe_filter_request_body(json, request_options, omit)
 
     # If you have an empty JSON body, you should just send None
-    return (json_body if json_body != {} else None), data_body if data_body != {} else None
+    return (json_body if json_body != {} else None), (data_body if data_body != {} else None)
 
 
 class HttpClient:
@@ -190,6 +191,7 @@ class HttpClient:
             else self.base_timeout
         )
 
+        path, json, data, files = gooey_process_request_params(path=path, data=data, files=files, json=json, omit=omit)
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
         response = self.httpx_client.request(
@@ -224,7 +226,7 @@ class HttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None),
             timeout=timeout,
         )
 
@@ -246,7 +248,21 @@ class HttpClient:
                     omit=omit,
                 )
 
-        return response
+        # custom gooey code
+        location = response.headers.get("location")
+        if not location:
+            return response
+
+        while True:
+            response = self.request(location, method="get", headers=headers, request_options=request_options)
+            if not response.is_success:
+                return response
+            else:
+                body = response.json()
+                if body.get("status") in ["starting", "running"]:
+                    continue
+                else:  # failed, completed, or something not in the spec
+                    return response
 
     @contextmanager
     def stream(
@@ -306,7 +322,7 @@ class HttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None),
             timeout=timeout,
         ) as stream:
             yield stream
@@ -355,6 +371,7 @@ class AsyncHttpClient:
             else self.base_timeout
         )
 
+        path, json, data, files = gooey_process_request_params(path=path, data=data, files=files, json=json, omit=omit)
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
         # Add the input to each of these and do None-safety checks
@@ -390,7 +407,7 @@ class AsyncHttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None),
             timeout=timeout,
         )
 
@@ -411,7 +428,22 @@ class AsyncHttpClient:
                     retries=retries + 1,
                     omit=omit,
                 )
-        return response
+
+        # custom gooey code
+        location = response.headers.get("location")
+        if not location:
+            return response
+
+        while True:
+            response = await self.request(location, method="get", headers=headers, request_options=request_options)
+            if not response.is_success:
+                return response
+            else:
+                body = response.json()
+                if body.get("status") in ["starting", "running"]:
+                    continue
+                else:  # failed, completed, or something not in the spec
+                    return response
 
     @asynccontextmanager
     async def stream(
@@ -471,7 +503,53 @@ class AsyncHttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None),
             timeout=timeout,
         ) as stream:
             yield stream
+
+
+class GooeyRequestParams(typing.NamedTuple):
+    """Custom Request Parameters for Gooey"""
+
+    path: str | None
+    json: typing.Optional[typing.Any]
+    data: typing.Optional[typing.Any]
+    files: typing.Optional[typing.Any]
+
+
+def gooey_process_request_params(
+    *,
+    path: str | None,
+    json: typing.Optional[typing.Any],
+    data: typing.Optional[typing.Any],
+    files: typing.Optional[typing.Any],
+    omit: typing.Any,
+) -> GooeyRequestParams:
+    """
+    Hack to allow providing filepaths as strings in the SDK.
+    """
+    if json or not isinstance(data, typing.MutableMapping) or not path or not path.rstrip("/").endswith("/async"):
+        return GooeyRequestParams(path=path, json=json, data=data, files=files)
+
+    if files and isinstance(files, typing.MutableMapping):
+        for k, v in files.items():
+            if v and isinstance(v, list) and all(isinstance(item, str) and os.path.exists(item) for item in v):
+                files[k] = [open(item, "rb") for item in v]
+            elif v and isinstance(v, str) and os.path.exists(v):
+                files[k] = open(v, "rb")
+            elif isinstance(v, str) or v is omit or not v:
+                # a URL, None, or omitted value
+                data[k] = files.pop(k)
+
+    if files:
+        return GooeyRequestParams(
+            path=path.rstrip("/") + "/form",
+            json=None,
+            data={
+                "json": json_module.dumps(maybe_filter_request_body(data, request_options=None, omit=omit)),
+            },
+            files=files,
+        )
+    else:
+        return GooeyRequestParams(path=path, json=data, data=None, files=None)
