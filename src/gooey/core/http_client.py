@@ -512,7 +512,7 @@ class AsyncHttpClient:
 class GooeyRequestParams(typing.NamedTuple):
     """Custom Request Parameters for Gooey"""
 
-    path: str | None
+    path: typing.Optional[str]
     json: typing.Optional[typing.Any]
     data: typing.Optional[typing.Any]
     files: typing.Optional[typing.Any]
@@ -520,7 +520,7 @@ class GooeyRequestParams(typing.NamedTuple):
 
 def gooey_process_request_params(
     *,
-    path: str | None,
+    path: typing.Optional[str],
     json: typing.Optional[typing.Any],
     data: typing.Optional[typing.Any],
     files: typing.Optional[typing.Any],
