@@ -24,16 +24,8 @@ class SadTalkerSettings(UniversalBaseModel):
     Scale the amount of expression motion. 1.0 is normal, 0.5 is very reduced, and 2.0 is quite a lot.
     """
 
-    ref_eyeblink: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional reference video for eyeblinks to make the eyebrow movement more natural.
-    """
-
-    ref_pose: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional reference video to pose the head.
-    """
-
+    ref_eyeblink: typing.Optional[str] = None
+    ref_pose: typing.Optional[str] = None
     input_yaw: typing.Optional[typing.List[int]] = None
     input_pitch: typing.Optional[typing.List[int]] = None
     input_roll: typing.Optional[typing.List[int]] = None

@@ -16,19 +16,12 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import AnimationPrompt, Gooey
+from gooey import Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.animate(
-    animation_prompts=[
-        AnimationPrompt(
-            frame="frame",
-            prompt="prompt",
-        )
-    ],
-)
+client.post_v3video_bots_async()
 ```
 
 ## Async Client
@@ -38,7 +31,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AnimationPrompt, AsyncGooey
+from gooey import AsyncGooey
 
 client = AsyncGooey(
     api_key="YOUR_API_KEY",
@@ -46,14 +39,7 @@ client = AsyncGooey(
 
 
 async def main() -> None:
-    await client.animate(
-        animation_prompts=[
-            AnimationPrompt(
-                frame="frame",
-                prompt="prompt",
-            )
-        ],
-    )
+    await client.post_v3video_bots_async()
 
 
 asyncio.run(main())
@@ -68,7 +54,7 @@ will be thrown.
 from gooey.core.api_error import ApiError
 
 try:
-    client.animate(...)
+    client.post_v3video_bots_async(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -91,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.animate(..., {
+client.post_v3video_bots_async(..., {
     "max_retries": 1
 })
 ```
@@ -111,7 +97,7 @@ client = Gooey(
 
 
 # Override timeout for a specific method
-client.animate(..., {
+client.post_v3video_bots_async(..., {
     "timeout_in_seconds": 1
 })
 ```
