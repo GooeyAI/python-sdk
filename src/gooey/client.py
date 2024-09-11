@@ -6,12 +6,7 @@ import os
 import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
-from .copilot_integrations.client import CopilotIntegrationsClient
-from .copilot_for_your_enterprise.client import CopilotForYourEnterpriseClient
-from .evaluator.client import EvaluatorClient
-from .smart_gpt.client import SmartGptClient
-from .functions.client import FunctionsClient
-from .lip_syncing.client import LipSyncingClient
+from .copilot.client import CopilotClient
 from .misc.client import MiscClient
 from .types.deforum_sd_page_request_animation_prompts_item import DeforumSdPageRequestAnimationPromptsItem
 from .types.deforum_sd_page_request_functions_item import DeforumSdPageRequestFunctionsItem
@@ -21,10 +16,10 @@ from .core.request_options import RequestOptions
 from .types.deforum_sd_page_output import DeforumSdPageOutput
 from .core.pydantic_utilities import parse_obj_as
 from .errors.payment_required_error import PaymentRequiredError
+from .types.generic_error_response import GenericErrorResponse
 from .errors.unprocessable_entity_error import UnprocessableEntityError
 from .types.http_validation_error import HttpValidationError
 from .errors.too_many_requests_error import TooManyRequestsError
-from .types.generic_error_response import GenericErrorResponse
 from json.decoder import JSONDecodeError
 from .types.qr_code_request_functions_item import QrCodeRequestFunctionsItem
 from . import core
@@ -55,6 +50,12 @@ from .types.social_lookup_email_page_request_response_format_type import SocialL
 from .types.social_lookup_email_page_output import SocialLookupEmailPageOutput
 from .types.bulk_run_request_functions_item import BulkRunRequestFunctionsItem
 from .types.bulk_runner_page_output import BulkRunnerPageOutput
+from .types.bulk_eval_page_request_functions_item import BulkEvalPageRequestFunctionsItem
+from .types.bulk_eval_page_request_eval_prompts_item import BulkEvalPageRequestEvalPromptsItem
+from .types.bulk_eval_page_request_agg_functions_item import BulkEvalPageRequestAggFunctionsItem
+from .types.bulk_eval_page_request_selected_model import BulkEvalPageRequestSelectedModel
+from .types.bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
+from .types.bulk_eval_page_output import BulkEvalPageOutput
 from .types.synthesize_data_request_functions_item import SynthesizeDataRequestFunctionsItem
 from .types.synthesize_data_request_selected_asr_model import SynthesizeDataRequestSelectedAsrModel
 from .types.synthesize_data_request_selected_model import SynthesizeDataRequestSelectedModel
@@ -71,11 +72,20 @@ from .types.doc_search_page_request_selected_model import DocSearchPageRequestSe
 from .types.doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
 from .types.doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
 from .types.doc_search_page_output import DocSearchPageOutput
+from .types.smart_gpt_page_request_functions_item import SmartGptPageRequestFunctionsItem
+from .types.smart_gpt_page_request_selected_model import SmartGptPageRequestSelectedModel
+from .types.smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
+from .types.smart_gpt_page_output import SmartGptPageOutput
 from .types.doc_summary_request_functions_item import DocSummaryRequestFunctionsItem
 from .types.doc_summary_request_selected_model import DocSummaryRequestSelectedModel
 from .types.doc_summary_request_selected_asr_model import DocSummaryRequestSelectedAsrModel
 from .types.doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
 from .types.doc_summary_page_output import DocSummaryPageOutput
+from .types.functions_page_output import FunctionsPageOutput
+from .types.lipsync_request_functions_item import LipsyncRequestFunctionsItem
+from .types.lipsync_request_sadtalker_settings import LipsyncRequestSadtalkerSettings
+from .types.lipsync_request_selected_model import LipsyncRequestSelectedModel
+from .types.lipsync_page_output import LipsyncPageOutput
 from .types.lipsync_tts_request_functions_item import LipsyncTtsRequestFunctionsItem
 from .types.lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
 from .types.lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
@@ -135,12 +145,7 @@ from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPag
 from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .types.related_qn_a_doc_page_output import RelatedQnADocPageOutput
 from .core.client_wrapper import AsyncClientWrapper
-from .copilot_integrations.client import AsyncCopilotIntegrationsClient
-from .copilot_for_your_enterprise.client import AsyncCopilotForYourEnterpriseClient
-from .evaluator.client import AsyncEvaluatorClient
-from .smart_gpt.client import AsyncSmartGptClient
-from .functions.client import AsyncFunctionsClient
-from .lip_syncing.client import AsyncLipSyncingClient
+from .copilot.client import AsyncCopilotClient
 from .misc.client import AsyncMiscClient
 
 # this is used as the default value for optional parameters
@@ -207,12 +212,7 @@ class Gooey:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.copilot_integrations = CopilotIntegrationsClient(client_wrapper=self._client_wrapper)
-        self.copilot_for_your_enterprise = CopilotForYourEnterpriseClient(client_wrapper=self._client_wrapper)
-        self.evaluator = EvaluatorClient(client_wrapper=self._client_wrapper)
-        self.smart_gpt = SmartGptClient(client_wrapper=self._client_wrapper)
-        self.functions = FunctionsClient(client_wrapper=self._client_wrapper)
-        self.lip_syncing = LipSyncingClient(client_wrapper=self._client_wrapper)
+        self.copilot = CopilotClient(client_wrapper=self._client_wrapper)
         self.misc = MiscClient(client_wrapper=self._client_wrapper)
 
     def animate(
@@ -334,9 +334,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -371,36 +371,36 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[core.File] = OMIT,
-        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = OMIT,
-        qr_code_file: typing.Optional[core.File] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
+        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        qr_code_data: typing.Optional[str] = None,
+        qr_code_input_image: typing.Optional[core.File] = None,
+        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = None,
+        qr_code_file: typing.Optional[core.File] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        negative_prompt: typing.Optional[str] = None,
+        image_prompt: typing.Optional[str] = None,
         image_prompt_controlnet_models: typing.Optional[
             typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        ] = None,
+        image_prompt_strength: typing.Optional[float] = None,
+        image_prompt_scale: typing.Optional[float] = None,
+        image_prompt_pos_x: typing.Optional[float] = None,
+        image_prompt_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        seed: typing.Optional[int] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
@@ -542,9 +542,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -731,9 +731,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -905,9 +905,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1094,9 +1094,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1228,9 +1228,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1268,10 +1268,10 @@ class Gooey:
         input_columns: typing.Dict[str, str],
         output_columns: typing.Dict[str, str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_urls: typing.Optional[typing.List[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        eval_urls: typing.Optional[typing.List[str]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
@@ -1364,9 +1364,159 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def eval(
+        self,
+        *,
+        documents: typing.Sequence[str],
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]] = OMIT,
+        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BulkEvalPageOutput:
+        """
+        Parameters
+        ----------
+        documents : typing.Sequence[str]
+
+            Upload or link to a CSV or google sheet that contains your sample input data.
+            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+            Remember to includes header names in your CSV too.
+
+
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
+
+        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageOutput
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.eval(
+            documents=["documents"],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "functions": functions,
+                "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BulkEvalPageOutput,
+                    parse_obj_as(
+                        type_=BulkEvalPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1401,21 +1551,21 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        sheet_url: typing.Optional[core.File] = OMIT,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        sheet_url: typing.Optional[core.File] = None,
+        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        task_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
@@ -1517,9 +1667,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1645,9 +1795,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1823,9 +1973,151 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def smart_gpt(
+        self,
+        *,
+        input_prompt: str,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        cot_prompt: typing.Optional[str] = OMIT,
+        reflexion_prompt: typing.Optional[str] = OMIT,
+        dera_prompt: typing.Optional[str] = OMIT,
+        selected_model: typing.Optional[SmartGptPageRequestSelectedModel] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[SmartGptPageRequestResponseFormatType] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SmartGptPageOutput:
+        """
+        Parameters
+        ----------
+        input_prompt : str
+
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        cot_prompt : typing.Optional[str]
+
+        reflexion_prompt : typing.Optional[str]
+
+        dera_prompt : typing.Optional[str]
+
+        selected_model : typing.Optional[SmartGptPageRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[SmartGptPageRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SmartGptPageOutput
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.smart_gpt(
+            input_prompt="input_prompt",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/SmartGPT/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "cot_prompt": cot_prompt,
+                "reflexion_prompt": reflexion_prompt,
+                "dera_prompt": dera_prompt,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SmartGptPageOutput,
+                    parse_obj_as(
+                        type_=SmartGptPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1860,21 +2152,21 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        task_instructions: typing.Optional[str] = None,
+        merge_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = None,
+        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
@@ -1974,9 +2266,238 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def functions(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        code: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> FunctionsPageOutput:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        code : typing.Optional[str]
+            The JS code to be executed.
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used in the code
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FunctionsPageOutput
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.functions()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/functions/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "code": code,
+                "variables": variables,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    FunctionsPageOutput,
+                    parse_obj_as(
+                        type_=FunctionsPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def lipsync(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[LipsyncRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[LipsyncRequestSadtalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LipsyncPageOutput:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[LipsyncRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_face : typing.Optional[core.File]
+            See core.File for more documentation
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[LipsyncRequestSadtalkerSettings]
+
+        selected_model : typing.Optional[LipsyncRequestSelectedModel]
+
+        input_audio : typing.Optional[core.File]
+            See core.File for more documentation
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageOutput
+            Successful Response
+
+        Examples
+        --------
+        from gooey import Gooey
+
+        client = Gooey(
+            api_key="YOUR_API_KEY",
+        )
+        client.lipsync()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            data={
+                "functions": functions,
+                "variables": variables,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "selected_model": selected_model,
+                "settings": settings,
+            },
+            files={
+                "input_face": input_face,
+                "input_audio": input_audio,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LipsyncPageOutput,
+                    parse_obj_as(
+                        type_=LipsyncPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2011,34 +2532,34 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
@@ -2180,9 +2701,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2355,9 +2876,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2392,17 +2913,17 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        language: typing.Optional[str] = None,
+        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
+        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        google_translate_target: typing.Optional[str] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
@@ -2492,9 +3013,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2626,9 +3147,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2662,14 +3183,14 @@ class Gooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        texts: typing.Optional[typing.List[str]] = None,
+        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
@@ -2745,9 +3266,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -2782,22 +3303,22 @@ class Gooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        text_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        prompt_strength: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        seed: typing.Optional[int] = None,
+        image_guidance_scale: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
@@ -2900,9 +3421,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3058,9 +3579,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3096,22 +3617,22 @@ class Gooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        mask_threshold: typing.Optional[float] = None,
+        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        sd2upscaling: typing.Optional[bool] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
@@ -3219,9 +3740,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3257,21 +3778,21 @@ class Gooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        face_scale: typing.Optional[float] = None,
+        face_pos_x: typing.Optional[float] = None,
+        face_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        upscale_factor: typing.Optional[float] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
@@ -3376,9 +3897,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3567,9 +4088,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3719,9 +4240,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3756,16 +4277,16 @@ class Gooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        mask_threshold: typing.Optional[float] = None,
+        rect_persepective_transform: typing.Optional[bool] = None,
+        reflection_opacity: typing.Optional[float] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
@@ -3850,9 +4371,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -3887,13 +4408,13 @@ class Gooey:
         *,
         scale: int,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_image: typing.Optional[core.File] = OMIT,
-        input_video: typing.Optional[core.File] = OMIT,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_image: typing.Optional[core.File] = None,
+        input_video: typing.Optional[core.File] = None,
+        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
@@ -3973,9 +4494,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -4079,9 +4600,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -4275,9 +4796,9 @@ class Gooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -4410,12 +4931,7 @@ class AsyncGooey:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.copilot_integrations = AsyncCopilotIntegrationsClient(client_wrapper=self._client_wrapper)
-        self.copilot_for_your_enterprise = AsyncCopilotForYourEnterpriseClient(client_wrapper=self._client_wrapper)
-        self.evaluator = AsyncEvaluatorClient(client_wrapper=self._client_wrapper)
-        self.smart_gpt = AsyncSmartGptClient(client_wrapper=self._client_wrapper)
-        self.functions = AsyncFunctionsClient(client_wrapper=self._client_wrapper)
-        self.lip_syncing = AsyncLipSyncingClient(client_wrapper=self._client_wrapper)
+        self.copilot = AsyncCopilotClient(client_wrapper=self._client_wrapper)
         self.misc = AsyncMiscClient(client_wrapper=self._client_wrapper)
 
     async def animate(
@@ -4545,9 +5061,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -4582,36 +5098,36 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[core.File] = OMIT,
-        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = OMIT,
-        qr_code_file: typing.Optional[core.File] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
+        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        qr_code_data: typing.Optional[str] = None,
+        qr_code_input_image: typing.Optional[core.File] = None,
+        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = None,
+        qr_code_file: typing.Optional[core.File] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        negative_prompt: typing.Optional[str] = None,
+        image_prompt: typing.Optional[str] = None,
         image_prompt_controlnet_models: typing.Optional[
             typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        ] = None,
+        image_prompt_strength: typing.Optional[float] = None,
+        image_prompt_scale: typing.Optional[float] = None,
+        image_prompt_pos_x: typing.Optional[float] = None,
+        image_prompt_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        seed: typing.Optional[int] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
@@ -4761,9 +5277,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -4958,9 +5474,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5140,9 +5656,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5337,9 +5853,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5479,9 +5995,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5519,10 +6035,10 @@ class AsyncGooey:
         input_columns: typing.Dict[str, str],
         output_columns: typing.Dict[str, str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_urls: typing.Optional[typing.List[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        eval_urls: typing.Optional[typing.List[str]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
@@ -5623,9 +6139,167 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def eval(
+        self,
+        *,
+        documents: typing.Sequence[str],
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]] = OMIT,
+        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BulkEvalPageOutput:
+        """
+        Parameters
+        ----------
+        documents : typing.Sequence[str]
+
+            Upload or link to a CSV or google sheet that contains your sample input data.
+            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+            Remember to includes header names in your CSV too.
+
+
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        eval_prompts : typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]
+
+            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
+            _The `columns` dictionary can be used to reference the spreadsheet columns._
+
+
+        agg_functions : typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]
+
+            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+
+
+        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkEvalPageOutput
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.eval(
+                documents=["documents"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/bulk-eval/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "functions": functions,
+                "variables": variables,
+                "documents": documents,
+                "eval_prompts": eval_prompts,
+                "agg_functions": agg_functions,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BulkEvalPageOutput,
+                    parse_obj_as(
+                        type_=BulkEvalPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5660,21 +6334,21 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        sheet_url: typing.Optional[core.File] = OMIT,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        sheet_url: typing.Optional[core.File] = None,
+        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        task_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
@@ -5784,9 +6458,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -5920,9 +6594,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6106,9 +6780,159 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def smart_gpt(
+        self,
+        *,
+        input_prompt: str,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        cot_prompt: typing.Optional[str] = OMIT,
+        reflexion_prompt: typing.Optional[str] = OMIT,
+        dera_prompt: typing.Optional[str] = OMIT,
+        selected_model: typing.Optional[SmartGptPageRequestSelectedModel] = OMIT,
+        avoid_repetition: typing.Optional[bool] = OMIT,
+        num_outputs: typing.Optional[int] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        sampling_temperature: typing.Optional[float] = OMIT,
+        response_format_type: typing.Optional[SmartGptPageRequestResponseFormatType] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SmartGptPageOutput:
+        """
+        Parameters
+        ----------
+        input_prompt : str
+
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        cot_prompt : typing.Optional[str]
+
+        reflexion_prompt : typing.Optional[str]
+
+        dera_prompt : typing.Optional[str]
+
+        selected_model : typing.Optional[SmartGptPageRequestSelectedModel]
+
+        avoid_repetition : typing.Optional[bool]
+
+        num_outputs : typing.Optional[int]
+
+        quality : typing.Optional[float]
+
+        max_tokens : typing.Optional[int]
+
+        sampling_temperature : typing.Optional[float]
+
+        response_format_type : typing.Optional[SmartGptPageRequestResponseFormatType]
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SmartGptPageOutput
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.smart_gpt(
+                input_prompt="input_prompt",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/SmartGPT/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "functions": functions,
+                "variables": variables,
+                "input_prompt": input_prompt,
+                "cot_prompt": cot_prompt,
+                "reflexion_prompt": reflexion_prompt,
+                "dera_prompt": dera_prompt,
+                "selected_model": selected_model,
+                "avoid_repetition": avoid_repetition,
+                "num_outputs": num_outputs,
+                "quality": quality,
+                "max_tokens": max_tokens,
+                "sampling_temperature": sampling_temperature,
+                "response_format_type": response_format_type,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SmartGptPageOutput,
+                    parse_obj_as(
+                        type_=SmartGptPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6143,21 +6967,21 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        task_instructions: typing.Optional[str] = None,
+        merge_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = None,
+        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
@@ -6265,9 +7089,254 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def functions(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        code: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[RunSettings] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> FunctionsPageOutput:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        code : typing.Optional[str]
+            The JS code to be executed.
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used in the code
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        FunctionsPageOutput
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.functions()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/functions/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            json={
+                "code": code,
+                "variables": variables,
+                "settings": settings,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    FunctionsPageOutput,
+                    parse_obj_as(
+                        type_=FunctionsPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        parse_obj_as(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def lipsync(
+        self,
+        *,
+        example_id: typing.Optional[str] = None,
+        functions: typing.Optional[typing.List[LipsyncRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[LipsyncRequestSadtalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LipsyncPageOutput:
+        """
+        Parameters
+        ----------
+        example_id : typing.Optional[str]
+
+        functions : typing.Optional[typing.List[LipsyncRequestFunctionsItem]]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Variables to be used as Jinja prompt templates and in functions as arguments
+
+        input_face : typing.Optional[core.File]
+            See core.File for more documentation
+
+        face_padding_top : typing.Optional[int]
+
+        face_padding_bottom : typing.Optional[int]
+
+        face_padding_left : typing.Optional[int]
+
+        face_padding_right : typing.Optional[int]
+
+        sadtalker_settings : typing.Optional[LipsyncRequestSadtalkerSettings]
+
+        selected_model : typing.Optional[LipsyncRequestSelectedModel]
+
+        input_audio : typing.Optional[core.File]
+            See core.File for more documentation
+
+        settings : typing.Optional[RunSettings]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LipsyncPageOutput
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from gooey import AsyncGooey
+
+        client = AsyncGooey(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.lipsync()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v3/Lipsync/async",
+            method="POST",
+            params={
+                "example_id": example_id,
+            },
+            data={
+                "functions": functions,
+                "variables": variables,
+                "face_padding_top": face_padding_top,
+                "face_padding_bottom": face_padding_bottom,
+                "face_padding_left": face_padding_left,
+                "face_padding_right": face_padding_right,
+                "sadtalker_settings": sadtalker_settings,
+                "selected_model": selected_model,
+                "settings": settings,
+            },
+            files={
+                "input_face": input_face,
+                "input_audio": input_audio,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LipsyncPageOutput,
+                    parse_obj_as(
+                        type_=LipsyncPageOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    typing.cast(
+                        GenericErrorResponse,
+                        parse_obj_as(
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6302,34 +7371,34 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
@@ -6479,9 +7548,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6662,9 +7731,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6699,17 +7768,17 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        language: typing.Optional[str] = None,
+        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
+        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        google_translate_target: typing.Optional[str] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
@@ -6807,9 +7876,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6949,9 +8018,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -6985,14 +8054,14 @@ class AsyncGooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        texts: typing.Optional[typing.List[str]] = None,
+        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
@@ -7076,9 +8145,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -7113,22 +8182,22 @@ class AsyncGooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        text_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        prompt_strength: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        seed: typing.Optional[int] = None,
+        image_guidance_scale: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
@@ -7239,9 +8308,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -7405,9 +8474,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -7443,22 +8512,22 @@ class AsyncGooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        mask_threshold: typing.Optional[float] = None,
+        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        sd2upscaling: typing.Optional[bool] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
@@ -7574,9 +8643,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -7612,21 +8681,21 @@ class AsyncGooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        face_scale: typing.Optional[float] = None,
+        face_pos_x: typing.Optional[float] = None,
+        face_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        upscale_factor: typing.Optional[float] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
@@ -7739,9 +8808,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -7938,9 +9007,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -8098,9 +9167,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -8135,16 +9204,16 @@ class AsyncGooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        mask_threshold: typing.Optional[float] = None,
+        rect_persepective_transform: typing.Optional[bool] = None,
+        reflection_opacity: typing.Optional[float] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
@@ -8237,9 +9306,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -8274,13 +9343,13 @@ class AsyncGooey:
         *,
         scale: int,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_image: typing.Optional[core.File] = OMIT,
-        input_video: typing.Optional[core.File] = OMIT,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_image: typing.Optional[core.File] = None,
+        input_video: typing.Optional[core.File] = None,
+        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
@@ -8368,9 +9437,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -8482,9 +9551,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -8686,9 +9755,9 @@ class AsyncGooey:
             if _response.status_code == 402:
                 raise PaymentRequiredError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        GenericErrorResponse,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=GenericErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

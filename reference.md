@@ -1500,6 +1500,181 @@ _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the result
 </dl>
 </details>
 
+<details><summary><code>client.<a href="src/gooey/client.py">eval</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.eval(
+    documents=["documents"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documents:** `typing.Sequence[str]` 
+
+
+Upload or link to a CSV or google sheet that contains your sample input data. 
+For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs. 
+Remember to includes header names in your CSV too.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**example_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eval_prompts:** `typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]` 
+
+
+Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.  
+_The `columns` dictionary can be used to reference the spreadsheet columns._            
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agg_functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]` 
+
+
+Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[BulkEvalPageRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[BulkEvalPageRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="src/gooey/client.py">synthesize_data</a>(...)</code></summary>
 <dl>
 <dd>
@@ -2067,6 +2242,174 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 </dl>
 </details>
 
+<details><summary><code>client.<a href="src/gooey/client.py">smart_gpt</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.smart_gpt(
+    input_prompt="input_prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input_prompt:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**example_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cot_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reflexion_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dera_prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[SmartGptPageRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avoid_repetition:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_outputs:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_tokens:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling_temperature:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_format_type:** `typing.Optional[SmartGptPageRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="src/gooey/client.py">doc_summary</a>(...)</code></summary>
 <dl>
 <dd>
@@ -2224,6 +2567,230 @@ typing.List[core.File]` — See core.File for more documentation
 <dd>
 
 **response_format_type:** `typing.Optional[DocSummaryRequestResponseFormatType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">functions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.functions()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**example_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `typing.Optional[str]` — The JS code to be executed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used in the code
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[RunSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/gooey/client.py">lipsync</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from gooey import Gooey
+
+client = Gooey(
+    api_key="YOUR_API_KEY",
+)
+client.lipsync()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**example_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**functions:** `typing.Optional[typing.List[LipsyncRequestFunctionsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_face:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_top:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_bottom:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_left:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**face_padding_right:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sadtalker_settings:** `typing.Optional[LipsyncRequestSadtalkerSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_model:** `typing.Optional[LipsyncRequestSelectedModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_audio:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -5116,8 +5683,8 @@ client.health_status_get()
 </dl>
 </details>
 
-## CopilotIntegrations
-<details><summary><code>client.copilot_integrations.<a href="src/gooey/copilot_integrations/client.py">video_bots_stream_create</a>(...)</code></summary>
+## Copilot
+<details><summary><code>client.copilot.<a href="src/gooey/copilot/client.py">completion</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5135,667 +5702,7 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.copilot_integrations.video_bots_stream_create(
-    integration_id="integration_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**integration_id:** `str` — Your Integration ID as shown in the Copilot Integrations tab
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**conversation_id:** `typing.Optional[str]` 
-
-The gooey conversation ID.
-
-If not provided, a new conversation will be started and a new ID will be returned in the response. Use this to maintain the state of the conversation between requests.
-
-Note that you may not provide a custom ID here, and must only use the `conversation_id` returned in a previous response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_id:** `typing.Optional[str]` 
-
-Your app's custom user ID.
-
-If not provided, a random user will be created and a new ID will be returned in the response. If a `conversation_id` is provided, this field is automatically set to the user's id associated with that conversation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_message_id:** `typing.Optional[str]` 
-
-Your app's custom message ID for the user message.
-
-If not provided, a random ID will be generated and returned in the response. This is useful for tracking messages in the conversation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**button_pressed:** `typing.Optional[ButtonPressed]` — The button that was pressed by the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_prompt:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_audio:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_images:** `typing.Optional[typing.Sequence[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_documents:** `typing.Optional[typing.Sequence[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**doc_extract_url:** `typing.Optional[str]` — Select a workflow to extract text from documents and images.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**messages:** `typing.Optional[typing.Sequence[ConversationEntry]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bot_script:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_model:** `typing.Optional[CreateStreamRequestSelectedModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**document_model:** `typing.Optional[str]` — When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**query_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**keyword_instructions:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**documents:** `typing.Optional[typing.Sequence[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_references:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_context_words:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scroll_jump:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embedding_model:** `typing.Optional[CreateStreamRequestEmbeddingModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dense_weight:** `typing.Optional[float]` 
-
-
-Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-        
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**citation_style:** `typing.Optional[CreateStreamRequestCitationStyle]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_url_shortener:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**asr_model:** `typing.Optional[CreateStreamRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**asr_language:** `typing.Optional[str]` — Choose a language to transcribe incoming audio messages to text.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**translation_model:** `typing.Optional[CreateStreamRequestTranslationModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_language:** `typing.Optional[str]` — Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_glossary_document:** `typing.Optional[str]` 
-
-
-Translation Glossary for User Langauge -> LLM Language (English)
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_glossary_document:** `typing.Optional[str]` 
-
-
-Translation Glossary for LLM Language (English) -> User Langauge
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**lipsync_model:** `typing.Optional[CreateStreamRequestLipsyncModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tools:** `typing.Optional[typing.Sequence[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avoid_repetition:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_outputs:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_tokens:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling_temperature:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**response_format_type:** `typing.Optional[CreateStreamRequestResponseFormatType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tts_provider:** `typing.Optional[CreateStreamRequestTtsProvider]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**uberduck_voice_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**uberduck_speaking_rate:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_voice_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_speaking_rate:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_pitch:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bark_history_prompt:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_voice_name:** `typing.Optional[str]` — Use `elevenlabs_voice_id` instead
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_api_key:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_voice_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_model:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_stability:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_similarity_boost:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_style:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**elevenlabs_speaker_boost:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**azure_voice_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**openai_voice_name:** `typing.Optional[CreateStreamRequestOpenaiVoiceName]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**openai_tts_model:** `typing.Optional[CreateStreamRequestOpenaiTtsModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_face:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_top:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_bottom:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_left:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_right:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_text:** `typing.Optional[str]` — Use `input_prompt` instead
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.copilot_integrations.<a href="src/gooey/copilot_integrations/client.py">video_bots_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.copilot_integrations.video_bots_stream(
-    request_id="request_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CopilotForYourEnterprise
-<details><summary><code>client.copilot_for_your_enterprise.<a href="src/gooey/copilot_for_your_enterprise/client.py">async_video_bots</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.copilot_for_your_enterprise.async_video_bots()
+client.copilot.completion()
 
 ```
 </dd>
@@ -5819,7 +5726,7 @@ client.copilot_for_your_enterprise.async_video_bots()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[AsyncVideoBotsRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]]` 
     
 </dd>
 </dl>
@@ -5879,7 +5786,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.List[AsyncVideoBotsRequestMessagesItem]]` 
+**messages:** `typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]]` 
     
 </dd>
 </dl>
@@ -5895,7 +5802,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsyncVideoBotsRequestSelectedModel]` 
+**selected_model:** `typing.Optional[CopilotCompletionRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5969,7 +5876,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[AsyncVideoBotsRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[CopilotCompletionRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -5990,7 +5897,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[AsyncVideoBotsRequestCitationStyle]` 
+**citation_style:** `typing.Optional[CopilotCompletionRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -6006,7 +5913,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**asr_model:** `typing.Optional[AsyncVideoBotsRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
+**asr_model:** `typing.Optional[CopilotCompletionRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
     
 </dd>
 </dl>
@@ -6022,7 +5929,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[AsyncVideoBotsRequestTranslationModel]` 
+**translation_model:** `typing.Optional[CopilotCompletionRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -6058,7 +5965,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**lipsync_model:** `typing.Optional[AsyncVideoBotsRequestLipsyncModel]` 
+**lipsync_model:** `typing.Optional[CopilotCompletionRequestLipsyncModel]` 
     
 </dd>
 </dl>
@@ -6114,7 +6021,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[AsyncVideoBotsRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[CopilotCompletionRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -6122,7 +6029,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[AsyncVideoBotsRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[CopilotCompletionRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -6250,7 +6157,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[AsyncVideoBotsRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[CopilotCompletionRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -6258,560 +6165,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[AsyncVideoBotsRequestOpenaiTtsModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_face:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_top:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_bottom:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_left:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**face_padding_right:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sadtalker_settings:** `typing.Optional[AsyncVideoBotsRequestSadtalkerSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Evaluator
-<details><summary><code>client.evaluator.<a href="src/gooey/evaluator/client.py">async_bulk_eval</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.evaluator.async_bulk_eval(
-    documents=["documents"],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**documents:** `typing.Sequence[str]` 
-
-
-Upload or link to a CSV or google sheet that contains your sample input data. 
-For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs. 
-Remember to includes header names in your CSV too.
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**example_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**eval_prompts:** `typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]` 
-
-
-Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.  
-_The `columns` dictionary can be used to reference the spreadsheet columns._            
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agg_functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]` 
-
-
-Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_model:** `typing.Optional[BulkEvalPageRequestSelectedModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avoid_repetition:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_outputs:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_tokens:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling_temperature:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**response_format_type:** `typing.Optional[BulkEvalPageRequestResponseFormatType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SmartGpt
-<details><summary><code>client.smart_gpt.<a href="src/gooey/smart_gpt/client.py">async_smart_gpt</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.smart_gpt.async_smart_gpt(
-    input_prompt="input_prompt",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input_prompt:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**example_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**functions:** `typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cot_prompt:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reflexion_prompt:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dera_prompt:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_model:** `typing.Optional[SmartGptPageRequestSelectedModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avoid_repetition:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_outputs:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_tokens:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling_temperature:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**response_format_type:** `typing.Optional[SmartGptPageRequestResponseFormatType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Functions
-<details><summary><code>client.functions.<a href="src/gooey/functions/client.py">async_functions</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.functions.async_functions()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**example_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**code:** `typing.Optional[str]` — The JS code to be executed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used in the code
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `typing.Optional[RunSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## LipSyncing
-<details><summary><code>client.lip_syncing.<a href="src/gooey/lip_syncing/client.py">async_lipsync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from gooey import Gooey
-
-client = Gooey(
-    api_key="YOUR_API_KEY",
-)
-client.lip_syncing.async_lipsync()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**example_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**functions:** `typing.Optional[typing.List[AsyncLipsyncRequestFunctionsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**variables:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Variables to be used as Jinja prompt templates and in functions as arguments
+**openai_tts_model:** `typing.Optional[CopilotCompletionRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -6861,25 +6215,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**sadtalker_settings:** `typing.Optional[AsyncLipsyncRequestSadtalkerSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_model:** `typing.Optional[AsyncLipsyncRequestSelectedModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_audio:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**sadtalker_settings:** `typing.Optional[CopilotCompletionRequestSadtalkerSettings]` 
     
 </dd>
 </dl>
