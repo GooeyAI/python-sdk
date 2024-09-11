@@ -16,12 +16,19 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import Gooey
+from gooey import DeforumSdPageRequestAnimationPromptsItem, Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.post_v3video_bots_async()
+client.animate(
+    animation_prompts=[
+        DeforumSdPageRequestAnimationPromptsItem(
+            frame="frame",
+            prompt="prompt",
+        )
+    ],
+)
 ```
 
 ## Async Client
@@ -31,7 +38,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AsyncGooey
+from gooey import AsyncGooey, DeforumSdPageRequestAnimationPromptsItem
 
 client = AsyncGooey(
     api_key="YOUR_API_KEY",
@@ -39,7 +46,14 @@ client = AsyncGooey(
 
 
 async def main() -> None:
-    await client.post_v3video_bots_async()
+    await client.animate(
+        animation_prompts=[
+            DeforumSdPageRequestAnimationPromptsItem(
+                frame="frame",
+                prompt="prompt",
+            )
+        ],
+    )
 
 
 asyncio.run(main())
@@ -54,7 +68,7 @@ will be thrown.
 from gooey.core.api_error import ApiError
 
 try:
-    client.post_v3video_bots_async(...)
+    client.animate(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -77,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.post_v3video_bots_async(..., {
+client.animate(..., {
     "max_retries": 1
 })
 ```
@@ -97,7 +111,7 @@ client = Gooey(
 
 
 # Override timeout for a specific method
-client.post_v3video_bots_async(..., {
+client.animate(..., {
     "timeout_in_seconds": 1
 })
 ```
