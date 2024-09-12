@@ -7,8 +7,8 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .copilot.client import CopilotClient
-from .types.deforum_sd_page_request_animation_prompts_item import DeforumSdPageRequestAnimationPromptsItem
-from .types.deforum_sd_page_request_functions_item import DeforumSdPageRequestFunctionsItem
+from .types.animation_prompt import AnimationPrompt
+from .types.recipe_function import RecipeFunction
 from .types.deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
 from .types.run_settings import RunSettings
 from .core.request_options import RequestOptions
@@ -20,126 +20,88 @@ from .errors.unprocessable_entity_error import UnprocessableEntityError
 from .types.http_validation_error import HttpValidationError
 from .errors.too_many_requests_error import TooManyRequestsError
 from json.decoder import JSONDecodeError
-from .types.qr_code_request_functions_item import QrCodeRequestFunctionsItem
 from . import core
-from .types.qr_code_request_qr_code_vcard import QrCodeRequestQrCodeVcard
+from .types.vcard import Vcard
 from .types.qr_code_request_image_prompt_controlnet_models_item import QrCodeRequestImagePromptControlnetModelsItem
 from .types.qr_code_request_selected_model import QrCodeRequestSelectedModel
 from .types.qr_code_request_selected_controlnet_model_item import QrCodeRequestSelectedControlnetModelItem
 from .types.qr_code_request_scheduler import QrCodeRequestScheduler
 from .types.qr_code_generator_page_output import QrCodeGeneratorPageOutput
-from .types.related_qn_a_page_request_functions_item import RelatedQnAPageRequestFunctionsItem
-from .types.related_qn_a_page_request_selected_model import RelatedQnAPageRequestSelectedModel
+from .types.large_language_models import LargeLanguageModels
 from .types.related_qn_a_page_request_embedding_model import RelatedQnAPageRequestEmbeddingModel
 from .types.related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
 from .types.serp_search_location import SerpSearchLocation
 from .types.serp_search_type import SerpSearchType
 from .types.related_qn_a_page_output import RelatedQnAPageOutput
-from .types.seo_summary_page_request_selected_model import SeoSummaryPageRequestSelectedModel
 from .types.seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
 from .types.seo_summary_page_output import SeoSummaryPageOutput
-from .types.google_gpt_page_request_functions_item import GoogleGptPageRequestFunctionsItem
-from .types.google_gpt_page_request_selected_model import GoogleGptPageRequestSelectedModel
 from .types.google_gpt_page_request_embedding_model import GoogleGptPageRequestEmbeddingModel
 from .types.google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
 from .types.google_gpt_page_output import GoogleGptPageOutput
-from .types.social_lookup_email_page_request_functions_item import SocialLookupEmailPageRequestFunctionsItem
-from .types.social_lookup_email_page_request_selected_model import SocialLookupEmailPageRequestSelectedModel
 from .types.social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
 from .types.social_lookup_email_page_output import SocialLookupEmailPageOutput
-from .types.bulk_run_request_functions_item import BulkRunRequestFunctionsItem
 from .types.bulk_runner_page_output import BulkRunnerPageOutput
-from .types.bulk_eval_page_request_functions_item import BulkEvalPageRequestFunctionsItem
-from .types.bulk_eval_page_request_eval_prompts_item import BulkEvalPageRequestEvalPromptsItem
-from .types.bulk_eval_page_request_agg_functions_item import BulkEvalPageRequestAggFunctionsItem
-from .types.bulk_eval_page_request_selected_model import BulkEvalPageRequestSelectedModel
+from .types.eval_prompt import EvalPrompt
+from .types.agg_function import AggFunction
 from .types.bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
 from .types.bulk_eval_page_output import BulkEvalPageOutput
-from .types.synthesize_data_request_functions_item import SynthesizeDataRequestFunctionsItem
 from .types.synthesize_data_request_selected_asr_model import SynthesizeDataRequestSelectedAsrModel
-from .types.synthesize_data_request_selected_model import SynthesizeDataRequestSelectedModel
 from .types.synthesize_data_request_response_format_type import SynthesizeDataRequestResponseFormatType
 from .types.doc_extract_page_output import DocExtractPageOutput
-from .types.compare_llm_page_request_functions_item import CompareLlmPageRequestFunctionsItem
-from .types.compare_llm_page_request_selected_models_item import CompareLlmPageRequestSelectedModelsItem
 from .types.compare_llm_page_request_response_format_type import CompareLlmPageRequestResponseFormatType
 from .types.compare_llm_page_output import CompareLlmPageOutput
-from .types.doc_search_page_request_functions_item import DocSearchPageRequestFunctionsItem
 from .types.doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
 from .types.doc_search_page_request_embedding_model import DocSearchPageRequestEmbeddingModel
-from .types.doc_search_page_request_selected_model import DocSearchPageRequestSelectedModel
 from .types.doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
 from .types.doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
 from .types.doc_search_page_output import DocSearchPageOutput
-from .types.smart_gpt_page_request_functions_item import SmartGptPageRequestFunctionsItem
-from .types.smart_gpt_page_request_selected_model import SmartGptPageRequestSelectedModel
 from .types.smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
 from .types.smart_gpt_page_output import SmartGptPageOutput
-from .types.doc_summary_request_functions_item import DocSummaryRequestFunctionsItem
-from .types.doc_summary_request_selected_model import DocSummaryRequestSelectedModel
 from .types.doc_summary_request_selected_asr_model import DocSummaryRequestSelectedAsrModel
 from .types.doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
 from .types.doc_summary_page_output import DocSummaryPageOutput
 from .types.functions_page_output import FunctionsPageOutput
-from .types.lipsync_request_functions_item import LipsyncRequestFunctionsItem
-from .types.lipsync_request_sadtalker_settings import LipsyncRequestSadtalkerSettings
+from .types.sad_talker_settings import SadTalkerSettings
 from .types.lipsync_request_selected_model import LipsyncRequestSelectedModel
 from .types.lipsync_page_output import LipsyncPageOutput
-from .types.lipsync_tts_request_functions_item import LipsyncTtsRequestFunctionsItem
 from .types.lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
 from .types.lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
 from .types.lipsync_tts_request_openai_tts_model import LipsyncTtsRequestOpenaiTtsModel
-from .types.lipsync_tts_request_sadtalker_settings import LipsyncTtsRequestSadtalkerSettings
 from .types.lipsync_tts_request_selected_model import LipsyncTtsRequestSelectedModel
 from .types.lipsync_tts_page_output import LipsyncTtsPageOutput
-from .types.text_to_speech_page_request_functions_item import TextToSpeechPageRequestFunctionsItem
 from .types.text_to_speech_page_request_tts_provider import TextToSpeechPageRequestTtsProvider
 from .types.text_to_speech_page_request_openai_voice_name import TextToSpeechPageRequestOpenaiVoiceName
 from .types.text_to_speech_page_request_openai_tts_model import TextToSpeechPageRequestOpenaiTtsModel
 from .types.text_to_speech_page_output import TextToSpeechPageOutput
-from .types.speech_recognition_request_functions_item import SpeechRecognitionRequestFunctionsItem
 from .types.speech_recognition_request_selected_model import SpeechRecognitionRequestSelectedModel
 from .types.speech_recognition_request_translation_model import SpeechRecognitionRequestTranslationModel
 from .types.speech_recognition_request_output_format import SpeechRecognitionRequestOutputFormat
 from .types.asr_page_output import AsrPageOutput
-from .types.text2audio_page_request_functions_item import Text2AudioPageRequestFunctionsItem
 from .types.text2audio_page_output import Text2AudioPageOutput
-from .types.translate_request_functions_item import TranslateRequestFunctionsItem
 from .types.translate_request_selected_model import TranslateRequestSelectedModel
 from .types.translation_page_output import TranslationPageOutput
-from .types.remix_image_request_functions_item import RemixImageRequestFunctionsItem
 from .types.remix_image_request_selected_model import RemixImageRequestSelectedModel
 from .types.remix_image_request_selected_controlnet_model import RemixImageRequestSelectedControlnetModel
 from .types.img2img_page_output import Img2ImgPageOutput
-from .types.compare_text2img_page_request_functions_item import CompareText2ImgPageRequestFunctionsItem
 from .types.compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
 from .types.compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
 from .types.compare_text2img_page_output import CompareText2ImgPageOutput
-from .types.product_image_request_functions_item import ProductImageRequestFunctionsItem
 from .types.product_image_request_selected_model import ProductImageRequestSelectedModel
 from .types.object_inpainting_page_output import ObjectInpaintingPageOutput
-from .types.portrait_request_functions_item import PortraitRequestFunctionsItem
 from .types.portrait_request_selected_model import PortraitRequestSelectedModel
 from .types.face_inpainting_page_output import FaceInpaintingPageOutput
-from .types.email_face_inpainting_page_request_functions_item import EmailFaceInpaintingPageRequestFunctionsItem
 from .types.email_face_inpainting_page_request_selected_model import EmailFaceInpaintingPageRequestSelectedModel
 from .types.email_face_inpainting_page_output import EmailFaceInpaintingPageOutput
-from .types.google_image_gen_page_request_functions_item import GoogleImageGenPageRequestFunctionsItem
 from .types.google_image_gen_page_request_selected_model import GoogleImageGenPageRequestSelectedModel
 from .types.google_image_gen_page_output import GoogleImageGenPageOutput
-from .types.remove_background_request_functions_item import RemoveBackgroundRequestFunctionsItem
 from .types.remove_background_request_selected_model import RemoveBackgroundRequestSelectedModel
 from .types.image_segmentation_page_output import ImageSegmentationPageOutput
-from .types.upscale_request_functions_item import UpscaleRequestFunctionsItem
 from .types.upscale_request_selected_models_item import UpscaleRequestSelectedModelsItem
 from .types.compare_upscaler_page_output import CompareUpscalerPageOutput
-from .types.embeddings_page_request_functions_item import EmbeddingsPageRequestFunctionsItem
 from .types.embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
 from .types.embeddings_page_output import EmbeddingsPageOutput
-from .types.related_qn_a_doc_page_request_functions_item import RelatedQnADocPageRequestFunctionsItem
 from .types.related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
 from .types.related_qn_a_doc_page_request_embedding_model import RelatedQnADocPageRequestEmbeddingModel
-from .types.related_qn_a_doc_page_request_selected_model import RelatedQnADocPageRequestSelectedModel
 from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
 from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .types.related_qn_a_doc_page_output import RelatedQnADocPageOutput
@@ -216,9 +178,9 @@ class Gooey:
     def animate(
         self,
         *,
-        animation_prompts: typing.Sequence[DeforumSdPageRequestAnimationPromptsItem],
+        animation_prompts: typing.Sequence[AnimationPrompt],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[DeforumSdPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         max_frames: typing.Optional[int] = OMIT,
         selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
@@ -237,11 +199,11 @@ class Gooey:
         """
         Parameters
         ----------
-        animation_prompts : typing.Sequence[DeforumSdPageRequestAnimationPromptsItem]
+        animation_prompts : typing.Sequence[AnimationPrompt]
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[DeforumSdPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -280,14 +242,14 @@ class Gooey:
 
         Examples
         --------
-        from gooey import DeforumSdPageRequestAnimationPromptsItem, Gooey
+        from gooey import AnimationPrompt, Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.animate(
             animation_prompts=[
-                DeforumSdPageRequestAnimationPromptsItem(
+                AnimationPrompt(
                     frame="frame",
                     prompt="prompt",
                 )
@@ -369,36 +331,36 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[core.File] = OMIT,
-        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = OMIT,
-        qr_code_file: typing.Optional[core.File] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        qr_code_data: typing.Optional[str] = None,
+        qr_code_input_image: typing.Optional[core.File] = None,
+        qr_code_vcard: typing.Optional[Vcard] = None,
+        qr_code_file: typing.Optional[core.File] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        negative_prompt: typing.Optional[str] = None,
+        image_prompt: typing.Optional[str] = None,
         image_prompt_controlnet_models: typing.Optional[
             typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        ] = None,
+        image_prompt_strength: typing.Optional[float] = None,
+        image_prompt_scale: typing.Optional[float] = None,
+        image_prompt_pos_x: typing.Optional[float] = None,
+        image_prompt_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        seed: typing.Optional[int] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
@@ -408,7 +370,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[QrCodeRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -418,7 +380,7 @@ class Gooey:
         qr_code_input_image : typing.Optional[core.File]
             See core.File for more documentation
 
-        qr_code_vcard : typing.Optional[QrCodeRequestQrCodeVcard]
+        qr_code_vcard : typing.Optional[Vcard]
 
         qr_code_file : typing.Optional[core.File]
             See core.File for more documentation
@@ -578,11 +540,11 @@ class Gooey:
         search_query: str,
         site_filter: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RelatedQnAPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnAPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
@@ -611,7 +573,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RelatedQnAPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -620,7 +582,7 @@ class Gooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[RelatedQnAPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -771,7 +733,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         task_instructions: typing.Optional[str] = OMIT,
         enable_html: typing.Optional[bool] = OMIT,
-        selected_model: typing.Optional[SeoSummaryPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         enable_crosslinks: typing.Optional[bool] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -805,7 +767,7 @@ class Gooey:
 
         enable_html : typing.Optional[bool]
 
-        selected_model : typing.Optional[SeoSummaryPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -941,11 +903,11 @@ class Gooey:
         search_query: str,
         site_filter: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[GoogleGptPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[GoogleGptPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
@@ -974,7 +936,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[GoogleGptPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -983,7 +945,7 @@ class Gooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[GoogleGptPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -1129,10 +1091,10 @@ class Gooey:
         *,
         email_address: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[SocialLookupEmailPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         input_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SocialLookupEmailPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -1149,14 +1111,14 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[SocialLookupEmailPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
         input_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[SocialLookupEmailPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -1266,10 +1228,10 @@ class Gooey:
         input_columns: typing.Dict[str, str],
         output_columns: typing.Dict[str, str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_urls: typing.Optional[typing.List[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        eval_urls: typing.Optional[typing.List[str]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
@@ -1296,7 +1258,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[BulkRunRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -1399,11 +1361,11 @@ class Gooey:
         *,
         documents: typing.Sequence[str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]] = OMIT,
-        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -1425,23 +1387,23 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        eval_prompts : typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]
+        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
 
             Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
             _The `columns` dictionary can be used to reference the spreadsheet columns._
 
 
-        agg_functions : typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]
+        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
 
             Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
 
 
-        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -1549,21 +1511,21 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        sheet_url: typing.Optional[core.File] = OMIT,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        sheet_url: typing.Optional[core.File] = None,
+        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        task_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
@@ -1574,7 +1536,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -1591,7 +1553,7 @@ class Gooey:
 
         task_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[SynthesizeDataRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -1701,10 +1663,10 @@ class Gooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[CompareLlmPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         input_prompt: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[LargeLanguageModels]] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -1719,14 +1681,14 @@ class Gooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[CompareLlmPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
         input_prompt : typing.Optional[str]
 
-        selected_models : typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.Sequence[LargeLanguageModels]]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -1830,7 +1792,7 @@ class Gooey:
         *,
         search_query: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[DocSearchPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         keyword_query: typing.Optional[DocSearchPageRequestKeywordQuery] = OMIT,
         documents: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -1842,7 +1804,7 @@ class Gooey:
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSearchPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -1860,7 +1822,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[DocSearchPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -1889,7 +1851,7 @@ class Gooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[DocSearchPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
 
@@ -2008,12 +1970,12 @@ class Gooey:
         *,
         input_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         cot_prompt: typing.Optional[str] = OMIT,
         reflexion_prompt: typing.Optional[str] = OMIT,
         dera_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SmartGptPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -2030,7 +1992,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -2041,7 +2003,7 @@ class Gooey:
 
         dera_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[SmartGptPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -2150,21 +2112,21 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        task_instructions: typing.Optional[str] = None,
+        merge_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
@@ -2175,7 +2137,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[DocSummaryRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -2184,7 +2146,7 @@ class Gooey:
 
         merge_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[DocSummaryRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         chain_type : typing.Optional[typing.Literal["map_reduce"]]
 
@@ -2397,17 +2359,17 @@ class Gooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncRequestSelectedModel] = OMIT,
-        input_audio: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncPageOutput:
         """
@@ -2415,7 +2377,7 @@ class Gooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[LipsyncRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -2431,7 +2393,7 @@ class Gooey:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[LipsyncRequestSadtalkerSettings]
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
 
         selected_model : typing.Optional[LipsyncRequestSelectedModel]
 
@@ -2530,34 +2492,34 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
@@ -2567,7 +2529,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -2620,7 +2582,7 @@ class Gooey:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[LipsyncTtsRequestSadtalkerSettings]
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
 
         selected_model : typing.Optional[LipsyncTtsRequestSelectedModel]
 
@@ -2736,7 +2698,7 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[TextToSpeechPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
@@ -2766,7 +2728,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[TextToSpeechPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -2911,17 +2873,17 @@ class Gooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        language: typing.Optional[str] = None,
+        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
+        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        google_translate_target: typing.Optional[str] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
@@ -2932,7 +2894,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3048,7 +3010,7 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[Text2AudioPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         duration_sec: typing.Optional[float] = OMIT,
@@ -3068,7 +3030,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[Text2AudioPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3181,14 +3143,14 @@ class Gooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        texts: typing.Optional[typing.List[str]] = None,
+        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
@@ -3196,7 +3158,7 @@ class Gooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[TranslateRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3301,22 +3263,22 @@ class Gooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        text_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        prompt_strength: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        seed: typing.Optional[int] = None,
+        image_guidance_scale: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
@@ -3327,7 +3289,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[RemixImageRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3456,7 +3418,7 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[CompareText2ImgPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         output_width: typing.Optional[int] = OMIT,
@@ -3482,7 +3444,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[CompareText2ImgPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3615,22 +3577,22 @@ class Gooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        mask_threshold: typing.Optional[float] = None,
+        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        sd2upscaling: typing.Optional[bool] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
@@ -3643,7 +3605,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[ProductImageRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3776,21 +3738,21 @@ class Gooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        face_scale: typing.Optional[float] = None,
+        face_pos_x: typing.Optional[float] = None,
+        face_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        upscale_factor: typing.Optional[float] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
@@ -3803,7 +3765,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[PortraitRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -3932,7 +3894,7 @@ class Gooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[EmailFaceInpaintingPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         email_address: typing.Optional[str] = OMIT,
         twitter_handle: typing.Optional[str] = OMIT,
@@ -3966,7 +3928,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[EmailFaceInpaintingPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4124,7 +4086,7 @@ class Gooey:
         search_query: str,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[GoogleImageGenPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -4149,7 +4111,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[GoogleImageGenPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4275,16 +4237,16 @@ class Gooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        mask_threshold: typing.Optional[float] = None,
+        rect_persepective_transform: typing.Optional[bool] = None,
+        reflection_opacity: typing.Optional[float] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
@@ -4295,7 +4257,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4406,13 +4368,13 @@ class Gooey:
         *,
         scale: int,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_image: typing.Optional[core.File] = OMIT,
-        input_video: typing.Optional[core.File] = OMIT,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_image: typing.Optional[core.File] = None,
+        input_video: typing.Optional[core.File] = None,
+        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
@@ -4423,7 +4385,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[UpscaleRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4529,7 +4491,7 @@ class Gooey:
         *,
         texts: typing.Sequence[str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[EmbeddingsPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -4542,7 +4504,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[EmbeddingsPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4635,7 +4597,7 @@ class Gooey:
         *,
         search_query: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RelatedQnADocPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         keyword_query: typing.Optional[RelatedQnADocPageRequestKeywordQuery] = OMIT,
         documents: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -4647,7 +4609,7 @@ class Gooey:
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnADocPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -4669,7 +4631,7 @@ class Gooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RelatedQnADocPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4698,7 +4660,7 @@ class Gooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[RelatedQnADocPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
 
@@ -4932,9 +4894,9 @@ class AsyncGooey:
     async def animate(
         self,
         *,
-        animation_prompts: typing.Sequence[DeforumSdPageRequestAnimationPromptsItem],
+        animation_prompts: typing.Sequence[AnimationPrompt],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[DeforumSdPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         max_frames: typing.Optional[int] = OMIT,
         selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
@@ -4953,11 +4915,11 @@ class AsyncGooey:
         """
         Parameters
         ----------
-        animation_prompts : typing.Sequence[DeforumSdPageRequestAnimationPromptsItem]
+        animation_prompts : typing.Sequence[AnimationPrompt]
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[DeforumSdPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -4998,7 +4960,7 @@ class AsyncGooey:
         --------
         import asyncio
 
-        from gooey import AsyncGooey, DeforumSdPageRequestAnimationPromptsItem
+        from gooey import AnimationPrompt, AsyncGooey
 
         client = AsyncGooey(
             api_key="YOUR_API_KEY",
@@ -5008,7 +4970,7 @@ class AsyncGooey:
         async def main() -> None:
             await client.animate(
                 animation_prompts=[
-                    DeforumSdPageRequestAnimationPromptsItem(
+                    AnimationPrompt(
                         frame="frame",
                         prompt="prompt",
                     )
@@ -5093,36 +5055,36 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[QrCodeRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        qr_code_data: typing.Optional[str] = OMIT,
-        qr_code_input_image: typing.Optional[core.File] = OMIT,
-        qr_code_vcard: typing.Optional[QrCodeRequestQrCodeVcard] = OMIT,
-        qr_code_file: typing.Optional[core.File] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        image_prompt: typing.Optional[str] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        qr_code_data: typing.Optional[str] = None,
+        qr_code_input_image: typing.Optional[core.File] = None,
+        qr_code_vcard: typing.Optional[Vcard] = None,
+        qr_code_file: typing.Optional[core.File] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        negative_prompt: typing.Optional[str] = None,
+        image_prompt: typing.Optional[str] = None,
         image_prompt_controlnet_models: typing.Optional[
             typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = OMIT,
-        image_prompt_strength: typing.Optional[float] = OMIT,
-        image_prompt_scale: typing.Optional[float] = OMIT,
-        image_prompt_pos_x: typing.Optional[float] = OMIT,
-        image_prompt_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        ] = None,
+        image_prompt_strength: typing.Optional[float] = None,
+        image_prompt_scale: typing.Optional[float] = None,
+        image_prompt_pos_x: typing.Optional[float] = None,
+        image_prompt_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        seed: typing.Optional[int] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
@@ -5132,7 +5094,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[QrCodeRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -5142,7 +5104,7 @@ class AsyncGooey:
         qr_code_input_image : typing.Optional[core.File]
             See core.File for more documentation
 
-        qr_code_vcard : typing.Optional[QrCodeRequestQrCodeVcard]
+        qr_code_vcard : typing.Optional[Vcard]
 
         qr_code_file : typing.Optional[core.File]
             See core.File for more documentation
@@ -5310,11 +5272,11 @@ class AsyncGooey:
         search_query: str,
         site_filter: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RelatedQnAPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnAPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
@@ -5343,7 +5305,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RelatedQnAPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -5352,7 +5314,7 @@ class AsyncGooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[RelatedQnAPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -5511,7 +5473,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         task_instructions: typing.Optional[str] = OMIT,
         enable_html: typing.Optional[bool] = OMIT,
-        selected_model: typing.Optional[SeoSummaryPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         enable_crosslinks: typing.Optional[bool] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -5545,7 +5507,7 @@ class AsyncGooey:
 
         enable_html : typing.Optional[bool]
 
-        selected_model : typing.Optional[SeoSummaryPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -5689,11 +5651,11 @@ class AsyncGooey:
         search_query: str,
         site_filter: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[GoogleGptPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[GoogleGptPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         max_search_urls: typing.Optional[int] = OMIT,
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
@@ -5722,7 +5684,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[GoogleGptPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -5731,7 +5693,7 @@ class AsyncGooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[GoogleGptPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         max_search_urls : typing.Optional[int]
 
@@ -5885,10 +5847,10 @@ class AsyncGooey:
         *,
         email_address: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[SocialLookupEmailPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         input_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SocialLookupEmailPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -5905,14 +5867,14 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[SocialLookupEmailPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
         input_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[SocialLookupEmailPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6030,10 +5992,10 @@ class AsyncGooey:
         input_columns: typing.Dict[str, str],
         output_columns: typing.Dict[str, str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[BulkRunRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_urls: typing.Optional[typing.List[str]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        eval_urls: typing.Optional[typing.List[str]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
@@ -6060,7 +6022,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[BulkRunRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -6171,11 +6133,11 @@ class AsyncGooey:
         *,
         documents: typing.Sequence[str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        eval_prompts: typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]] = OMIT,
-        agg_functions: typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]] = OMIT,
-        selected_model: typing.Optional[BulkEvalPageRequestSelectedModel] = OMIT,
+        eval_prompts: typing.Optional[typing.Sequence[EvalPrompt]] = OMIT,
+        agg_functions: typing.Optional[typing.Sequence[AggFunction]] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -6197,23 +6159,23 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        eval_prompts : typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]
+        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
 
             Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
             _The `columns` dictionary can be used to reference the spreadsheet columns._
 
 
-        agg_functions : typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]
+        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
 
             Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
 
 
-        selected_model : typing.Optional[BulkEvalPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6329,21 +6291,21 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        sheet_url: typing.Optional[core.File] = OMIT,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SynthesizeDataRequestSelectedModel] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        sheet_url: typing.Optional[core.File] = None,
+        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        task_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
@@ -6354,7 +6316,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -6371,7 +6333,7 @@ class AsyncGooey:
 
         task_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[SynthesizeDataRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6489,10 +6451,10 @@ class AsyncGooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[CompareLlmPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         input_prompt: typing.Optional[str] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[LargeLanguageModels]] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -6507,14 +6469,14 @@ class AsyncGooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[CompareLlmPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
         input_prompt : typing.Optional[str]
 
-        selected_models : typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.Sequence[LargeLanguageModels]]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6626,7 +6588,7 @@ class AsyncGooey:
         *,
         search_query: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[DocSearchPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         keyword_query: typing.Optional[DocSearchPageRequestKeywordQuery] = OMIT,
         documents: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -6638,7 +6600,7 @@ class AsyncGooey:
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSearchPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -6656,7 +6618,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[DocSearchPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -6685,7 +6647,7 @@ class AsyncGooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[DocSearchPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
 
@@ -6812,12 +6774,12 @@ class AsyncGooey:
         *,
         input_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         cot_prompt: typing.Optional[str] = OMIT,
         reflexion_prompt: typing.Optional[str] = OMIT,
         dera_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[SmartGptPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -6834,7 +6796,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -6845,7 +6807,7 @@ class AsyncGooey:
 
         dera_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[SmartGptPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6962,21 +6924,21 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[DocSummaryRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        merge_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[DocSummaryRequestSelectedModel] = OMIT,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = OMIT,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        task_instructions: typing.Optional[str] = None,
+        merge_instructions: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        google_translate_target: typing.Optional[str] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
@@ -6987,7 +6949,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[DocSummaryRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -6996,7 +6958,7 @@ class AsyncGooey:
 
         merge_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[DocSummaryRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         chain_type : typing.Optional[typing.Literal["map_reduce"]]
 
@@ -7225,17 +7187,17 @@ class AsyncGooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncRequestSelectedModel] = OMIT,
-        input_audio: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        input_audio: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncPageOutput:
         """
@@ -7243,7 +7205,7 @@ class AsyncGooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[LipsyncRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -7259,7 +7221,7 @@ class AsyncGooey:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[LipsyncRequestSadtalkerSettings]
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
 
         selected_model : typing.Optional[LipsyncRequestSelectedModel]
 
@@ -7366,34 +7328,34 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[LipsyncTtsRequestSadtalkerSettings] = OMIT,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[LipsyncTtsRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[LipsyncTtsRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
+        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
@@ -7403,7 +7365,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -7456,7 +7418,7 @@ class AsyncGooey:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[LipsyncTtsRequestSadtalkerSettings]
+        sadtalker_settings : typing.Optional[SadTalkerSettings]
 
         selected_model : typing.Optional[LipsyncTtsRequestSelectedModel]
 
@@ -7580,7 +7542,7 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[TextToSpeechPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
@@ -7610,7 +7572,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[TextToSpeechPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -7763,17 +7725,17 @@ class AsyncGooey:
         *,
         documents: typing.List[core.File],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = OMIT,
-        language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = OMIT,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = OMIT,
-        google_translate_target: typing.Optional[str] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        language: typing.Optional[str] = None,
+        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
+        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        google_translate_target: typing.Optional[str] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
@@ -7784,7 +7746,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -7908,7 +7870,7 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[Text2AudioPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         duration_sec: typing.Optional[float] = OMIT,
@@ -7928,7 +7890,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[Text2AudioPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8049,14 +8011,14 @@ class AsyncGooey:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[TranslateRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = OMIT,
-        translation_source: typing.Optional[str] = OMIT,
-        translation_target: typing.Optional[str] = OMIT,
-        glossary_document: typing.Optional[core.File] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        texts: typing.Optional[typing.List[str]] = None,
+        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        translation_source: typing.Optional[str] = None,
+        translation_target: typing.Optional[str] = None,
+        glossary_document: typing.Optional[core.File] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
@@ -8064,7 +8026,7 @@ class AsyncGooey:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[TranslateRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8177,22 +8139,22 @@ class AsyncGooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemixImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        text_prompt: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = OMIT,
-        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        prompt_strength: typing.Optional[float] = OMIT,
-        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        image_guidance_scale: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        text_prompt: typing.Optional[str] = None,
+        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        prompt_strength: typing.Optional[float] = None,
+        controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
+        seed: typing.Optional[int] = None,
+        image_guidance_scale: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
@@ -8203,7 +8165,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[RemixImageRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8340,7 +8302,7 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[CompareText2ImgPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         output_width: typing.Optional[int] = OMIT,
@@ -8366,7 +8328,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[CompareText2ImgPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8507,22 +8469,22 @@ class AsyncGooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[ProductImageRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        sd2upscaling: typing.Optional[bool] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        mask_threshold: typing.Optional[float] = None,
+        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        sd2upscaling: typing.Optional[bool] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
@@ -8535,7 +8497,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[ProductImageRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8676,21 +8638,21 @@ class AsyncGooey:
         input_image: core.File,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[PortraitRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        face_scale: typing.Optional[float] = OMIT,
-        face_pos_x: typing.Optional[float] = OMIT,
-        face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = OMIT,
-        negative_prompt: typing.Optional[str] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[int] = OMIT,
-        upscale_factor: typing.Optional[float] = OMIT,
-        output_width: typing.Optional[int] = OMIT,
-        output_height: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        face_scale: typing.Optional[float] = None,
+        face_pos_x: typing.Optional[float] = None,
+        face_pos_y: typing.Optional[float] = None,
+        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        negative_prompt: typing.Optional[str] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[int] = None,
+        upscale_factor: typing.Optional[float] = None,
+        output_width: typing.Optional[int] = None,
+        output_height: typing.Optional[int] = None,
+        guidance_scale: typing.Optional[float] = None,
+        seed: typing.Optional[int] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
@@ -8703,7 +8665,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[PortraitRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -8840,7 +8802,7 @@ class AsyncGooey:
         *,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[EmailFaceInpaintingPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         email_address: typing.Optional[str] = OMIT,
         twitter_handle: typing.Optional[str] = OMIT,
@@ -8874,7 +8836,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[EmailFaceInpaintingPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9040,7 +9002,7 @@ class AsyncGooey:
         search_query: str,
         text_prompt: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[GoogleImageGenPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -9065,7 +9027,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[GoogleImageGenPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9199,16 +9161,16 @@ class AsyncGooey:
         *,
         input_image: core.File,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = OMIT,
-        mask_threshold: typing.Optional[float] = OMIT,
-        rect_persepective_transform: typing.Optional[bool] = OMIT,
-        reflection_opacity: typing.Optional[float] = OMIT,
-        obj_scale: typing.Optional[float] = OMIT,
-        obj_pos_x: typing.Optional[float] = OMIT,
-        obj_pos_y: typing.Optional[float] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        mask_threshold: typing.Optional[float] = None,
+        rect_persepective_transform: typing.Optional[bool] = None,
+        reflection_opacity: typing.Optional[float] = None,
+        obj_scale: typing.Optional[float] = None,
+        obj_pos_x: typing.Optional[float] = None,
+        obj_pos_y: typing.Optional[float] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
@@ -9219,7 +9181,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9338,13 +9300,13 @@ class AsyncGooey:
         *,
         scale: int,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[UpscaleRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_image: typing.Optional[core.File] = OMIT,
-        input_video: typing.Optional[core.File] = OMIT,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = OMIT,
-        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[RecipeFunction]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_image: typing.Optional[core.File] = None,
+        input_video: typing.Optional[core.File] = None,
+        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
@@ -9355,7 +9317,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.List[UpscaleRequestFunctionsItem]]
+        functions : typing.Optional[typing.List[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9469,7 +9431,7 @@ class AsyncGooey:
         *,
         texts: typing.Sequence[str],
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[EmbeddingsPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -9482,7 +9444,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[EmbeddingsPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9583,7 +9545,7 @@ class AsyncGooey:
         *,
         search_query: str,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RelatedQnADocPageRequestFunctionsItem]] = OMIT,
+        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         keyword_query: typing.Optional[RelatedQnADocPageRequestKeywordQuery] = OMIT,
         documents: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -9595,7 +9557,7 @@ class AsyncGooey:
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[RelatedQnADocPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
         citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -9617,7 +9579,7 @@ class AsyncGooey:
 
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RelatedQnADocPageRequestFunctionsItem]]
+        functions : typing.Optional[typing.Sequence[RecipeFunction]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -9646,7 +9608,7 @@ class AsyncGooey:
 
         query_instructions : typing.Optional[str]
 
-        selected_model : typing.Optional[RelatedQnADocPageRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
 

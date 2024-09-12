@@ -16,14 +16,14 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import DeforumSdPageRequestAnimationPromptsItem, Gooey
+from gooey import AnimationPrompt, Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.animate(
     animation_prompts=[
-        DeforumSdPageRequestAnimationPromptsItem(
+        AnimationPrompt(
             frame="frame",
             prompt="prompt",
         )
@@ -38,7 +38,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AsyncGooey, DeforumSdPageRequestAnimationPromptsItem
+from gooey import AnimationPrompt, AsyncGooey
 
 client = AsyncGooey(
     api_key="YOUR_API_KEY",
@@ -48,7 +48,7 @@ client = AsyncGooey(
 async def main() -> None:
     await client.animate(
         animation_prompts=[
-            DeforumSdPageRequestAnimationPromptsItem(
+            AnimationPrompt(
                 frame="frame",
                 prompt="prompt",
             )

@@ -2,9 +2,9 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .doc_summary_page_request_functions_item import DocSummaryPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
-from .doc_summary_page_request_selected_model import DocSummaryPageRequestSelectedModel
+from .large_language_models import LargeLanguageModels
 from .doc_summary_page_request_selected_asr_model import DocSummaryPageRequestSelectedAsrModel
 from .doc_summary_page_request_response_format_type import DocSummaryPageRequestResponseFormatType
 from .run_settings import RunSettings
@@ -12,7 +12,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DocSummaryPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[DocSummaryPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
@@ -21,7 +21,7 @@ class DocSummaryPageRequest(UniversalBaseModel):
     documents: typing.List[str]
     task_instructions: typing.Optional[str] = None
     merge_instructions: typing.Optional[str] = None
-    selected_model: typing.Optional[DocSummaryPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LargeLanguageModels] = None
     chain_type: typing.Optional[typing.Literal["map_reduce"]] = None
     selected_asr_model: typing.Optional[DocSummaryPageRequestSelectedAsrModel] = None
     google_translate_target: typing.Optional[str] = None

@@ -2,17 +2,17 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .doc_extract_page_request_functions_item import DocExtractPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .doc_extract_page_request_selected_asr_model import DocExtractPageRequestSelectedAsrModel
-from .doc_extract_page_request_selected_model import DocExtractPageRequestSelectedModel
+from .large_language_models import LargeLanguageModels
 from .doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DocExtractPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[DocExtractPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
@@ -24,7 +24,7 @@ class DocExtractPageRequest(UniversalBaseModel):
     google_translate_target: typing.Optional[str] = None
     glossary_document: typing.Optional[str] = None
     task_instructions: typing.Optional[str] = None
-    selected_model: typing.Optional[DocExtractPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LargeLanguageModels] = None
     avoid_repetition: typing.Optional[bool] = None
     num_outputs: typing.Optional[int] = None
     quality: typing.Optional[float] = None

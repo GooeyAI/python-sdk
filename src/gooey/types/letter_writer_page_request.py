@@ -2,15 +2,15 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .letter_writer_page_request_functions_item import LetterWriterPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
-from .letter_writer_page_request_example_letters_item import LetterWriterPageRequestExampleLettersItem
+from .training_data_model import TrainingDataModel
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LetterWriterPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[LetterWriterPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
@@ -18,7 +18,7 @@ class LetterWriterPageRequest(UniversalBaseModel):
 
     action_id: str
     prompt_header: typing.Optional[str] = None
-    example_letters: typing.Optional[typing.List[LetterWriterPageRequestExampleLettersItem]] = None
+    example_letters: typing.Optional[typing.List[TrainingDataModel]] = None
     lm_selected_api: typing.Optional[str] = None
     lm_selected_engine: typing.Optional[str] = None
     num_outputs: typing.Optional[int] = None

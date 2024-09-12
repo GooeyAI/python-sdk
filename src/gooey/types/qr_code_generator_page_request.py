@@ -2,9 +2,9 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .qr_code_generator_page_request_functions_item import QrCodeGeneratorPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
-from .qr_code_generator_page_request_qr_code_vcard import QrCodeGeneratorPageRequestQrCodeVcard
+from .vcard import Vcard
 from .qr_code_generator_page_request_image_prompt_controlnet_models_item import (
     QrCodeGeneratorPageRequestImagePromptControlnetModelsItem,
 )
@@ -18,7 +18,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class QrCodeGeneratorPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[QrCodeGeneratorPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
@@ -26,7 +26,7 @@ class QrCodeGeneratorPageRequest(UniversalBaseModel):
 
     qr_code_data: typing.Optional[str] = None
     qr_code_input_image: typing.Optional[str] = None
-    qr_code_vcard: typing.Optional[QrCodeGeneratorPageRequestQrCodeVcard] = None
+    qr_code_vcard: typing.Optional[Vcard] = None
     qr_code_file: typing.Optional[str] = None
     use_url_shortener: typing.Optional[bool] = None
     text_prompt: str

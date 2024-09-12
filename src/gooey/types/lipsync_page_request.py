@@ -2,16 +2,16 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .lipsync_page_request_functions_item import LipsyncPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
-from .lipsync_page_request_sadtalker_settings import LipsyncPageRequestSadtalkerSettings
+from .sad_talker_settings import SadTalkerSettings
 from .lipsync_page_request_selected_model import LipsyncPageRequestSelectedModel
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LipsyncPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[LipsyncPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
@@ -22,7 +22,7 @@ class LipsyncPageRequest(UniversalBaseModel):
     face_padding_bottom: typing.Optional[int] = None
     face_padding_left: typing.Optional[int] = None
     face_padding_right: typing.Optional[int] = None
-    sadtalker_settings: typing.Optional[LipsyncPageRequestSadtalkerSettings] = None
+    sadtalker_settings: typing.Optional[SadTalkerSettings] = None
     selected_model: typing.Optional[LipsyncPageRequestSelectedModel] = None
     input_audio: typing.Optional[str] = None
     settings: typing.Optional[RunSettings] = None

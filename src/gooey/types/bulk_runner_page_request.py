@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .bulk_runner_page_request_functions_item import BulkRunnerPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BulkRunnerPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[BulkRunnerPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments

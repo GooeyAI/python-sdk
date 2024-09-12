@@ -2,7 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .img2img_page_request_functions_item import Img2ImgPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .img2img_page_request_selected_model import Img2ImgPageRequestSelectedModel
 from .img2img_page_request_selected_controlnet_model import Img2ImgPageRequestSelectedControlnetModel
@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Img2ImgPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[Img2ImgPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments

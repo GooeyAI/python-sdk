@@ -2,7 +2,7 @@
 
 import typing
 
-DocExtractPageRequestSelectedModel = typing.Union[
+LargeLanguageModels = typing.Union[
     typing.Literal[
         "gpt_4_o",
         "gpt_4_o_mini",

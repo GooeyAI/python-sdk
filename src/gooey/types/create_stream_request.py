@@ -6,7 +6,7 @@ import typing
 from .button_pressed import ButtonPressed
 from .recipe_function import RecipeFunction
 from .conversation_entry import ConversationEntry
-from .create_stream_request_selected_model import CreateStreamRequestSelectedModel
+from .large_language_models import LargeLanguageModels
 from .create_stream_request_embedding_model import CreateStreamRequestEmbeddingModel
 from .create_stream_request_citation_style import CreateStreamRequestCitationStyle
 from .create_stream_request_asr_model import CreateStreamRequestAsrModel
@@ -72,7 +72,7 @@ class CreateStreamRequest(UniversalBaseModel):
 
     messages: typing.Optional[typing.List[ConversationEntry]] = None
     bot_script: typing.Optional[str] = None
-    selected_model: typing.Optional[CreateStreamRequestSelectedModel] = None
+    selected_model: typing.Optional[LargeLanguageModels] = None
     document_model: typing.Optional[str] = pydantic.Field(default=None)
     """
     When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))

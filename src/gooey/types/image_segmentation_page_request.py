@@ -2,7 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .image_segmentation_page_request_functions_item import ImageSegmentationPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .image_segmentation_page_request_selected_model import ImageSegmentationPageRequestSelectedModel
 from .run_settings import RunSettings
@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ImageSegmentationPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[ImageSegmentationPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments

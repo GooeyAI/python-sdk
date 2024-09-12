@@ -12,14 +12,14 @@
 <dd>
 
 ```python
-from gooey import DeforumSdPageRequestAnimationPromptsItem, Gooey
+from gooey import AnimationPrompt, Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.animate(
     animation_prompts=[
-        DeforumSdPageRequestAnimationPromptsItem(
+        AnimationPrompt(
             frame="frame",
             prompt="prompt",
         )
@@ -40,7 +40,7 @@ client.animate(
 <dl>
 <dd>
 
-**animation_prompts:** `typing.Sequence[DeforumSdPageRequestAnimationPromptsItem]` 
+**animation_prompts:** `typing.Sequence[AnimationPrompt]` 
     
 </dd>
 </dl>
@@ -56,7 +56,7 @@ client.animate(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[DeforumSdPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -232,7 +232,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[QrCodeRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -266,7 +266,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**qr_code_vcard:** `typing.Optional[QrCodeRequestQrCodeVcard]` 
+**qr_code_vcard:** `typing.Optional[Vcard]` 
     
 </dd>
 </dl>
@@ -533,7 +533,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[RelatedQnAPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -565,7 +565,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RelatedQnAPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -821,7 +821,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SeoSummaryPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -1014,7 +1014,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[GoogleGptPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1046,7 +1046,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[GoogleGptPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -1259,7 +1259,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[SocialLookupEmailPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1283,7 +1283,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SocialLookupEmailPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -1452,7 +1452,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[BulkRunRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1558,7 +1558,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1574,7 +1574,7 @@ Remember to includes header names in your CSV too.
 <dl>
 <dd>
 
-**eval_prompts:** `typing.Optional[typing.Sequence[BulkEvalPageRequestEvalPromptsItem]]` 
+**eval_prompts:** `typing.Optional[typing.Sequence[EvalPrompt]]` 
 
 
 Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.  
@@ -1587,7 +1587,7 @@ _The `columns` dictionary can be used to reference the spreadsheet columns._
 <dl>
 <dd>
 
-**agg_functions:** `typing.Optional[typing.Sequence[BulkEvalPageRequestAggFunctionsItem]]` 
+**agg_functions:** `typing.Optional[typing.Sequence[AggFunction]]` 
 
 
 Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
@@ -1599,7 +1599,7 @@ Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[BulkEvalPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -1727,7 +1727,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[SynthesizeDataRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1787,7 +1787,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SynthesizeDataRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -1905,7 +1905,7 @@ client.llm()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[CompareLlmPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1929,7 +1929,7 @@ client.llm()
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.Sequence[CompareLlmPageRequestSelectedModelsItem]]` 
+**selected_models:** `typing.Optional[typing.Sequence[LargeLanguageModels]]` 
     
 </dd>
 </dl>
@@ -2057,7 +2057,7 @@ client.rag(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[DocSearchPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2158,7 +2158,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[DocSearchPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -2294,7 +2294,7 @@ client.smart_gpt(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[SmartGptPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2334,7 +2334,7 @@ client.smart_gpt(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SmartGptPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -2462,7 +2462,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[DocSummaryRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2494,7 +2494,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[DocSummaryRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -2714,7 +2714,7 @@ client.lipsync()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[LipsyncRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2772,7 +2772,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**sadtalker_settings:** `typing.Optional[LipsyncRequestSadtalkerSettings]` 
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
     
 </dd>
 </dl>
@@ -2870,7 +2870,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[LipsyncTtsRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3072,7 +3072,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**sadtalker_settings:** `typing.Optional[LipsyncTtsRequestSadtalkerSettings]` 
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
     
 </dd>
 </dl>
@@ -3160,7 +3160,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[TextToSpeechPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3392,7 +3392,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[SpeechRecognitionRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3546,7 +3546,7 @@ client.text_to_music(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[Text2AudioPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3688,7 +3688,7 @@ client.translate()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[TranslateRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3818,7 +3818,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RemixImageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4010,7 +4010,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[CompareText2ImgPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4220,7 +4220,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[ProductImageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4422,7 +4422,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[PortraitRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4607,7 +4607,7 @@ client.image_from_email(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[EmailFaceInpaintingPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4880,7 +4880,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[GoogleImageGenPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5056,7 +5056,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RemoveBackgroundRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5200,7 +5200,7 @@ client.upscale(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[UpscaleRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5324,7 +5324,7 @@ client.embed(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[EmbeddingsPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5420,7 +5420,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.Sequence[RelatedQnADocPageRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5521,7 +5521,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RelatedQnADocPageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -5786,7 +5786,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]]` 
+**messages:** `typing.Optional[typing.List[ConversationEntry]]` 
     
 </dd>
 </dl>
@@ -5802,7 +5802,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[CopilotCompletionRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LargeLanguageModels]` 
     
 </dd>
 </dl>
@@ -5973,7 +5973,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**tools:** `typing.Optional[typing.List[typing.Literal["json_to_pdf"]]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+**tools:** `typing.Optional[typing.List[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
     
 </dd>
 </dl>

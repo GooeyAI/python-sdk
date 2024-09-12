@@ -4,13 +4,14 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .video_bots_page_request_functions_item import VideoBotsPageRequestFunctionsItem
 import pydantic
-from .video_bots_page_request_messages_item import VideoBotsPageRequestMessagesItem
-from .video_bots_page_request_selected_model import VideoBotsPageRequestSelectedModel
+from .conversation_entry import ConversationEntry
+from .large_language_models import LargeLanguageModels
 from .video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddingModel
 from .video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
 from .video_bots_page_request_asr_model import VideoBotsPageRequestAsrModel
 from .video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
 from .video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
+from .llm_tools import LlmTools
 from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
 from .video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
 from .video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
@@ -36,9 +37,9 @@ class VideoBotsPageRequest(UniversalBaseModel):
     Select a workflow to extract text from documents and images.
     """
 
-    messages: typing.Optional[typing.List[VideoBotsPageRequestMessagesItem]] = None
+    messages: typing.Optional[typing.List[ConversationEntry]] = None
     bot_script: typing.Optional[str] = None
-    selected_model: typing.Optional[VideoBotsPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LargeLanguageModels] = None
     document_model: typing.Optional[str] = pydantic.Field(default=None)
     """
     When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
@@ -79,7 +80,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
     input_glossary_document: typing.Optional[str] = None
     output_glossary_document: typing.Optional[str] = None
     lipsync_model: typing.Optional[VideoBotsPageRequestLipsyncModel] = None
-    tools: typing.Optional[typing.List[typing.Literal["json_to_pdf"]]] = pydantic.Field(default=None)
+    tools: typing.Optional[typing.List[LlmTools]] = pydantic.Field(default=None)
     """
     Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
     """

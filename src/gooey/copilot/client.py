@@ -4,13 +4,14 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .types.copilot_completion_request_functions_item import CopilotCompletionRequestFunctionsItem
 from .. import core
-from .types.copilot_completion_request_messages_item import CopilotCompletionRequestMessagesItem
-from .types.copilot_completion_request_selected_model import CopilotCompletionRequestSelectedModel
+from ..types.conversation_entry import ConversationEntry
+from ..types.large_language_models import LargeLanguageModels
 from .types.copilot_completion_request_embedding_model import CopilotCompletionRequestEmbeddingModel
 from .types.copilot_completion_request_citation_style import CopilotCompletionRequestCitationStyle
 from .types.copilot_completion_request_asr_model import CopilotCompletionRequestAsrModel
 from .types.copilot_completion_request_translation_model import CopilotCompletionRequestTranslationModel
 from .types.copilot_completion_request_lipsync_model import CopilotCompletionRequestLipsyncModel
+from ..types.llm_tools import LlmTools
 from .types.copilot_completion_request_response_format_type import CopilotCompletionRequestResponseFormatType
 from .types.copilot_completion_request_tts_provider import CopilotCompletionRequestTtsProvider
 from .types.copilot_completion_request_openai_voice_name import CopilotCompletionRequestOpenaiVoiceName
@@ -41,67 +42,67 @@ class CopilotClient:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        input_audio: typing.Optional[str] = OMIT,
-        input_images: typing.Optional[typing.List[core.File]] = OMIT,
-        input_documents: typing.Optional[typing.List[core.File]] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        messages: typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]] = OMIT,
-        bot_script: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[CopilotCompletionRequestSelectedModel] = OMIT,
-        document_model: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        keyword_instructions: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.List[core.File]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = OMIT,
-        asr_language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = OMIT,
-        user_language: typing.Optional[str] = OMIT,
-        input_glossary_document: typing.Optional[core.File] = OMIT,
-        output_glossary_document: typing.Optional[core.File] = OMIT,
-        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = OMIT,
-        tools: typing.Optional[typing.List[typing.Literal["json_to_pdf"]]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = OMIT,
-        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[core.File]] = None,
+        input_documents: typing.Optional[typing.List[core.File]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[core.File]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[core.File] = None,
+        output_glossary_document: typing.Optional[core.File] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VideoBotsPageOutput:
         """
@@ -127,11 +128,11 @@ class CopilotClient:
         doc_extract_url : typing.Optional[str]
             Select a workflow to extract text from documents and images.
 
-        messages : typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]]
+        messages : typing.Optional[typing.List[ConversationEntry]]
 
         bot_script : typing.Optional[str]
 
-        selected_model : typing.Optional[CopilotCompletionRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         document_model : typing.Optional[str]
             When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
@@ -182,7 +183,7 @@ class CopilotClient:
 
         lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
-        tools : typing.Optional[typing.List[typing.Literal["json_to_pdf"]]]
+        tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
 
         avoid_repetition : typing.Optional[bool]
@@ -393,67 +394,67 @@ class AsyncCopilotClient:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        input_audio: typing.Optional[str] = OMIT,
-        input_images: typing.Optional[typing.List[core.File]] = OMIT,
-        input_documents: typing.Optional[typing.List[core.File]] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        messages: typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]] = OMIT,
-        bot_script: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[CopilotCompletionRequestSelectedModel] = OMIT,
-        document_model: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        keyword_instructions: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.List[core.File]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = OMIT,
-        asr_language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = OMIT,
-        user_language: typing.Optional[str] = OMIT,
-        input_glossary_document: typing.Optional[core.File] = OMIT,
-        output_glossary_document: typing.Optional[core.File] = OMIT,
-        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = OMIT,
-        tools: typing.Optional[typing.List[typing.Literal["json_to_pdf"]]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = OMIT,
-        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[core.File] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[core.File]] = None,
+        input_documents: typing.Optional[typing.List[core.File]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[core.File]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[core.File] = None,
+        output_glossary_document: typing.Optional[core.File] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VideoBotsPageOutput:
         """
@@ -479,11 +480,11 @@ class AsyncCopilotClient:
         doc_extract_url : typing.Optional[str]
             Select a workflow to extract text from documents and images.
 
-        messages : typing.Optional[typing.List[CopilotCompletionRequestMessagesItem]]
+        messages : typing.Optional[typing.List[ConversationEntry]]
 
         bot_script : typing.Optional[str]
 
-        selected_model : typing.Optional[CopilotCompletionRequestSelectedModel]
+        selected_model : typing.Optional[LargeLanguageModels]
 
         document_model : typing.Optional[str]
             When your copilot users upload a photo or pdf, what kind of document are they mostly likely to upload? (via [Azure](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-3.1.0&tabs=linux&pivots=programming-language-rest-api))
@@ -534,7 +535,7 @@ class AsyncCopilotClient:
 
         lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
-        tools : typing.Optional[typing.List[typing.Literal["json_to_pdf"]]]
+        tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
 
         avoid_repetition : typing.Optional[bool]

@@ -10,8 +10,6 @@ from .asr_output_json import AsrOutputJson
 from .asr_page_output import AsrPageOutput
 from .asr_page_output_output_text_item import AsrPageOutputOutputTextItem
 from .asr_page_request import AsrPageRequest
-from .asr_page_request_functions_item import AsrPageRequestFunctionsItem
-from .asr_page_request_functions_item_trigger import AsrPageRequestFunctionsItemTrigger
 from .asr_page_request_output_format import AsrPageRequestOutputFormat
 from .asr_page_request_selected_model import AsrPageRequestSelectedModel
 from .asr_page_request_translation_model import AsrPageRequestTranslationModel
@@ -21,20 +19,10 @@ from .balance_response import BalanceResponse
 from .bot_broadcast_filters import BotBroadcastFilters
 from .bot_broadcast_request_model import BotBroadcastRequestModel
 from .bulk_eval_page_output import BulkEvalPageOutput
-from .bulk_eval_page_request_agg_functions_item import BulkEvalPageRequestAggFunctionsItem
-from .bulk_eval_page_request_agg_functions_item_function import BulkEvalPageRequestAggFunctionsItemFunction
-from .bulk_eval_page_request_eval_prompts_item import BulkEvalPageRequestEvalPromptsItem
-from .bulk_eval_page_request_functions_item import BulkEvalPageRequestFunctionsItem
-from .bulk_eval_page_request_functions_item_trigger import BulkEvalPageRequestFunctionsItemTrigger
 from .bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
-from .bulk_eval_page_request_selected_model import BulkEvalPageRequestSelectedModel
 from .bulk_eval_page_status_response import BulkEvalPageStatusResponse
-from .bulk_run_request_functions_item import BulkRunRequestFunctionsItem
-from .bulk_run_request_functions_item_trigger import BulkRunRequestFunctionsItemTrigger
 from .bulk_runner_page_output import BulkRunnerPageOutput
 from .bulk_runner_page_request import BulkRunnerPageRequest
-from .bulk_runner_page_request_functions_item import BulkRunnerPageRequestFunctionsItem
-from .bulk_runner_page_request_functions_item_trigger import BulkRunnerPageRequestFunctionsItemTrigger
 from .bulk_runner_page_status_response import BulkRunnerPageStatusResponse
 from .button_pressed import ButtonPressed
 from .called_function_response import CalledFunctionResponse
@@ -43,25 +31,16 @@ from .chat_completion_content_part_image_param import ChatCompletionContentPartI
 from .chat_completion_content_part_text_param import ChatCompletionContentPartTextParam
 from .chyron_plant_page_output import ChyronPlantPageOutput
 from .chyron_plant_page_request import ChyronPlantPageRequest
-from .chyron_plant_page_request_functions_item import ChyronPlantPageRequestFunctionsItem
-from .chyron_plant_page_request_functions_item_trigger import ChyronPlantPageRequestFunctionsItemTrigger
 from .chyron_plant_page_status_response import ChyronPlantPageStatusResponse
 from .compare_llm_page_output import CompareLlmPageOutput
-from .compare_llm_page_request_functions_item import CompareLlmPageRequestFunctionsItem
-from .compare_llm_page_request_functions_item_trigger import CompareLlmPageRequestFunctionsItemTrigger
 from .compare_llm_page_request_response_format_type import CompareLlmPageRequestResponseFormatType
-from .compare_llm_page_request_selected_models_item import CompareLlmPageRequestSelectedModelsItem
 from .compare_llm_page_status_response import CompareLlmPageStatusResponse
 from .compare_text2img_page_output import CompareText2ImgPageOutput
-from .compare_text2img_page_request_functions_item import CompareText2ImgPageRequestFunctionsItem
-from .compare_text2img_page_request_functions_item_trigger import CompareText2ImgPageRequestFunctionsItemTrigger
 from .compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
 from .compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
 from .compare_text2img_page_status_response import CompareText2ImgPageStatusResponse
 from .compare_upscaler_page_output import CompareUpscalerPageOutput
 from .compare_upscaler_page_request import CompareUpscalerPageRequest
-from .compare_upscaler_page_request_functions_item import CompareUpscalerPageRequestFunctionsItem
-from .compare_upscaler_page_request_functions_item_trigger import CompareUpscalerPageRequestFunctionsItemTrigger
 from .compare_upscaler_page_request_selected_models_item import CompareUpscalerPageRequestSelectedModelsItem
 from .compare_upscaler_page_status_response import CompareUpscalerPageStatusResponse
 from .console_logs import ConsoleLogs
@@ -83,63 +62,39 @@ from .create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
 from .create_stream_request_openai_tts_model import CreateStreamRequestOpenaiTtsModel
 from .create_stream_request_openai_voice_name import CreateStreamRequestOpenaiVoiceName
 from .create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
-from .create_stream_request_selected_model import CreateStreamRequestSelectedModel
 from .create_stream_request_translation_model import CreateStreamRequestTranslationModel
 from .create_stream_request_tts_provider import CreateStreamRequestTtsProvider
 from .create_stream_response import CreateStreamResponse
 from .deforum_sd_page_output import DeforumSdPageOutput
-from .deforum_sd_page_request_animation_prompts_item import DeforumSdPageRequestAnimationPromptsItem
-from .deforum_sd_page_request_functions_item import DeforumSdPageRequestFunctionsItem
-from .deforum_sd_page_request_functions_item_trigger import DeforumSdPageRequestFunctionsItemTrigger
 from .deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
 from .deforum_sd_page_status_response import DeforumSdPageStatusResponse
 from .doc_extract_page_output import DocExtractPageOutput
 from .doc_extract_page_request import DocExtractPageRequest
-from .doc_extract_page_request_functions_item import DocExtractPageRequestFunctionsItem
-from .doc_extract_page_request_functions_item_trigger import DocExtractPageRequestFunctionsItemTrigger
 from .doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
 from .doc_extract_page_request_selected_asr_model import DocExtractPageRequestSelectedAsrModel
-from .doc_extract_page_request_selected_model import DocExtractPageRequestSelectedModel
 from .doc_extract_page_status_response import DocExtractPageStatusResponse
 from .doc_search_page_output import DocSearchPageOutput
 from .doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
 from .doc_search_page_request_embedding_model import DocSearchPageRequestEmbeddingModel
-from .doc_search_page_request_functions_item import DocSearchPageRequestFunctionsItem
-from .doc_search_page_request_functions_item_trigger import DocSearchPageRequestFunctionsItemTrigger
 from .doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
 from .doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
-from .doc_search_page_request_selected_model import DocSearchPageRequestSelectedModel
 from .doc_search_page_status_response import DocSearchPageStatusResponse
 from .doc_summary_page_output import DocSummaryPageOutput
 from .doc_summary_page_request import DocSummaryPageRequest
-from .doc_summary_page_request_functions_item import DocSummaryPageRequestFunctionsItem
-from .doc_summary_page_request_functions_item_trigger import DocSummaryPageRequestFunctionsItemTrigger
 from .doc_summary_page_request_response_format_type import DocSummaryPageRequestResponseFormatType
 from .doc_summary_page_request_selected_asr_model import DocSummaryPageRequestSelectedAsrModel
-from .doc_summary_page_request_selected_model import DocSummaryPageRequestSelectedModel
 from .doc_summary_page_status_response import DocSummaryPageStatusResponse
-from .doc_summary_request_functions_item import DocSummaryRequestFunctionsItem
-from .doc_summary_request_functions_item_trigger import DocSummaryRequestFunctionsItemTrigger
 from .doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
 from .doc_summary_request_selected_asr_model import DocSummaryRequestSelectedAsrModel
-from .doc_summary_request_selected_model import DocSummaryRequestSelectedModel
 from .email_face_inpainting_page_output import EmailFaceInpaintingPageOutput
-from .email_face_inpainting_page_request_functions_item import EmailFaceInpaintingPageRequestFunctionsItem
-from .email_face_inpainting_page_request_functions_item_trigger import (
-    EmailFaceInpaintingPageRequestFunctionsItemTrigger,
-)
 from .email_face_inpainting_page_request_selected_model import EmailFaceInpaintingPageRequestSelectedModel
 from .email_face_inpainting_page_status_response import EmailFaceInpaintingPageStatusResponse
 from .embeddings_page_output import EmbeddingsPageOutput
-from .embeddings_page_request_functions_item import EmbeddingsPageRequestFunctionsItem
-from .embeddings_page_request_functions_item_trigger import EmbeddingsPageRequestFunctionsItemTrigger
 from .embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
 from .embeddings_page_status_response import EmbeddingsPageStatusResponse
 from .eval_prompt import EvalPrompt
 from .face_inpainting_page_output import FaceInpaintingPageOutput
 from .face_inpainting_page_request import FaceInpaintingPageRequest
-from .face_inpainting_page_request_functions_item import FaceInpaintingPageRequestFunctionsItem
-from .face_inpainting_page_request_functions_item_trigger import FaceInpaintingPageRequestFunctionsItemTrigger
 from .face_inpainting_page_request_selected_model import FaceInpaintingPageRequestSelectedModel
 from .face_inpainting_page_status_response import FaceInpaintingPageStatusResponse
 from .final_response import FinalResponse
@@ -149,105 +104,66 @@ from .generic_error_response import GenericErrorResponse
 from .generic_error_response_detail import GenericErrorResponseDetail
 from .google_gpt_page_output import GoogleGptPageOutput
 from .google_gpt_page_request_embedding_model import GoogleGptPageRequestEmbeddingModel
-from .google_gpt_page_request_functions_item import GoogleGptPageRequestFunctionsItem
-from .google_gpt_page_request_functions_item_trigger import GoogleGptPageRequestFunctionsItemTrigger
 from .google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
-from .google_gpt_page_request_selected_model import GoogleGptPageRequestSelectedModel
 from .google_gpt_page_status_response import GoogleGptPageStatusResponse
 from .google_image_gen_page_output import GoogleImageGenPageOutput
-from .google_image_gen_page_request_functions_item import GoogleImageGenPageRequestFunctionsItem
-from .google_image_gen_page_request_functions_item_trigger import GoogleImageGenPageRequestFunctionsItemTrigger
 from .google_image_gen_page_request_selected_model import GoogleImageGenPageRequestSelectedModel
 from .google_image_gen_page_status_response import GoogleImageGenPageStatusResponse
 from .http_validation_error import HttpValidationError
 from .image_segmentation_page_output import ImageSegmentationPageOutput
 from .image_segmentation_page_request import ImageSegmentationPageRequest
-from .image_segmentation_page_request_functions_item import ImageSegmentationPageRequestFunctionsItem
-from .image_segmentation_page_request_functions_item_trigger import ImageSegmentationPageRequestFunctionsItemTrigger
 from .image_segmentation_page_request_selected_model import ImageSegmentationPageRequestSelectedModel
 from .image_segmentation_page_status_response import ImageSegmentationPageStatusResponse
 from .image_url import ImageUrl
 from .image_url_detail import ImageUrlDetail
 from .img2img_page_output import Img2ImgPageOutput
 from .img2img_page_request import Img2ImgPageRequest
-from .img2img_page_request_functions_item import Img2ImgPageRequestFunctionsItem
-from .img2img_page_request_functions_item_trigger import Img2ImgPageRequestFunctionsItemTrigger
 from .img2img_page_request_selected_controlnet_model import Img2ImgPageRequestSelectedControlnetModel
 from .img2img_page_request_selected_controlnet_model_item import Img2ImgPageRequestSelectedControlnetModelItem
 from .img2img_page_request_selected_model import Img2ImgPageRequestSelectedModel
 from .img2img_page_status_response import Img2ImgPageStatusResponse
+from .large_language_models import LargeLanguageModels
 from .letter_writer_page_output import LetterWriterPageOutput
 from .letter_writer_page_request import LetterWriterPageRequest
-from .letter_writer_page_request_example_letters_item import LetterWriterPageRequestExampleLettersItem
-from .letter_writer_page_request_functions_item import LetterWriterPageRequestFunctionsItem
-from .letter_writer_page_request_functions_item_trigger import LetterWriterPageRequestFunctionsItemTrigger
 from .letter_writer_page_status_response import LetterWriterPageStatusResponse
 from .lipsync_page_output import LipsyncPageOutput
 from .lipsync_page_request import LipsyncPageRequest
-from .lipsync_page_request_functions_item import LipsyncPageRequestFunctionsItem
-from .lipsync_page_request_functions_item_trigger import LipsyncPageRequestFunctionsItemTrigger
-from .lipsync_page_request_sadtalker_settings import LipsyncPageRequestSadtalkerSettings
-from .lipsync_page_request_sadtalker_settings_preprocess import LipsyncPageRequestSadtalkerSettingsPreprocess
 from .lipsync_page_request_selected_model import LipsyncPageRequestSelectedModel
 from .lipsync_page_status_response import LipsyncPageStatusResponse
-from .lipsync_request_functions_item import LipsyncRequestFunctionsItem
-from .lipsync_request_functions_item_trigger import LipsyncRequestFunctionsItemTrigger
-from .lipsync_request_sadtalker_settings import LipsyncRequestSadtalkerSettings
-from .lipsync_request_sadtalker_settings_preprocess import LipsyncRequestSadtalkerSettingsPreprocess
 from .lipsync_request_selected_model import LipsyncRequestSelectedModel
 from .lipsync_tts_page_output import LipsyncTtsPageOutput
 from .lipsync_tts_page_request import LipsyncTtsPageRequest
-from .lipsync_tts_page_request_functions_item import LipsyncTtsPageRequestFunctionsItem
-from .lipsync_tts_page_request_functions_item_trigger import LipsyncTtsPageRequestFunctionsItemTrigger
 from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
 from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
-from .lipsync_tts_page_request_sadtalker_settings import LipsyncTtsPageRequestSadtalkerSettings
-from .lipsync_tts_page_request_sadtalker_settings_preprocess import LipsyncTtsPageRequestSadtalkerSettingsPreprocess
 from .lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
 from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
 from .lipsync_tts_page_status_response import LipsyncTtsPageStatusResponse
-from .lipsync_tts_request_functions_item import LipsyncTtsRequestFunctionsItem
-from .lipsync_tts_request_functions_item_trigger import LipsyncTtsRequestFunctionsItemTrigger
 from .lipsync_tts_request_openai_tts_model import LipsyncTtsRequestOpenaiTtsModel
 from .lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
-from .lipsync_tts_request_sadtalker_settings import LipsyncTtsRequestSadtalkerSettings
-from .lipsync_tts_request_sadtalker_settings_preprocess import LipsyncTtsRequestSadtalkerSettingsPreprocess
 from .lipsync_tts_request_selected_model import LipsyncTtsRequestSelectedModel
 from .lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
 from .llm_tools import LlmTools
 from .message_part import MessagePart
 from .object_inpainting_page_output import ObjectInpaintingPageOutput
 from .object_inpainting_page_request import ObjectInpaintingPageRequest
-from .object_inpainting_page_request_functions_item import ObjectInpaintingPageRequestFunctionsItem
-from .object_inpainting_page_request_functions_item_trigger import ObjectInpaintingPageRequestFunctionsItemTrigger
 from .object_inpainting_page_request_selected_model import ObjectInpaintingPageRequestSelectedModel
 from .object_inpainting_page_status_response import ObjectInpaintingPageStatusResponse
-from .portrait_request_functions_item import PortraitRequestFunctionsItem
-from .portrait_request_functions_item_trigger import PortraitRequestFunctionsItemTrigger
 from .portrait_request_selected_model import PortraitRequestSelectedModel
-from .product_image_request_functions_item import ProductImageRequestFunctionsItem
-from .product_image_request_functions_item_trigger import ProductImageRequestFunctionsItemTrigger
 from .product_image_request_selected_model import ProductImageRequestSelectedModel
 from .prompt_tree_node import PromptTreeNode
 from .prompt_tree_node_prompt import PromptTreeNodePrompt
 from .qr_code_generator_page_output import QrCodeGeneratorPageOutput
 from .qr_code_generator_page_request import QrCodeGeneratorPageRequest
-from .qr_code_generator_page_request_functions_item import QrCodeGeneratorPageRequestFunctionsItem
-from .qr_code_generator_page_request_functions_item_trigger import QrCodeGeneratorPageRequestFunctionsItemTrigger
 from .qr_code_generator_page_request_image_prompt_controlnet_models_item import (
     QrCodeGeneratorPageRequestImagePromptControlnetModelsItem,
 )
-from .qr_code_generator_page_request_qr_code_vcard import QrCodeGeneratorPageRequestQrCodeVcard
 from .qr_code_generator_page_request_scheduler import QrCodeGeneratorPageRequestScheduler
 from .qr_code_generator_page_request_selected_controlnet_model_item import (
     QrCodeGeneratorPageRequestSelectedControlnetModelItem,
 )
 from .qr_code_generator_page_request_selected_model import QrCodeGeneratorPageRequestSelectedModel
 from .qr_code_generator_page_status_response import QrCodeGeneratorPageStatusResponse
-from .qr_code_request_functions_item import QrCodeRequestFunctionsItem
-from .qr_code_request_functions_item_trigger import QrCodeRequestFunctionsItemTrigger
 from .qr_code_request_image_prompt_controlnet_models_item import QrCodeRequestImagePromptControlnetModelsItem
-from .qr_code_request_qr_code_vcard import QrCodeRequestQrCodeVcard
 from .qr_code_request_scheduler import QrCodeRequestScheduler
 from .qr_code_request_selected_controlnet_model_item import QrCodeRequestSelectedControlnetModelItem
 from .qr_code_request_selected_model import QrCodeRequestSelectedModel
@@ -259,26 +175,16 @@ from .related_google_gpt_response import RelatedGoogleGptResponse
 from .related_qn_a_doc_page_output import RelatedQnADocPageOutput
 from .related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
 from .related_qn_a_doc_page_request_embedding_model import RelatedQnADocPageRequestEmbeddingModel
-from .related_qn_a_doc_page_request_functions_item import RelatedQnADocPageRequestFunctionsItem
-from .related_qn_a_doc_page_request_functions_item_trigger import RelatedQnADocPageRequestFunctionsItemTrigger
 from .related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
 from .related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
-from .related_qn_a_doc_page_request_selected_model import RelatedQnADocPageRequestSelectedModel
 from .related_qn_a_doc_page_status_response import RelatedQnADocPageStatusResponse
 from .related_qn_a_page_output import RelatedQnAPageOutput
 from .related_qn_a_page_request_embedding_model import RelatedQnAPageRequestEmbeddingModel
-from .related_qn_a_page_request_functions_item import RelatedQnAPageRequestFunctionsItem
-from .related_qn_a_page_request_functions_item_trigger import RelatedQnAPageRequestFunctionsItemTrigger
 from .related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
-from .related_qn_a_page_request_selected_model import RelatedQnAPageRequestSelectedModel
 from .related_qn_a_page_status_response import RelatedQnAPageStatusResponse
-from .remix_image_request_functions_item import RemixImageRequestFunctionsItem
-from .remix_image_request_functions_item_trigger import RemixImageRequestFunctionsItemTrigger
 from .remix_image_request_selected_controlnet_model import RemixImageRequestSelectedControlnetModel
 from .remix_image_request_selected_controlnet_model_item import RemixImageRequestSelectedControlnetModelItem
 from .remix_image_request_selected_model import RemixImageRequestSelectedModel
-from .remove_background_request_functions_item import RemoveBackgroundRequestFunctionsItem
-from .remove_background_request_functions_item_trigger import RemoveBackgroundRequestFunctionsItemTrigger
 from .remove_background_request_selected_model import RemoveBackgroundRequestSelectedModel
 from .reply_button import ReplyButton
 from .response_model import ResponseModel
@@ -292,56 +198,34 @@ from .sad_talker_settings_preprocess import SadTalkerSettingsPreprocess
 from .search_reference import SearchReference
 from .seo_summary_page_output import SeoSummaryPageOutput
 from .seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
-from .seo_summary_page_request_selected_model import SeoSummaryPageRequestSelectedModel
 from .seo_summary_page_status_response import SeoSummaryPageStatusResponse
 from .serp_search_location import SerpSearchLocation
 from .serp_search_type import SerpSearchType
 from .smart_gpt_page_output import SmartGptPageOutput
-from .smart_gpt_page_request_functions_item import SmartGptPageRequestFunctionsItem
-from .smart_gpt_page_request_functions_item_trigger import SmartGptPageRequestFunctionsItemTrigger
 from .smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
-from .smart_gpt_page_request_selected_model import SmartGptPageRequestSelectedModel
 from .smart_gpt_page_status_response import SmartGptPageStatusResponse
 from .social_lookup_email_page_output import SocialLookupEmailPageOutput
-from .social_lookup_email_page_request_functions_item import SocialLookupEmailPageRequestFunctionsItem
-from .social_lookup_email_page_request_functions_item_trigger import SocialLookupEmailPageRequestFunctionsItemTrigger
 from .social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
-from .social_lookup_email_page_request_selected_model import SocialLookupEmailPageRequestSelectedModel
 from .social_lookup_email_page_status_response import SocialLookupEmailPageStatusResponse
-from .speech_recognition_request_functions_item import SpeechRecognitionRequestFunctionsItem
-from .speech_recognition_request_functions_item_trigger import SpeechRecognitionRequestFunctionsItemTrigger
 from .speech_recognition_request_output_format import SpeechRecognitionRequestOutputFormat
 from .speech_recognition_request_selected_model import SpeechRecognitionRequestSelectedModel
 from .speech_recognition_request_translation_model import SpeechRecognitionRequestTranslationModel
 from .stream_error import StreamError
-from .synthesize_data_request_functions_item import SynthesizeDataRequestFunctionsItem
-from .synthesize_data_request_functions_item_trigger import SynthesizeDataRequestFunctionsItemTrigger
 from .synthesize_data_request_response_format_type import SynthesizeDataRequestResponseFormatType
 from .synthesize_data_request_selected_asr_model import SynthesizeDataRequestSelectedAsrModel
-from .synthesize_data_request_selected_model import SynthesizeDataRequestSelectedModel
 from .text2audio_page_output import Text2AudioPageOutput
-from .text2audio_page_request_functions_item import Text2AudioPageRequestFunctionsItem
-from .text2audio_page_request_functions_item_trigger import Text2AudioPageRequestFunctionsItemTrigger
 from .text2audio_page_status_response import Text2AudioPageStatusResponse
 from .text_to_speech_page_output import TextToSpeechPageOutput
-from .text_to_speech_page_request_functions_item import TextToSpeechPageRequestFunctionsItem
-from .text_to_speech_page_request_functions_item_trigger import TextToSpeechPageRequestFunctionsItemTrigger
 from .text_to_speech_page_request_openai_tts_model import TextToSpeechPageRequestOpenaiTtsModel
 from .text_to_speech_page_request_openai_voice_name import TextToSpeechPageRequestOpenaiVoiceName
 from .text_to_speech_page_request_tts_provider import TextToSpeechPageRequestTtsProvider
 from .text_to_speech_page_status_response import TextToSpeechPageStatusResponse
 from .training_data_model import TrainingDataModel
-from .translate_request_functions_item import TranslateRequestFunctionsItem
-from .translate_request_functions_item_trigger import TranslateRequestFunctionsItemTrigger
 from .translate_request_selected_model import TranslateRequestSelectedModel
 from .translation_page_output import TranslationPageOutput
 from .translation_page_request import TranslationPageRequest
-from .translation_page_request_functions_item import TranslationPageRequestFunctionsItem
-from .translation_page_request_functions_item_trigger import TranslationPageRequestFunctionsItemTrigger
 from .translation_page_request_selected_model import TranslationPageRequestSelectedModel
 from .translation_page_status_response import TranslationPageStatusResponse
-from .upscale_request_functions_item import UpscaleRequestFunctionsItem
-from .upscale_request_functions_item_trigger import UpscaleRequestFunctionsItemTrigger
 from .upscale_request_selected_models_item import UpscaleRequestSelectedModelsItem
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
@@ -356,20 +240,11 @@ from .video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddi
 from .video_bots_page_request_functions_item import VideoBotsPageRequestFunctionsItem
 from .video_bots_page_request_functions_item_trigger import VideoBotsPageRequestFunctionsItemTrigger
 from .video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
-from .video_bots_page_request_messages_item import VideoBotsPageRequestMessagesItem
-from .video_bots_page_request_messages_item_content import VideoBotsPageRequestMessagesItemContent
-from .video_bots_page_request_messages_item_content_item import (
-    VideoBotsPageRequestMessagesItemContentItem,
-    VideoBotsPageRequestMessagesItemContentItem_ImageUrl,
-    VideoBotsPageRequestMessagesItemContentItem_Text,
-)
-from .video_bots_page_request_messages_item_role import VideoBotsPageRequestMessagesItemRole
 from .video_bots_page_request_openai_tts_model import VideoBotsPageRequestOpenaiTtsModel
 from .video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
 from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
 from .video_bots_page_request_sadtalker_settings import VideoBotsPageRequestSadtalkerSettings
 from .video_bots_page_request_sadtalker_settings_preprocess import VideoBotsPageRequestSadtalkerSettingsPreprocess
-from .video_bots_page_request_selected_model import VideoBotsPageRequestSelectedModel
 from .video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
 from .video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
 from .video_bots_page_status_response import VideoBotsPageStatusResponse
@@ -385,8 +260,6 @@ __all__ = [
     "AsrPageOutput",
     "AsrPageOutputOutputTextItem",
     "AsrPageRequest",
-    "AsrPageRequestFunctionsItem",
-    "AsrPageRequestFunctionsItemTrigger",
     "AsrPageRequestOutputFormat",
     "AsrPageRequestSelectedModel",
     "AsrPageRequestTranslationModel",
@@ -396,20 +269,10 @@ __all__ = [
     "BotBroadcastFilters",
     "BotBroadcastRequestModel",
     "BulkEvalPageOutput",
-    "BulkEvalPageRequestAggFunctionsItem",
-    "BulkEvalPageRequestAggFunctionsItemFunction",
-    "BulkEvalPageRequestEvalPromptsItem",
-    "BulkEvalPageRequestFunctionsItem",
-    "BulkEvalPageRequestFunctionsItemTrigger",
     "BulkEvalPageRequestResponseFormatType",
-    "BulkEvalPageRequestSelectedModel",
     "BulkEvalPageStatusResponse",
-    "BulkRunRequestFunctionsItem",
-    "BulkRunRequestFunctionsItemTrigger",
     "BulkRunnerPageOutput",
     "BulkRunnerPageRequest",
-    "BulkRunnerPageRequestFunctionsItem",
-    "BulkRunnerPageRequestFunctionsItemTrigger",
     "BulkRunnerPageStatusResponse",
     "ButtonPressed",
     "CalledFunctionResponse",
@@ -418,25 +281,16 @@ __all__ = [
     "ChatCompletionContentPartTextParam",
     "ChyronPlantPageOutput",
     "ChyronPlantPageRequest",
-    "ChyronPlantPageRequestFunctionsItem",
-    "ChyronPlantPageRequestFunctionsItemTrigger",
     "ChyronPlantPageStatusResponse",
     "CompareLlmPageOutput",
-    "CompareLlmPageRequestFunctionsItem",
-    "CompareLlmPageRequestFunctionsItemTrigger",
     "CompareLlmPageRequestResponseFormatType",
-    "CompareLlmPageRequestSelectedModelsItem",
     "CompareLlmPageStatusResponse",
     "CompareText2ImgPageOutput",
-    "CompareText2ImgPageRequestFunctionsItem",
-    "CompareText2ImgPageRequestFunctionsItemTrigger",
     "CompareText2ImgPageRequestScheduler",
     "CompareText2ImgPageRequestSelectedModelsItem",
     "CompareText2ImgPageStatusResponse",
     "CompareUpscalerPageOutput",
     "CompareUpscalerPageRequest",
-    "CompareUpscalerPageRequestFunctionsItem",
-    "CompareUpscalerPageRequestFunctionsItemTrigger",
     "CompareUpscalerPageRequestSelectedModelsItem",
     "CompareUpscalerPageStatusResponse",
     "ConsoleLogs",
@@ -456,61 +310,39 @@ __all__ = [
     "CreateStreamRequestOpenaiTtsModel",
     "CreateStreamRequestOpenaiVoiceName",
     "CreateStreamRequestResponseFormatType",
-    "CreateStreamRequestSelectedModel",
     "CreateStreamRequestTranslationModel",
     "CreateStreamRequestTtsProvider",
     "CreateStreamResponse",
     "DeforumSdPageOutput",
-    "DeforumSdPageRequestAnimationPromptsItem",
-    "DeforumSdPageRequestFunctionsItem",
-    "DeforumSdPageRequestFunctionsItemTrigger",
     "DeforumSdPageRequestSelectedModel",
     "DeforumSdPageStatusResponse",
     "DocExtractPageOutput",
     "DocExtractPageRequest",
-    "DocExtractPageRequestFunctionsItem",
-    "DocExtractPageRequestFunctionsItemTrigger",
     "DocExtractPageRequestResponseFormatType",
     "DocExtractPageRequestSelectedAsrModel",
-    "DocExtractPageRequestSelectedModel",
     "DocExtractPageStatusResponse",
     "DocSearchPageOutput",
     "DocSearchPageRequestCitationStyle",
     "DocSearchPageRequestEmbeddingModel",
-    "DocSearchPageRequestFunctionsItem",
-    "DocSearchPageRequestFunctionsItemTrigger",
     "DocSearchPageRequestKeywordQuery",
     "DocSearchPageRequestResponseFormatType",
-    "DocSearchPageRequestSelectedModel",
     "DocSearchPageStatusResponse",
     "DocSummaryPageOutput",
     "DocSummaryPageRequest",
-    "DocSummaryPageRequestFunctionsItem",
-    "DocSummaryPageRequestFunctionsItemTrigger",
     "DocSummaryPageRequestResponseFormatType",
     "DocSummaryPageRequestSelectedAsrModel",
-    "DocSummaryPageRequestSelectedModel",
     "DocSummaryPageStatusResponse",
-    "DocSummaryRequestFunctionsItem",
-    "DocSummaryRequestFunctionsItemTrigger",
     "DocSummaryRequestResponseFormatType",
     "DocSummaryRequestSelectedAsrModel",
-    "DocSummaryRequestSelectedModel",
     "EmailFaceInpaintingPageOutput",
-    "EmailFaceInpaintingPageRequestFunctionsItem",
-    "EmailFaceInpaintingPageRequestFunctionsItemTrigger",
     "EmailFaceInpaintingPageRequestSelectedModel",
     "EmailFaceInpaintingPageStatusResponse",
     "EmbeddingsPageOutput",
-    "EmbeddingsPageRequestFunctionsItem",
-    "EmbeddingsPageRequestFunctionsItemTrigger",
     "EmbeddingsPageRequestSelectedModel",
     "EmbeddingsPageStatusResponse",
     "EvalPrompt",
     "FaceInpaintingPageOutput",
     "FaceInpaintingPageRequest",
-    "FaceInpaintingPageRequestFunctionsItem",
-    "FaceInpaintingPageRequestFunctionsItemTrigger",
     "FaceInpaintingPageRequestSelectedModel",
     "FaceInpaintingPageStatusResponse",
     "FinalResponse",
@@ -520,101 +352,62 @@ __all__ = [
     "GenericErrorResponseDetail",
     "GoogleGptPageOutput",
     "GoogleGptPageRequestEmbeddingModel",
-    "GoogleGptPageRequestFunctionsItem",
-    "GoogleGptPageRequestFunctionsItemTrigger",
     "GoogleGptPageRequestResponseFormatType",
-    "GoogleGptPageRequestSelectedModel",
     "GoogleGptPageStatusResponse",
     "GoogleImageGenPageOutput",
-    "GoogleImageGenPageRequestFunctionsItem",
-    "GoogleImageGenPageRequestFunctionsItemTrigger",
     "GoogleImageGenPageRequestSelectedModel",
     "GoogleImageGenPageStatusResponse",
     "HttpValidationError",
     "ImageSegmentationPageOutput",
     "ImageSegmentationPageRequest",
-    "ImageSegmentationPageRequestFunctionsItem",
-    "ImageSegmentationPageRequestFunctionsItemTrigger",
     "ImageSegmentationPageRequestSelectedModel",
     "ImageSegmentationPageStatusResponse",
     "ImageUrl",
     "ImageUrlDetail",
     "Img2ImgPageOutput",
     "Img2ImgPageRequest",
-    "Img2ImgPageRequestFunctionsItem",
-    "Img2ImgPageRequestFunctionsItemTrigger",
     "Img2ImgPageRequestSelectedControlnetModel",
     "Img2ImgPageRequestSelectedControlnetModelItem",
     "Img2ImgPageRequestSelectedModel",
     "Img2ImgPageStatusResponse",
+    "LargeLanguageModels",
     "LetterWriterPageOutput",
     "LetterWriterPageRequest",
-    "LetterWriterPageRequestExampleLettersItem",
-    "LetterWriterPageRequestFunctionsItem",
-    "LetterWriterPageRequestFunctionsItemTrigger",
     "LetterWriterPageStatusResponse",
     "LipsyncPageOutput",
     "LipsyncPageRequest",
-    "LipsyncPageRequestFunctionsItem",
-    "LipsyncPageRequestFunctionsItemTrigger",
-    "LipsyncPageRequestSadtalkerSettings",
-    "LipsyncPageRequestSadtalkerSettingsPreprocess",
     "LipsyncPageRequestSelectedModel",
     "LipsyncPageStatusResponse",
-    "LipsyncRequestFunctionsItem",
-    "LipsyncRequestFunctionsItemTrigger",
-    "LipsyncRequestSadtalkerSettings",
-    "LipsyncRequestSadtalkerSettingsPreprocess",
     "LipsyncRequestSelectedModel",
     "LipsyncTtsPageOutput",
     "LipsyncTtsPageRequest",
-    "LipsyncTtsPageRequestFunctionsItem",
-    "LipsyncTtsPageRequestFunctionsItemTrigger",
     "LipsyncTtsPageRequestOpenaiTtsModel",
     "LipsyncTtsPageRequestOpenaiVoiceName",
-    "LipsyncTtsPageRequestSadtalkerSettings",
-    "LipsyncTtsPageRequestSadtalkerSettingsPreprocess",
     "LipsyncTtsPageRequestSelectedModel",
     "LipsyncTtsPageRequestTtsProvider",
     "LipsyncTtsPageStatusResponse",
-    "LipsyncTtsRequestFunctionsItem",
-    "LipsyncTtsRequestFunctionsItemTrigger",
     "LipsyncTtsRequestOpenaiTtsModel",
     "LipsyncTtsRequestOpenaiVoiceName",
-    "LipsyncTtsRequestSadtalkerSettings",
-    "LipsyncTtsRequestSadtalkerSettingsPreprocess",
     "LipsyncTtsRequestSelectedModel",
     "LipsyncTtsRequestTtsProvider",
     "LlmTools",
     "MessagePart",
     "ObjectInpaintingPageOutput",
     "ObjectInpaintingPageRequest",
-    "ObjectInpaintingPageRequestFunctionsItem",
-    "ObjectInpaintingPageRequestFunctionsItemTrigger",
     "ObjectInpaintingPageRequestSelectedModel",
     "ObjectInpaintingPageStatusResponse",
-    "PortraitRequestFunctionsItem",
-    "PortraitRequestFunctionsItemTrigger",
     "PortraitRequestSelectedModel",
-    "ProductImageRequestFunctionsItem",
-    "ProductImageRequestFunctionsItemTrigger",
     "ProductImageRequestSelectedModel",
     "PromptTreeNode",
     "PromptTreeNodePrompt",
     "QrCodeGeneratorPageOutput",
     "QrCodeGeneratorPageRequest",
-    "QrCodeGeneratorPageRequestFunctionsItem",
-    "QrCodeGeneratorPageRequestFunctionsItemTrigger",
     "QrCodeGeneratorPageRequestImagePromptControlnetModelsItem",
-    "QrCodeGeneratorPageRequestQrCodeVcard",
     "QrCodeGeneratorPageRequestScheduler",
     "QrCodeGeneratorPageRequestSelectedControlnetModelItem",
     "QrCodeGeneratorPageRequestSelectedModel",
     "QrCodeGeneratorPageStatusResponse",
-    "QrCodeRequestFunctionsItem",
-    "QrCodeRequestFunctionsItemTrigger",
     "QrCodeRequestImagePromptControlnetModelsItem",
-    "QrCodeRequestQrCodeVcard",
     "QrCodeRequestScheduler",
     "QrCodeRequestSelectedControlnetModelItem",
     "QrCodeRequestSelectedModel",
@@ -626,26 +419,16 @@ __all__ = [
     "RelatedQnADocPageOutput",
     "RelatedQnADocPageRequestCitationStyle",
     "RelatedQnADocPageRequestEmbeddingModel",
-    "RelatedQnADocPageRequestFunctionsItem",
-    "RelatedQnADocPageRequestFunctionsItemTrigger",
     "RelatedQnADocPageRequestKeywordQuery",
     "RelatedQnADocPageRequestResponseFormatType",
-    "RelatedQnADocPageRequestSelectedModel",
     "RelatedQnADocPageStatusResponse",
     "RelatedQnAPageOutput",
     "RelatedQnAPageRequestEmbeddingModel",
-    "RelatedQnAPageRequestFunctionsItem",
-    "RelatedQnAPageRequestFunctionsItemTrigger",
     "RelatedQnAPageRequestResponseFormatType",
-    "RelatedQnAPageRequestSelectedModel",
     "RelatedQnAPageStatusResponse",
-    "RemixImageRequestFunctionsItem",
-    "RemixImageRequestFunctionsItemTrigger",
     "RemixImageRequestSelectedControlnetModel",
     "RemixImageRequestSelectedControlnetModelItem",
     "RemixImageRequestSelectedModel",
-    "RemoveBackgroundRequestFunctionsItem",
-    "RemoveBackgroundRequestFunctionsItemTrigger",
     "RemoveBackgroundRequestSelectedModel",
     "ReplyButton",
     "ResponseModel",
@@ -659,56 +442,34 @@ __all__ = [
     "SearchReference",
     "SeoSummaryPageOutput",
     "SeoSummaryPageRequestResponseFormatType",
-    "SeoSummaryPageRequestSelectedModel",
     "SeoSummaryPageStatusResponse",
     "SerpSearchLocation",
     "SerpSearchType",
     "SmartGptPageOutput",
-    "SmartGptPageRequestFunctionsItem",
-    "SmartGptPageRequestFunctionsItemTrigger",
     "SmartGptPageRequestResponseFormatType",
-    "SmartGptPageRequestSelectedModel",
     "SmartGptPageStatusResponse",
     "SocialLookupEmailPageOutput",
-    "SocialLookupEmailPageRequestFunctionsItem",
-    "SocialLookupEmailPageRequestFunctionsItemTrigger",
     "SocialLookupEmailPageRequestResponseFormatType",
-    "SocialLookupEmailPageRequestSelectedModel",
     "SocialLookupEmailPageStatusResponse",
-    "SpeechRecognitionRequestFunctionsItem",
-    "SpeechRecognitionRequestFunctionsItemTrigger",
     "SpeechRecognitionRequestOutputFormat",
     "SpeechRecognitionRequestSelectedModel",
     "SpeechRecognitionRequestTranslationModel",
     "StreamError",
-    "SynthesizeDataRequestFunctionsItem",
-    "SynthesizeDataRequestFunctionsItemTrigger",
     "SynthesizeDataRequestResponseFormatType",
     "SynthesizeDataRequestSelectedAsrModel",
-    "SynthesizeDataRequestSelectedModel",
     "Text2AudioPageOutput",
-    "Text2AudioPageRequestFunctionsItem",
-    "Text2AudioPageRequestFunctionsItemTrigger",
     "Text2AudioPageStatusResponse",
     "TextToSpeechPageOutput",
-    "TextToSpeechPageRequestFunctionsItem",
-    "TextToSpeechPageRequestFunctionsItemTrigger",
     "TextToSpeechPageRequestOpenaiTtsModel",
     "TextToSpeechPageRequestOpenaiVoiceName",
     "TextToSpeechPageRequestTtsProvider",
     "TextToSpeechPageStatusResponse",
     "TrainingDataModel",
-    "TranslateRequestFunctionsItem",
-    "TranslateRequestFunctionsItemTrigger",
     "TranslateRequestSelectedModel",
     "TranslationPageOutput",
     "TranslationPageRequest",
-    "TranslationPageRequestFunctionsItem",
-    "TranslationPageRequestFunctionsItemTrigger",
     "TranslationPageRequestSelectedModel",
     "TranslationPageStatusResponse",
-    "UpscaleRequestFunctionsItem",
-    "UpscaleRequestFunctionsItemTrigger",
     "UpscaleRequestSelectedModelsItem",
     "ValidationError",
     "ValidationErrorLocItem",
@@ -723,18 +484,11 @@ __all__ = [
     "VideoBotsPageRequestFunctionsItem",
     "VideoBotsPageRequestFunctionsItemTrigger",
     "VideoBotsPageRequestLipsyncModel",
-    "VideoBotsPageRequestMessagesItem",
-    "VideoBotsPageRequestMessagesItemContent",
-    "VideoBotsPageRequestMessagesItemContentItem",
-    "VideoBotsPageRequestMessagesItemContentItem_ImageUrl",
-    "VideoBotsPageRequestMessagesItemContentItem_Text",
-    "VideoBotsPageRequestMessagesItemRole",
     "VideoBotsPageRequestOpenaiTtsModel",
     "VideoBotsPageRequestOpenaiVoiceName",
     "VideoBotsPageRequestResponseFormatType",
     "VideoBotsPageRequestSadtalkerSettings",
     "VideoBotsPageRequestSadtalkerSettingsPreprocess",
-    "VideoBotsPageRequestSelectedModel",
     "VideoBotsPageRequestTranslationModel",
     "VideoBotsPageRequestTtsProvider",
     "VideoBotsPageStatusResponse",

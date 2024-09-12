@@ -2,7 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .compare_upscaler_page_request_functions_item import CompareUpscalerPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .compare_upscaler_page_request_selected_models_item import CompareUpscalerPageRequestSelectedModelsItem
 from .run_settings import RunSettings
@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class CompareUpscalerPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[CompareUpscalerPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments

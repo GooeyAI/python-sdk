@@ -2,7 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .asr_page_request_functions_item import AsrPageRequestFunctionsItem
+from .recipe_function import RecipeFunction
 import pydantic
 from .asr_page_request_selected_model import AsrPageRequestSelectedModel
 from .asr_page_request_translation_model import AsrPageRequestTranslationModel
@@ -12,7 +12,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AsrPageRequest(UniversalBaseModel):
-    functions: typing.Optional[typing.List[AsrPageRequestFunctionsItem]] = None
+    functions: typing.Optional[typing.List[RecipeFunction]] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Variables to be used as Jinja prompt templates and in functions as arguments
