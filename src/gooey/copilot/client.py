@@ -2,20 +2,21 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from ..types.recipe_function import RecipeFunction
+from .types.copilot_completion_request_functions_item import CopilotCompletionRequestFunctionsItem
+from .. import core
 from ..types.conversation_entry import ConversationEntry
 from ..types.large_language_models import LargeLanguageModels
-from .types.video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddingModel
-from .types.video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
-from .types.video_bots_page_request_asr_model import VideoBotsPageRequestAsrModel
-from .types.video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
-from .types.video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
+from .types.copilot_completion_request_embedding_model import CopilotCompletionRequestEmbeddingModel
+from .types.copilot_completion_request_citation_style import CopilotCompletionRequestCitationStyle
+from .types.copilot_completion_request_asr_model import CopilotCompletionRequestAsrModel
+from .types.copilot_completion_request_translation_model import CopilotCompletionRequestTranslationModel
+from .types.copilot_completion_request_lipsync_model import CopilotCompletionRequestLipsyncModel
 from ..types.llm_tools import LlmTools
-from .types.video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
-from .types.video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
-from .types.video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
-from .types.video_bots_page_request_openai_tts_model import VideoBotsPageRequestOpenaiTtsModel
-from ..types.sad_talker_settings import SadTalkerSettings
+from .types.copilot_completion_request_response_format_type import CopilotCompletionRequestResponseFormatType
+from .types.copilot_completion_request_tts_provider import CopilotCompletionRequestTtsProvider
+from .types.copilot_completion_request_openai_voice_name import CopilotCompletionRequestOpenaiVoiceName
+from .types.copilot_completion_request_openai_tts_model import CopilotCompletionRequestOpenaiTtsModel
+from .types.copilot_completion_request_sadtalker_settings import CopilotCompletionRequestSadtalkerSettings
 from ..types.run_settings import RunSettings
 from ..core.request_options import RequestOptions
 from ..types.video_bots_page_output import VideoBotsPageOutput
@@ -41,67 +42,67 @@ class CopilotClient:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        input_audio: typing.Optional[str] = OMIT,
-        input_images: typing.Optional[typing.Sequence[str]] = OMIT,
-        input_documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        messages: typing.Optional[typing.Sequence[ConversationEntry]] = OMIT,
-        bot_script: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        document_model: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        keyword_instructions: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[VideoBotsPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        citation_style: typing.Optional[VideoBotsPageRequestCitationStyle] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        asr_model: typing.Optional[VideoBotsPageRequestAsrModel] = OMIT,
-        asr_language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[VideoBotsPageRequestTranslationModel] = OMIT,
-        user_language: typing.Optional[str] = OMIT,
-        input_glossary_document: typing.Optional[str] = OMIT,
-        output_glossary_document: typing.Optional[str] = OMIT,
-        lipsync_model: typing.Optional[VideoBotsPageRequestLipsyncModel] = OMIT,
-        tools: typing.Optional[typing.Sequence[LlmTools]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[VideoBotsPageRequestResponseFormatType] = OMIT,
-        tts_provider: typing.Optional[VideoBotsPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[VideoBotsPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[VideoBotsPageRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[str] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[SadTalkerSettings] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[core.File]] = None,
+        input_documents: typing.Optional[typing.List[core.File]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[core.File]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[core.File] = None,
+        output_glossary_document: typing.Optional[core.File] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VideoBotsPageOutput:
         """
@@ -109,7 +110,7 @@ class CopilotClient:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
+        functions : typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -118,14 +119,16 @@ class CopilotClient:
 
         input_audio : typing.Optional[str]
 
-        input_images : typing.Optional[typing.Sequence[str]]
+        input_images : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-        input_documents : typing.Optional[typing.Sequence[str]]
+        input_documents : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         doc_extract_url : typing.Optional[str]
             Select a workflow to extract text from documents and images.
 
-        messages : typing.Optional[typing.Sequence[ConversationEntry]]
+        messages : typing.Optional[typing.List[ConversationEntry]]
 
         bot_script : typing.Optional[str]
 
@@ -140,7 +143,8 @@ class CopilotClient:
 
         keyword_instructions : typing.Optional[str]
 
-        documents : typing.Optional[typing.Sequence[str]]
+        documents : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         max_references : typing.Optional[int]
 
@@ -148,7 +152,7 @@ class CopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[VideoBotsPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
 
         dense_weight : typing.Optional[float]
 
@@ -156,34 +160,30 @@ class CopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[VideoBotsPageRequestCitationStyle]
+        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[VideoBotsPageRequestAsrModel]
+        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[VideoBotsPageRequestTranslationModel]
+        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
 
-        input_glossary_document : typing.Optional[str]
+        input_glossary_document : typing.Optional[core.File]
+            See core.File for more documentation
 
-            Translation Glossary for User Langauge -> LLM Language (English)
+        output_glossary_document : typing.Optional[core.File]
+            See core.File for more documentation
 
+        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
-        output_glossary_document : typing.Optional[str]
-
-            Translation Glossary for LLM Language (English) -> User Langauge
-
-
-        lipsync_model : typing.Optional[VideoBotsPageRequestLipsyncModel]
-
-        tools : typing.Optional[typing.Sequence[LlmTools]]
+        tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
 
         avoid_repetition : typing.Optional[bool]
@@ -196,9 +196,9 @@ class CopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[VideoBotsPageRequestResponseFormatType]
+        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
 
-        tts_provider : typing.Optional[VideoBotsPageRequestTtsProvider]
+        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -231,11 +231,12 @@ class CopilotClient:
 
         azure_voice_name : typing.Optional[str]
 
-        openai_voice_name : typing.Optional[VideoBotsPageRequestOpenaiVoiceName]
+        openai_voice_name : typing.Optional[CopilotCompletionRequestOpenaiVoiceName]
 
-        openai_tts_model : typing.Optional[VideoBotsPageRequestOpenaiTtsModel]
+        openai_tts_model : typing.Optional[CopilotCompletionRequestOpenaiTtsModel]
 
-        input_face : typing.Optional[str]
+        input_face : typing.Optional[core.File]
+            See core.File for more documentation
 
         face_padding_top : typing.Optional[int]
 
@@ -245,7 +246,7 @@ class CopilotClient:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
+        sadtalker_settings : typing.Optional[CopilotCompletionRequestSadtalkerSettings]
 
         settings : typing.Optional[RunSettings]
 
@@ -272,13 +273,11 @@ class CopilotClient:
             params={
                 "example_id": example_id,
             },
-            json={
+            data={
                 "functions": functions,
                 "variables": variables,
                 "input_prompt": input_prompt,
                 "input_audio": input_audio,
-                "input_images": input_images,
-                "input_documents": input_documents,
                 "doc_extract_url": doc_extract_url,
                 "messages": messages,
                 "bot_script": bot_script,
@@ -287,7 +286,6 @@ class CopilotClient:
                 "task_instructions": task_instructions,
                 "query_instructions": query_instructions,
                 "keyword_instructions": keyword_instructions,
-                "documents": documents,
                 "max_references": max_references,
                 "max_context_words": max_context_words,
                 "scroll_jump": scroll_jump,
@@ -299,8 +297,6 @@ class CopilotClient:
                 "asr_language": asr_language,
                 "translation_model": translation_model,
                 "user_language": user_language,
-                "input_glossary_document": input_glossary_document,
-                "output_glossary_document": output_glossary_document,
                 "lipsync_model": lipsync_model,
                 "tools": tools,
                 "avoid_repetition": avoid_repetition,
@@ -327,13 +323,20 @@ class CopilotClient:
                 "azure_voice_name": azure_voice_name,
                 "openai_voice_name": openai_voice_name,
                 "openai_tts_model": openai_tts_model,
-                "input_face": input_face,
                 "face_padding_top": face_padding_top,
                 "face_padding_bottom": face_padding_bottom,
                 "face_padding_left": face_padding_left,
                 "face_padding_right": face_padding_right,
                 "sadtalker_settings": sadtalker_settings,
                 "settings": settings,
+            },
+            files={
+                "input_images": input_images,
+                "input_documents": input_documents,
+                "documents": documents,
+                "input_glossary_document": input_glossary_document,
+                "output_glossary_document": output_glossary_document,
+                "input_face": input_face,
             },
             request_options=request_options,
             omit=OMIT,
@@ -391,67 +394,67 @@ class AsyncCopilotClient:
         self,
         *,
         example_id: typing.Optional[str] = None,
-        functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
-        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        input_prompt: typing.Optional[str] = OMIT,
-        input_audio: typing.Optional[str] = OMIT,
-        input_images: typing.Optional[typing.Sequence[str]] = OMIT,
-        input_documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        doc_extract_url: typing.Optional[str] = OMIT,
-        messages: typing.Optional[typing.Sequence[ConversationEntry]] = OMIT,
-        bot_script: typing.Optional[str] = OMIT,
-        selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        document_model: typing.Optional[str] = OMIT,
-        task_instructions: typing.Optional[str] = OMIT,
-        query_instructions: typing.Optional[str] = OMIT,
-        keyword_instructions: typing.Optional[str] = OMIT,
-        documents: typing.Optional[typing.Sequence[str]] = OMIT,
-        max_references: typing.Optional[int] = OMIT,
-        max_context_words: typing.Optional[int] = OMIT,
-        scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[VideoBotsPageRequestEmbeddingModel] = OMIT,
-        dense_weight: typing.Optional[float] = OMIT,
-        citation_style: typing.Optional[VideoBotsPageRequestCitationStyle] = OMIT,
-        use_url_shortener: typing.Optional[bool] = OMIT,
-        asr_model: typing.Optional[VideoBotsPageRequestAsrModel] = OMIT,
-        asr_language: typing.Optional[str] = OMIT,
-        translation_model: typing.Optional[VideoBotsPageRequestTranslationModel] = OMIT,
-        user_language: typing.Optional[str] = OMIT,
-        input_glossary_document: typing.Optional[str] = OMIT,
-        output_glossary_document: typing.Optional[str] = OMIT,
-        lipsync_model: typing.Optional[VideoBotsPageRequestLipsyncModel] = OMIT,
-        tools: typing.Optional[typing.Sequence[LlmTools]] = OMIT,
-        avoid_repetition: typing.Optional[bool] = OMIT,
-        num_outputs: typing.Optional[int] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        max_tokens: typing.Optional[int] = OMIT,
-        sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[VideoBotsPageRequestResponseFormatType] = OMIT,
-        tts_provider: typing.Optional[VideoBotsPageRequestTtsProvider] = OMIT,
-        uberduck_voice_name: typing.Optional[str] = OMIT,
-        uberduck_speaking_rate: typing.Optional[float] = OMIT,
-        google_voice_name: typing.Optional[str] = OMIT,
-        google_speaking_rate: typing.Optional[float] = OMIT,
-        google_pitch: typing.Optional[float] = OMIT,
-        bark_history_prompt: typing.Optional[str] = OMIT,
-        elevenlabs_voice_name: typing.Optional[str] = OMIT,
-        elevenlabs_api_key: typing.Optional[str] = OMIT,
-        elevenlabs_voice_id: typing.Optional[str] = OMIT,
-        elevenlabs_model: typing.Optional[str] = OMIT,
-        elevenlabs_stability: typing.Optional[float] = OMIT,
-        elevenlabs_similarity_boost: typing.Optional[float] = OMIT,
-        elevenlabs_style: typing.Optional[float] = OMIT,
-        elevenlabs_speaker_boost: typing.Optional[bool] = OMIT,
-        azure_voice_name: typing.Optional[str] = OMIT,
-        openai_voice_name: typing.Optional[VideoBotsPageRequestOpenaiVoiceName] = OMIT,
-        openai_tts_model: typing.Optional[VideoBotsPageRequestOpenaiTtsModel] = OMIT,
-        input_face: typing.Optional[str] = OMIT,
-        face_padding_top: typing.Optional[int] = OMIT,
-        face_padding_bottom: typing.Optional[int] = OMIT,
-        face_padding_left: typing.Optional[int] = OMIT,
-        face_padding_right: typing.Optional[int] = OMIT,
-        sadtalker_settings: typing.Optional[SadTalkerSettings] = OMIT,
-        settings: typing.Optional[RunSettings] = OMIT,
+        functions: typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]] = None,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        input_prompt: typing.Optional[str] = None,
+        input_audio: typing.Optional[str] = None,
+        input_images: typing.Optional[typing.List[core.File]] = None,
+        input_documents: typing.Optional[typing.List[core.File]] = None,
+        doc_extract_url: typing.Optional[str] = None,
+        messages: typing.Optional[typing.List[ConversationEntry]] = None,
+        bot_script: typing.Optional[str] = None,
+        selected_model: typing.Optional[LargeLanguageModels] = None,
+        document_model: typing.Optional[str] = None,
+        task_instructions: typing.Optional[str] = None,
+        query_instructions: typing.Optional[str] = None,
+        keyword_instructions: typing.Optional[str] = None,
+        documents: typing.Optional[typing.List[core.File]] = None,
+        max_references: typing.Optional[int] = None,
+        max_context_words: typing.Optional[int] = None,
+        scroll_jump: typing.Optional[int] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        dense_weight: typing.Optional[float] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        use_url_shortener: typing.Optional[bool] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_language: typing.Optional[str] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        user_language: typing.Optional[str] = None,
+        input_glossary_document: typing.Optional[core.File] = None,
+        output_glossary_document: typing.Optional[core.File] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        tools: typing.Optional[typing.List[LlmTools]] = None,
+        avoid_repetition: typing.Optional[bool] = None,
+        num_outputs: typing.Optional[int] = None,
+        quality: typing.Optional[float] = None,
+        max_tokens: typing.Optional[int] = None,
+        sampling_temperature: typing.Optional[float] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        uberduck_voice_name: typing.Optional[str] = None,
+        uberduck_speaking_rate: typing.Optional[float] = None,
+        google_voice_name: typing.Optional[str] = None,
+        google_speaking_rate: typing.Optional[float] = None,
+        google_pitch: typing.Optional[float] = None,
+        bark_history_prompt: typing.Optional[str] = None,
+        elevenlabs_voice_name: typing.Optional[str] = None,
+        elevenlabs_api_key: typing.Optional[str] = None,
+        elevenlabs_voice_id: typing.Optional[str] = None,
+        elevenlabs_model: typing.Optional[str] = None,
+        elevenlabs_stability: typing.Optional[float] = None,
+        elevenlabs_similarity_boost: typing.Optional[float] = None,
+        elevenlabs_style: typing.Optional[float] = None,
+        elevenlabs_speaker_boost: typing.Optional[bool] = None,
+        azure_voice_name: typing.Optional[str] = None,
+        openai_voice_name: typing.Optional[CopilotCompletionRequestOpenaiVoiceName] = None,
+        openai_tts_model: typing.Optional[CopilotCompletionRequestOpenaiTtsModel] = None,
+        input_face: typing.Optional[core.File] = None,
+        face_padding_top: typing.Optional[int] = None,
+        face_padding_bottom: typing.Optional[int] = None,
+        face_padding_left: typing.Optional[int] = None,
+        face_padding_right: typing.Optional[int] = None,
+        sadtalker_settings: typing.Optional[CopilotCompletionRequestSadtalkerSettings] = None,
+        settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VideoBotsPageOutput:
         """
@@ -459,7 +462,7 @@ class AsyncCopilotClient:
         ----------
         example_id : typing.Optional[str]
 
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
+        functions : typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]]
 
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
@@ -468,14 +471,16 @@ class AsyncCopilotClient:
 
         input_audio : typing.Optional[str]
 
-        input_images : typing.Optional[typing.Sequence[str]]
+        input_images : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-        input_documents : typing.Optional[typing.Sequence[str]]
+        input_documents : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         doc_extract_url : typing.Optional[str]
             Select a workflow to extract text from documents and images.
 
-        messages : typing.Optional[typing.Sequence[ConversationEntry]]
+        messages : typing.Optional[typing.List[ConversationEntry]]
 
         bot_script : typing.Optional[str]
 
@@ -490,7 +495,8 @@ class AsyncCopilotClient:
 
         keyword_instructions : typing.Optional[str]
 
-        documents : typing.Optional[typing.Sequence[str]]
+        documents : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         max_references : typing.Optional[int]
 
@@ -498,7 +504,7 @@ class AsyncCopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[VideoBotsPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
 
         dense_weight : typing.Optional[float]
 
@@ -506,34 +512,30 @@ class AsyncCopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[VideoBotsPageRequestCitationStyle]
+        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[VideoBotsPageRequestAsrModel]
+        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[VideoBotsPageRequestTranslationModel]
+        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
 
-        input_glossary_document : typing.Optional[str]
+        input_glossary_document : typing.Optional[core.File]
+            See core.File for more documentation
 
-            Translation Glossary for User Langauge -> LLM Language (English)
+        output_glossary_document : typing.Optional[core.File]
+            See core.File for more documentation
 
+        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
-        output_glossary_document : typing.Optional[str]
-
-            Translation Glossary for LLM Language (English) -> User Langauge
-
-
-        lipsync_model : typing.Optional[VideoBotsPageRequestLipsyncModel]
-
-        tools : typing.Optional[typing.Sequence[LlmTools]]
+        tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
 
         avoid_repetition : typing.Optional[bool]
@@ -546,9 +548,9 @@ class AsyncCopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[VideoBotsPageRequestResponseFormatType]
+        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
 
-        tts_provider : typing.Optional[VideoBotsPageRequestTtsProvider]
+        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -581,11 +583,12 @@ class AsyncCopilotClient:
 
         azure_voice_name : typing.Optional[str]
 
-        openai_voice_name : typing.Optional[VideoBotsPageRequestOpenaiVoiceName]
+        openai_voice_name : typing.Optional[CopilotCompletionRequestOpenaiVoiceName]
 
-        openai_tts_model : typing.Optional[VideoBotsPageRequestOpenaiTtsModel]
+        openai_tts_model : typing.Optional[CopilotCompletionRequestOpenaiTtsModel]
 
-        input_face : typing.Optional[str]
+        input_face : typing.Optional[core.File]
+            See core.File for more documentation
 
         face_padding_top : typing.Optional[int]
 
@@ -595,7 +598,7 @@ class AsyncCopilotClient:
 
         face_padding_right : typing.Optional[int]
 
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
+        sadtalker_settings : typing.Optional[CopilotCompletionRequestSadtalkerSettings]
 
         settings : typing.Optional[RunSettings]
 
@@ -630,13 +633,11 @@ class AsyncCopilotClient:
             params={
                 "example_id": example_id,
             },
-            json={
+            data={
                 "functions": functions,
                 "variables": variables,
                 "input_prompt": input_prompt,
                 "input_audio": input_audio,
-                "input_images": input_images,
-                "input_documents": input_documents,
                 "doc_extract_url": doc_extract_url,
                 "messages": messages,
                 "bot_script": bot_script,
@@ -645,7 +646,6 @@ class AsyncCopilotClient:
                 "task_instructions": task_instructions,
                 "query_instructions": query_instructions,
                 "keyword_instructions": keyword_instructions,
-                "documents": documents,
                 "max_references": max_references,
                 "max_context_words": max_context_words,
                 "scroll_jump": scroll_jump,
@@ -657,8 +657,6 @@ class AsyncCopilotClient:
                 "asr_language": asr_language,
                 "translation_model": translation_model,
                 "user_language": user_language,
-                "input_glossary_document": input_glossary_document,
-                "output_glossary_document": output_glossary_document,
                 "lipsync_model": lipsync_model,
                 "tools": tools,
                 "avoid_repetition": avoid_repetition,
@@ -685,13 +683,20 @@ class AsyncCopilotClient:
                 "azure_voice_name": azure_voice_name,
                 "openai_voice_name": openai_voice_name,
                 "openai_tts_model": openai_tts_model,
-                "input_face": input_face,
                 "face_padding_top": face_padding_top,
                 "face_padding_bottom": face_padding_bottom,
                 "face_padding_left": face_padding_left,
                 "face_padding_right": face_padding_right,
                 "sadtalker_settings": sadtalker_settings,
                 "settings": settings,
+            },
+            files={
+                "input_images": input_images,
+                "input_documents": input_documents,
+                "documents": documents,
+                "input_glossary_document": input_glossary_document,
+                "output_glossary_document": output_glossary_document,
+                "input_face": input_face,
             },
             request_options=request_options,
             omit=OMIT,
