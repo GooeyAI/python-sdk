@@ -2,4 +2,4 @@
 
 import typing
 
-LlmTools = typing.Union[typing.Literal["json_to_pdf"], typing.Any]
+SecuritySchemes = typing.Optional[typing.Any]

@@ -196,6 +196,7 @@ from .run_start import RunStart
 from .sad_talker_settings import SadTalkerSettings
 from .sad_talker_settings_preprocess import SadTalkerSettingsPreprocess
 from .search_reference import SearchReference
+from .security_schemes import SecuritySchemes
 from .seo_summary_page_output import SeoSummaryPageOutput
 from .seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
 from .seo_summary_page_status_response import SeoSummaryPageStatusResponse
@@ -440,6 +441,7 @@ __all__ = [
     "SadTalkerSettings",
     "SadTalkerSettingsPreprocess",
     "SearchReference",
+    "SecuritySchemes",
     "SeoSummaryPageOutput",
     "SeoSummaryPageRequestResponseFormatType",
     "SeoSummaryPageStatusResponse",
