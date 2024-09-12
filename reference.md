@@ -232,7 +232,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -256,9 +256,7 @@ client.qr_code(
 <dl>
 <dd>
 
-**qr_code_input_image:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**qr_code_input_image:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -274,9 +272,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**qr_code_file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**qr_code_file:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -308,7 +304,9 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**image_prompt_controlnet_models:** `typing.Optional[typing.List[QrCodeRequestImagePromptControlnetModelsItem]]` 
+**image_prompt_controlnet_models:** `typing.Optional[
+    typing.Sequence[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]
+]` 
     
 </dd>
 </dl>
@@ -348,7 +346,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[QrCodeRequestSelectedModel]` 
+**selected_model:** `typing.Optional[QrCodeGeneratorPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -356,7 +354,9 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_controlnet_model:** `typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]]` 
+**selected_controlnet_model:** `typing.Optional[
+    typing.Sequence[QrCodeGeneratorPageRequestSelectedControlnetModelItem]
+]` 
     
 </dd>
 </dl>
@@ -388,7 +388,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+**controlnet_conditioning_scale:** `typing.Optional[typing.Sequence[float]]` 
     
 </dd>
 </dl>
@@ -412,7 +412,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[QrCodeRequestScheduler]` 
+**scheduler:** `typing.Optional[QrCodeGeneratorPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -1378,6 +1378,7 @@ client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.bulk_run(
+    documents=["documents"],
     run_urls=["run_urls"],
     input_columns={"key": "value"},
     output_columns={"key": "value"},
@@ -1397,9 +1398,13 @@ client.bulk_run(
 <dl>
 <dd>
 
-**documents:** `from __future__ import annotations
+**documents:** `typing.Sequence[str]` 
 
-typing.List[core.File]` — See core.File for more documentation
+
+Upload or link to a CSV or google sheet that contains your sample input data.
+For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
+Remember to includes header names in your CSV too.
+            
     
 </dd>
 </dl>
@@ -1407,7 +1412,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**run_urls:** `typing.List[str]` 
+**run_urls:** `typing.Sequence[str]` 
 
 
 Provide one or more Gooey.AI workflow runs.
@@ -1452,7 +1457,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1468,7 +1473,7 @@ For each output field in the Gooey.AI workflow, specify the column name that you
 <dl>
 <dd>
 
-**eval_urls:** `typing.Optional[typing.List[str]]` 
+**eval_urls:** `typing.Optional[typing.Sequence[str]]` 
 
 
 _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
@@ -1693,7 +1698,9 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.synthesize_data()
+client.synthesize_data(
+    documents=["documents"],
+)
 
 ```
 </dd>
@@ -1709,9 +1716,7 @@ client.synthesize_data()
 <dl>
 <dd>
 
-**documents:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -1727,7 +1732,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -1743,9 +1748,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**sheet_url:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**sheet_url:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1753,7 +1756,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[SynthesizeDataRequestSelectedAsrModel]` 
+**selected_asr_model:** `typing.Optional[DocExtractPageRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -1769,9 +1772,10 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**glossary_document:** `from __future__ import annotations
+**glossary_document:** `typing.Optional[str]` 
 
-typing.Optional[core.File]` — See core.File for more documentation
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
     
 </dd>
 </dl>
@@ -1835,7 +1839,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[SynthesizeDataRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocExtractPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2428,7 +2432,9 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.doc_summary()
+client.doc_summary(
+    documents=["documents"],
+)
 
 ```
 </dd>
@@ -2444,9 +2450,7 @@ client.doc_summary()
 <dl>
 <dd>
 
-**documents:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -2462,7 +2466,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2510,7 +2514,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[DocSummaryRequestSelectedAsrModel]` 
+**selected_asr_model:** `typing.Optional[DocSummaryPageRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -2566,7 +2570,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[DocSummaryRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocSummaryPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2714,7 +2718,7 @@ client.lipsync()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2730,9 +2734,7 @@ client.lipsync()
 <dl>
 <dd>
 
-**input_face:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_face:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2780,7 +2782,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[LipsyncRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LipsyncPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -2788,9 +2790,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**input_audio:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_audio:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2870,7 +2870,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -2886,7 +2886,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[LipsyncTtsRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[LipsyncTtsPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -3014,7 +3014,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[LipsyncTtsRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -3022,7 +3022,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[LipsyncTtsRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -3030,9 +3030,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**input_face:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_face:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -3080,7 +3078,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[LipsyncTtsRequestSelectedModel]` 
+**selected_model:** `typing.Optional[LipsyncTtsPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3358,7 +3356,9 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.speech_recognition()
+client.speech_recognition(
+    documents=["documents"],
+)
 
 ```
 </dd>
@@ -3374,9 +3374,7 @@ client.speech_recognition()
 <dl>
 <dd>
 
-**documents:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**documents:** `typing.Sequence[str]` 
     
 </dd>
 </dl>
@@ -3392,7 +3390,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3408,7 +3406,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[SpeechRecognitionRequestSelectedModel]` 
+**selected_model:** `typing.Optional[AsrPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3424,7 +3422,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[SpeechRecognitionRequestTranslationModel]` 
+**translation_model:** `typing.Optional[AsrPageRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -3432,7 +3430,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[SpeechRecognitionRequestOutputFormat]` 
+**output_format:** `typing.Optional[AsrPageRequestOutputFormat]` 
     
 </dd>
 </dl>
@@ -3464,9 +3462,10 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**glossary_document:** `from __future__ import annotations
+**glossary_document:** `typing.Optional[str]` 
 
-typing.Optional[core.File]` — See core.File for more documentation
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
     
 </dd>
 </dl>
@@ -3688,7 +3687,7 @@ client.translate()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3704,7 +3703,7 @@ client.translate()
 <dl>
 <dd>
 
-**texts:** `typing.Optional[typing.List[str]]` 
+**texts:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -3712,7 +3711,7 @@ client.translate()
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[TranslateRequestSelectedModel]` 
+**selected_model:** `typing.Optional[TranslationPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3736,9 +3735,10 @@ client.translate()
 <dl>
 <dd>
 
-**glossary_document:** `from __future__ import annotations
+**glossary_document:** `typing.Optional[str]` 
 
-typing.Optional[core.File]` — See core.File for more documentation
+Provide a glossary to customize translation and improve accuracy of domain-specific terms.
+If not specified or invalid, no glossary will be used. Read about the expected format [here](https://docs.google.com/document/d/1TwzAvFmFYekloRKql2PXNPIyqCbsHRL8ZtnWkzAYrh8/edit?usp=sharing).
     
 </dd>
 </dl>
@@ -3784,7 +3784,9 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.remix_image()
+client.remix_image(
+    input_image="input_image",
+)
 
 ```
 </dd>
@@ -3800,9 +3802,7 @@ client.remix_image()
 <dl>
 <dd>
 
-**input_image:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**input_image:** `str` 
     
 </dd>
 </dl>
@@ -3818,7 +3818,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -3842,7 +3842,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RemixImageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[Img2ImgPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3850,7 +3850,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_controlnet_model:** `typing.Optional[RemixImageRequestSelectedControlnetModel]` 
+**selected_controlnet_model:** `typing.Optional[Img2ImgPageRequestSelectedControlnetModel]` 
     
 </dd>
 </dl>
@@ -3914,7 +3914,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**controlnet_conditioning_scale:** `typing.Optional[typing.List[float]]` 
+**controlnet_conditioning_scale:** `typing.Optional[typing.Sequence[float]]` 
     
 </dd>
 </dl>
@@ -4177,6 +4177,7 @@ client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.product_image(
+    input_image="input_image",
     text_prompt="text_prompt",
 )
 
@@ -4194,9 +4195,7 @@ client.product_image(
 <dl>
 <dd>
 
-**input_image:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**input_image:** `str` 
     
 </dd>
 </dl>
@@ -4220,7 +4219,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4268,7 +4267,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ProductImageRequestSelectedModel]` 
+**selected_model:** `typing.Optional[ObjectInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4379,7 +4378,8 @@ client = Gooey(
     api_key="YOUR_API_KEY",
 )
 client.portrait(
-    text_prompt="text_prompt",
+    input_image="input_image",
+    text_prompt="tony stark from the iron man",
 )
 
 ```
@@ -4396,9 +4396,7 @@ client.portrait(
 <dl>
 <dd>
 
-**input_image:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**input_image:** `str` 
     
 </dd>
 </dl>
@@ -4422,7 +4420,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -4462,7 +4460,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[PortraitRequestSelectedModel]` 
+**selected_model:** `typing.Optional[FaceInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5022,7 +5020,9 @@ from gooey import Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.remove_background()
+client.remove_background(
+    input_image="input_image",
+)
 
 ```
 </dd>
@@ -5038,9 +5038,7 @@ client.remove_background()
 <dl>
 <dd>
 
-**input_image:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**input_image:** `str` 
     
 </dd>
 </dl>
@@ -5056,7 +5054,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5072,7 +5070,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[RemoveBackgroundRequestSelectedModel]` 
+**selected_model:** `typing.Optional[ImageSegmentationPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5200,7 +5198,7 @@ client.upscale(
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[RecipeFunction]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5216,9 +5214,7 @@ client.upscale(
 <dl>
 <dd>
 
-**input_image:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_image:** `typing.Optional[str]` — Input Image
     
 </dd>
 </dl>
@@ -5226,9 +5222,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**input_video:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_video:** `typing.Optional[str]` — Input Video
     
 </dd>
 </dl>
@@ -5236,7 +5230,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]]` 
+**selected_models:** `typing.Optional[typing.Sequence[CompareUpscalerPageRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -5726,7 +5720,7 @@ client.copilot.completion()
 <dl>
 <dd>
 
-**functions:** `typing.Optional[typing.List[CopilotCompletionRequestFunctionsItem]]` 
+**functions:** `typing.Optional[typing.Sequence[RecipeFunction]]` 
     
 </dd>
 </dl>
@@ -5758,9 +5752,7 @@ client.copilot.completion()
 <dl>
 <dd>
 
-**input_images:** `from __future__ import annotations
-
-typing.Optional[typing.List[core.File]]` — See core.File for more documentation
+**input_images:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -5768,9 +5760,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**input_documents:** `from __future__ import annotations
-
-typing.Optional[typing.List[core.File]]` — See core.File for more documentation
+**input_documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -5786,7 +5776,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.List[ConversationEntry]]` 
+**messages:** `typing.Optional[typing.Sequence[ConversationEntry]]` 
     
 </dd>
 </dl>
@@ -5842,9 +5832,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**documents:** `from __future__ import annotations
-
-typing.Optional[typing.List[core.File]]` — See core.File for more documentation
+**documents:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -5876,7 +5864,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[CopilotCompletionRequestEmbeddingModel]` 
+**embedding_model:** `typing.Optional[VideoBotsPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -5897,7 +5885,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[CopilotCompletionRequestCitationStyle]` 
+**citation_style:** `typing.Optional[VideoBotsPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -5913,7 +5901,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**asr_model:** `typing.Optional[CopilotCompletionRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
+**asr_model:** `typing.Optional[VideoBotsPageRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
     
 </dd>
 </dl>
@@ -5929,7 +5917,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[CopilotCompletionRequestTranslationModel]` 
+**translation_model:** `typing.Optional[VideoBotsPageRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -5945,9 +5933,11 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**input_glossary_document:** `from __future__ import annotations
+**input_glossary_document:** `typing.Optional[str]` 
 
-typing.Optional[core.File]` — See core.File for more documentation
+
+Translation Glossary for User Langauge -> LLM Language (English)
+            
     
 </dd>
 </dl>
@@ -5955,9 +5945,11 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**output_glossary_document:** `from __future__ import annotations
+**output_glossary_document:** `typing.Optional[str]` 
 
-typing.Optional[core.File]` — See core.File for more documentation
+
+Translation Glossary for LLM Language (English) -> User Langauge
+            
     
 </dd>
 </dl>
@@ -5965,7 +5957,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**lipsync_model:** `typing.Optional[CopilotCompletionRequestLipsyncModel]` 
+**lipsync_model:** `typing.Optional[VideoBotsPageRequestLipsyncModel]` 
     
 </dd>
 </dl>
@@ -5973,7 +5965,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**tools:** `typing.Optional[typing.List[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
+**tools:** `typing.Optional[typing.Sequence[LlmTools]]` — Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
     
 </dd>
 </dl>
@@ -6021,7 +6013,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[CopilotCompletionRequestResponseFormatType]` 
+**response_format_type:** `typing.Optional[VideoBotsPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -6029,7 +6021,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[CopilotCompletionRequestTtsProvider]` 
+**tts_provider:** `typing.Optional[VideoBotsPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -6157,7 +6149,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**openai_voice_name:** `typing.Optional[CopilotCompletionRequestOpenaiVoiceName]` 
+**openai_voice_name:** `typing.Optional[VideoBotsPageRequestOpenaiVoiceName]` 
     
 </dd>
 </dl>
@@ -6165,7 +6157,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**openai_tts_model:** `typing.Optional[CopilotCompletionRequestOpenaiTtsModel]` 
+**openai_tts_model:** `typing.Optional[VideoBotsPageRequestOpenaiTtsModel]` 
     
 </dd>
 </dl>
@@ -6173,9 +6165,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**input_face:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**input_face:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -6215,7 +6205,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**sadtalker_settings:** `typing.Optional[CopilotCompletionRequestSadtalkerSettings]` 
+**sadtalker_settings:** `typing.Optional[SadTalkerSettings]` 
     
 </dd>
 </dl>
