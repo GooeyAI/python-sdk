@@ -4,11 +4,11 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
-from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
-from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
+from .text_to_speech_providers import TextToSpeechProviders
+from .open_ai_tts_voices import OpenAiTtsVoices
+from .open_ai_tts_models import OpenAiTtsModels
 from .sad_talker_settings import SadTalkerSettings
-from .lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
+from .lipsync_models import LipsyncModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -21,7 +21,7 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     """
 
     text_prompt: str
-    tts_provider: typing.Optional[LipsyncTtsPageRequestTtsProvider] = None
+    tts_provider: typing.Optional[TextToSpeechProviders] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None
@@ -41,15 +41,15 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     elevenlabs_style: typing.Optional[float] = None
     elevenlabs_speaker_boost: typing.Optional[bool] = None
     azure_voice_name: typing.Optional[str] = None
-    openai_voice_name: typing.Optional[LipsyncTtsPageRequestOpenaiVoiceName] = None
-    openai_tts_model: typing.Optional[LipsyncTtsPageRequestOpenaiTtsModel] = None
+    openai_voice_name: typing.Optional[OpenAiTtsVoices] = None
+    openai_tts_model: typing.Optional[OpenAiTtsModels] = None
     input_face: typing.Optional[str] = None
     face_padding_top: typing.Optional[int] = None
     face_padding_bottom: typing.Optional[int] = None
     face_padding_left: typing.Optional[int] = None
     face_padding_right: typing.Optional[int] = None
     sadtalker_settings: typing.Optional[SadTalkerSettings] = None
-    selected_model: typing.Optional[LipsyncTtsPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LipsyncModels] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:

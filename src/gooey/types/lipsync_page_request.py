@@ -5,7 +5,7 @@ import typing
 from .recipe_function import RecipeFunction
 import pydantic
 from .sad_talker_settings import SadTalkerSettings
-from .lipsync_page_request_selected_model import LipsyncPageRequestSelectedModel
+from .lipsync_models import LipsyncModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -23,7 +23,7 @@ class LipsyncPageRequest(UniversalBaseModel):
     face_padding_left: typing.Optional[int] = None
     face_padding_right: typing.Optional[int] = None
     sadtalker_settings: typing.Optional[SadTalkerSettings] = None
-    selected_model: typing.Optional[LipsyncPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LipsyncModels] = None
     input_audio: typing.Optional[str] = None
     settings: typing.Optional[RunSettings] = None
 

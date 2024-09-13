@@ -4,9 +4,9 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .asr_page_request_selected_model import AsrPageRequestSelectedModel
-from .asr_page_request_translation_model import AsrPageRequestTranslationModel
-from .asr_page_request_output_format import AsrPageRequestOutputFormat
+from .asr_models import AsrModels
+from .translation_models import TranslationModels
+from .asr_output_format import AsrOutputFormat
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -19,10 +19,10 @@ class AsrPageRequest(UniversalBaseModel):
     """
 
     documents: typing.List[str]
-    selected_model: typing.Optional[AsrPageRequestSelectedModel] = None
+    selected_model: typing.Optional[AsrModels] = None
     language: typing.Optional[str] = None
-    translation_model: typing.Optional[AsrPageRequestTranslationModel] = None
-    output_format: typing.Optional[AsrPageRequestOutputFormat] = None
+    translation_model: typing.Optional[TranslationModels] = None
+    output_format: typing.Optional[AsrOutputFormat] = None
     google_translate_target: typing.Optional[str] = pydantic.Field(default=None)
     """
     use `translation_model` & `translation_target` instead.

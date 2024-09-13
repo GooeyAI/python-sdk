@@ -9,6 +9,7 @@ import pydantic
 
 class LipsyncPageOutput(UniversalBaseModel):
     output_video: str
+    duration_sec: typing.Optional[float] = None
     called_functions: typing.Optional[typing.List[CalledFunctionResponse]] = None
 
     if IS_PYDANTIC_V2:

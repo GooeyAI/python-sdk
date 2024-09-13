@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .object_inpainting_page_request_selected_model import ObjectInpaintingPageRequestSelectedModel
+from .inpainting_models import InpaintingModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -22,7 +22,7 @@ class ObjectInpaintingPageRequest(UniversalBaseModel):
     obj_pos_x: typing.Optional[float] = None
     obj_pos_y: typing.Optional[float] = None
     mask_threshold: typing.Optional[float] = None
-    selected_model: typing.Optional[ObjectInpaintingPageRequestSelectedModel] = None
+    selected_model: typing.Optional[InpaintingModels] = None
     negative_prompt: typing.Optional[str] = None
     num_outputs: typing.Optional[int] = None
     quality: typing.Optional[int] = None

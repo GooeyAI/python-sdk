@@ -6,16 +6,16 @@ from .video_bots_page_request_functions_item import VideoBotsPageRequestFunction
 import pydantic
 from .conversation_entry import ConversationEntry
 from .large_language_models import LargeLanguageModels
-from .video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddingModel
-from .video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
-from .video_bots_page_request_asr_model import VideoBotsPageRequestAsrModel
-from .video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
-from .video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
+from .embedding_models import EmbeddingModels
+from .citation_styles import CitationStyles
+from .asr_models import AsrModels
+from .translation_models import TranslationModels
+from .lipsync_models import LipsyncModels
 from .llm_tools import LlmTools
-from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
-from .video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
-from .video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
-from .video_bots_page_request_openai_tts_model import VideoBotsPageRequestOpenaiTtsModel
+from .response_format_type import ResponseFormatType
+from .text_to_speech_providers import TextToSpeechProviders
+from .open_ai_tts_voices import OpenAiTtsVoices
+from .open_ai_tts_models import OpenAiTtsModels
 from .video_bots_page_request_sadtalker_settings import VideoBotsPageRequestSadtalkerSettings
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -52,16 +52,16 @@ class VideoBotsPageRequest(UniversalBaseModel):
     max_references: typing.Optional[int] = None
     max_context_words: typing.Optional[int] = None
     scroll_jump: typing.Optional[int] = None
-    embedding_model: typing.Optional[VideoBotsPageRequestEmbeddingModel] = None
+    embedding_model: typing.Optional[EmbeddingModels] = None
     dense_weight: typing.Optional[float] = pydantic.Field(default=None)
     """
     Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
     Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
     """
 
-    citation_style: typing.Optional[VideoBotsPageRequestCitationStyle] = None
+    citation_style: typing.Optional[CitationStyles] = None
     use_url_shortener: typing.Optional[bool] = None
-    asr_model: typing.Optional[VideoBotsPageRequestAsrModel] = pydantic.Field(default=None)
+    asr_model: typing.Optional[AsrModels] = pydantic.Field(default=None)
     """
     Choose a model to transcribe incoming audio messages to text.
     """
@@ -71,7 +71,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
     Choose a language to transcribe incoming audio messages to text.
     """
 
-    translation_model: typing.Optional[VideoBotsPageRequestTranslationModel] = None
+    translation_model: typing.Optional[TranslationModels] = None
     user_language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -79,7 +79,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
 
     input_glossary_document: typing.Optional[str] = None
     output_glossary_document: typing.Optional[str] = None
-    lipsync_model: typing.Optional[VideoBotsPageRequestLipsyncModel] = None
+    lipsync_model: typing.Optional[LipsyncModels] = None
     tools: typing.Optional[typing.List[LlmTools]] = pydantic.Field(default=None)
     """
     Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
@@ -90,8 +90,8 @@ class VideoBotsPageRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[VideoBotsPageRequestResponseFormatType] = None
-    tts_provider: typing.Optional[VideoBotsPageRequestTtsProvider] = None
+    response_format_type: typing.Optional[ResponseFormatType] = None
+    tts_provider: typing.Optional[TextToSpeechProviders] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None
@@ -111,8 +111,8 @@ class VideoBotsPageRequest(UniversalBaseModel):
     elevenlabs_style: typing.Optional[float] = None
     elevenlabs_speaker_boost: typing.Optional[bool] = None
     azure_voice_name: typing.Optional[str] = None
-    openai_voice_name: typing.Optional[VideoBotsPageRequestOpenaiVoiceName] = None
-    openai_tts_model: typing.Optional[VideoBotsPageRequestOpenaiTtsModel] = None
+    openai_voice_name: typing.Optional[OpenAiTtsVoices] = None
+    openai_tts_model: typing.Optional[OpenAiTtsModels] = None
     input_face: typing.Optional[str] = None
     face_padding_top: typing.Optional[int] = None
     face_padding_bottom: typing.Optional[int] = None

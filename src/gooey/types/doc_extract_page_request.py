@@ -4,9 +4,9 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .doc_extract_page_request_selected_asr_model import DocExtractPageRequestSelectedAsrModel
+from .asr_models import AsrModels
 from .large_language_models import LargeLanguageModels
-from .doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
+from .response_format_type import ResponseFormatType
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -20,7 +20,7 @@ class DocExtractPageRequest(UniversalBaseModel):
 
     documents: typing.List[str]
     sheet_url: typing.Optional[str] = None
-    selected_asr_model: typing.Optional[DocExtractPageRequestSelectedAsrModel] = None
+    selected_asr_model: typing.Optional[AsrModels] = None
     google_translate_target: typing.Optional[str] = None
     glossary_document: typing.Optional[str] = None
     task_instructions: typing.Optional[str] = None
@@ -30,7 +30,7 @@ class DocExtractPageRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[DocExtractPageRequestResponseFormatType] = None
+    response_format_type: typing.Optional[ResponseFormatType] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:
