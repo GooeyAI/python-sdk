@@ -80,7 +80,7 @@ client.animate(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AnimationModels]` 
+**selected_model:** `typing.Optional[DeforumSdPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -308,7 +308,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**image_prompt_controlnet_models:** `typing.Optional[typing.List[ControlNetModels]]` 
+**image_prompt_controlnet_models:** `typing.Optional[typing.List[QrCodeRequestImagePromptControlnetModelsItem]]` 
     
 </dd>
 </dl>
@@ -348,7 +348,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[TextToImageModels]` 
+**selected_model:** `typing.Optional[QrCodeRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -356,7 +356,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_controlnet_model:** `typing.Optional[typing.List[ControlNetModels]]` 
+**selected_controlnet_model:** `typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]]` 
     
 </dd>
 </dl>
@@ -412,7 +412,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Schedulers]` 
+**scheduler:** `typing.Optional[QrCodeRequestScheduler]` 
     
 </dd>
 </dl>
@@ -605,7 +605,7 @@ client.seo_people_also_ask(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[EmbeddingModels]` 
+**embedding_model:** `typing.Optional[RelatedQnAPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -666,7 +666,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[RelatedQnAPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -674,7 +674,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**serp_search_location:** `typing.Optional[SerpSearchLocations]` 
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
     
 </dd>
 </dl>
@@ -893,7 +893,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[SeoSummaryPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -901,7 +901,7 @@ client.seo_content(
 <dl>
 <dd>
 
-**serp_search_location:** `typing.Optional[SerpSearchLocations]` 
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
     
 </dd>
 </dl>
@@ -1086,7 +1086,7 @@ client.web_search_llm(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[EmbeddingModels]` 
+**embedding_model:** `typing.Optional[GoogleGptPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -1147,7 +1147,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[GoogleGptPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1155,7 +1155,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**serp_search_location:** `typing.Optional[SerpSearchLocations]` 
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
     
 </dd>
 </dl>
@@ -1331,7 +1331,7 @@ client.personalize_email(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[SocialLookupEmailPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1647,7 +1647,7 @@ Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[BulkEvalPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1753,7 +1753,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[AsrModels]` 
+**selected_asr_model:** `typing.Optional[SynthesizeDataRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -1835,7 +1835,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[SynthesizeDataRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -1977,7 +1977,7 @@ client.llm()
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[CompareLlmPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2121,7 +2121,7 @@ client.rag(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[EmbeddingModels]` 
+**embedding_model:** `typing.Optional[DocSearchPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -2166,7 +2166,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[CitationStyles]` 
+**citation_style:** `typing.Optional[DocSearchPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -2214,7 +2214,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocSearchPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2382,7 +2382,7 @@ client.smart_gpt(
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[SmartGptPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2502,7 +2502,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**chain_type:** `typing.Optional[CombineDocumentsChains]` 
+**chain_type:** `typing.Optional[typing.Literal["map_reduce"]]` 
     
 </dd>
 </dl>
@@ -2510,7 +2510,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_asr_model:** `typing.Optional[AsrModels]` 
+**selected_asr_model:** `typing.Optional[DocSummaryRequestSelectedAsrModel]` 
     
 </dd>
 </dl>
@@ -2566,7 +2566,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[DocSummaryRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -2780,7 +2780,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[LipsyncModels]` 
+**selected_model:** `typing.Optional[LipsyncRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -2886,7 +2886,7 @@ client.lipsync_tts(
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[TextToSpeechProviders]` 
+**tts_provider:** `typing.Optional[LipsyncTtsRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -3080,7 +3080,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[LipsyncModels]` 
+**selected_model:** `typing.Optional[LipsyncTtsRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3176,7 +3176,7 @@ client.text_to_speech(
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[TextToSpeechProviders]` 
+**tts_provider:** `typing.Optional[TextToSpeechPageRequestTtsProvider]` 
     
 </dd>
 </dl>
@@ -3408,7 +3408,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[AsrModels]` 
+**selected_model:** `typing.Optional[SpeechRecognitionRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3424,7 +3424,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[TranslationModels]` 
+**translation_model:** `typing.Optional[SpeechRecognitionRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -3432,7 +3432,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AsrOutputFormat]` 
+**output_format:** `typing.Optional[SpeechRecognitionRequestOutputFormat]` 
     
 </dd>
 </dl>
@@ -3618,7 +3618,7 @@ client.text_to_music(
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.Sequence[Text2AudioModels]]` 
+**selected_models:** `typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]` 
     
 </dd>
 </dl>
@@ -3712,7 +3712,7 @@ client.translate()
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[TranslationModels]` 
+**selected_model:** `typing.Optional[TranslateRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -3842,7 +3842,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ImageToImageModels]` 
+**selected_model:** `typing.Optional[RemixImageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4106,7 +4106,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.Sequence[TextToImageModels]]` 
+**selected_models:** `typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -4114,7 +4114,7 @@ client.text_to_image(
 <dl>
 <dd>
 
-**scheduler:** `typing.Optional[Schedulers]` 
+**scheduler:** `typing.Optional[CompareText2ImgPageRequestScheduler]` 
     
 </dd>
 </dl>
@@ -4268,7 +4268,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[InpaintingModels]` 
+**selected_model:** `typing.Optional[ProductImageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4462,7 +4462,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[InpaintingModels]` 
+**selected_model:** `typing.Optional[PortraitRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4663,7 +4663,7 @@ client.image_from_email(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[InpaintingModels]` 
+**selected_model:** `typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -4896,7 +4896,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**serp_search_location:** `typing.Optional[SerpSearchLocations]` 
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
     
 </dd>
 </dl>
@@ -4912,7 +4912,7 @@ client.image_from_web_search(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ImageToImageModels]` 
+**selected_model:** `typing.Optional[GoogleImageGenPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5072,7 +5072,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[ImageSegmentationModels]` 
+**selected_model:** `typing.Optional[RemoveBackgroundRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5236,7 +5236,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**selected_models:** `typing.Optional[typing.List[UpscalerModels]]` 
+**selected_models:** `typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]]` 
     
 </dd>
 </dl>
@@ -5340,7 +5340,7 @@ client.embed(
 <dl>
 <dd>
 
-**selected_model:** `typing.Optional[EmbeddingModels]` 
+**selected_model:** `typing.Optional[EmbeddingsPageRequestSelectedModel]` 
     
 </dd>
 </dl>
@@ -5484,7 +5484,7 @@ client.seo_people_also_ask_doc(
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[EmbeddingModels]` 
+**embedding_model:** `typing.Optional[RelatedQnADocPageRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -5529,7 +5529,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[CitationStyles]` 
+**citation_style:** `typing.Optional[RelatedQnADocPageRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -5577,7 +5577,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[RelatedQnADocPageRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -5585,7 +5585,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**serp_search_location:** `typing.Optional[SerpSearchLocations]` 
+**serp_search_location:** `typing.Optional[SerpSearchLocation]` 
     
 </dd>
 </dl>
@@ -5876,7 +5876,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**embedding_model:** `typing.Optional[EmbeddingModels]` 
+**embedding_model:** `typing.Optional[CopilotCompletionRequestEmbeddingModel]` 
     
 </dd>
 </dl>
@@ -5897,7 +5897,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**citation_style:** `typing.Optional[CitationStyles]` 
+**citation_style:** `typing.Optional[CopilotCompletionRequestCitationStyle]` 
     
 </dd>
 </dl>
@@ -5913,7 +5913,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**asr_model:** `typing.Optional[AsrModels]` — Choose a model to transcribe incoming audio messages to text.
+**asr_model:** `typing.Optional[CopilotCompletionRequestAsrModel]` — Choose a model to transcribe incoming audio messages to text.
     
 </dd>
 </dl>
@@ -5929,7 +5929,7 @@ Generally speaking, dense embeddings excel at understanding the context of the q
 <dl>
 <dd>
 
-**translation_model:** `typing.Optional[TranslationModels]` 
+**translation_model:** `typing.Optional[CopilotCompletionRequestTranslationModel]` 
     
 </dd>
 </dl>
@@ -5965,7 +5965,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**lipsync_model:** `typing.Optional[LipsyncModels]` 
+**lipsync_model:** `typing.Optional[CopilotCompletionRequestLipsyncModel]` 
     
 </dd>
 </dl>
@@ -6021,7 +6021,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**response_format_type:** `typing.Optional[ResponseFormatType]` 
+**response_format_type:** `typing.Optional[CopilotCompletionRequestResponseFormatType]` 
     
 </dd>
 </dl>
@@ -6029,7 +6029,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**tts_provider:** `typing.Optional[TextToSpeechProviders]` 
+**tts_provider:** `typing.Optional[CopilotCompletionRequestTtsProvider]` 
     
 </dd>
 </dl>

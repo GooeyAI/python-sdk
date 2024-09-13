@@ -4,11 +4,11 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .text_to_speech_providers import TextToSpeechProviders
+from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
 from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
 from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
 from .sad_talker_settings import SadTalkerSettings
-from .lipsync_models import LipsyncModels
+from .lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -21,7 +21,7 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     """
 
     text_prompt: str
-    tts_provider: typing.Optional[TextToSpeechProviders] = None
+    tts_provider: typing.Optional[LipsyncTtsPageRequestTtsProvider] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None
@@ -49,7 +49,7 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     face_padding_left: typing.Optional[int] = None
     face_padding_right: typing.Optional[int] = None
     sadtalker_settings: typing.Optional[SadTalkerSettings] = None
-    selected_model: typing.Optional[LipsyncModels] = None
+    selected_model: typing.Optional[LipsyncTtsPageRequestSelectedModel] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:

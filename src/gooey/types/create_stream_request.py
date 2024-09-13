@@ -7,14 +7,14 @@ from .button_pressed import ButtonPressed
 from .recipe_function import RecipeFunction
 from .conversation_entry import ConversationEntry
 from .large_language_models import LargeLanguageModels
-from .embedding_models import EmbeddingModels
-from .citation_styles import CitationStyles
-from .asr_models import AsrModels
-from .translation_models import TranslationModels
-from .lipsync_models import LipsyncModels
+from .create_stream_request_embedding_model import CreateStreamRequestEmbeddingModel
+from .create_stream_request_citation_style import CreateStreamRequestCitationStyle
+from .create_stream_request_asr_model import CreateStreamRequestAsrModel
+from .create_stream_request_translation_model import CreateStreamRequestTranslationModel
+from .create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
 from .llm_tools import LlmTools
-from .response_format_type import ResponseFormatType
-from .text_to_speech_providers import TextToSpeechProviders
+from .create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
+from .create_stream_request_tts_provider import CreateStreamRequestTtsProvider
 from .create_stream_request_openai_voice_name import CreateStreamRequestOpenaiVoiceName
 from .create_stream_request_openai_tts_model import CreateStreamRequestOpenaiTtsModel
 from .sad_talker_settings import SadTalkerSettings
@@ -85,16 +85,16 @@ class CreateStreamRequest(UniversalBaseModel):
     max_references: typing.Optional[int] = None
     max_context_words: typing.Optional[int] = None
     scroll_jump: typing.Optional[int] = None
-    embedding_model: typing.Optional[EmbeddingModels] = None
+    embedding_model: typing.Optional[CreateStreamRequestEmbeddingModel] = None
     dense_weight: typing.Optional[float] = pydantic.Field(default=None)
     """
     Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
     Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
     """
 
-    citation_style: typing.Optional[CitationStyles] = None
+    citation_style: typing.Optional[CreateStreamRequestCitationStyle] = None
     use_url_shortener: typing.Optional[bool] = None
-    asr_model: typing.Optional[AsrModels] = pydantic.Field(default=None)
+    asr_model: typing.Optional[CreateStreamRequestAsrModel] = pydantic.Field(default=None)
     """
     Choose a model to transcribe incoming audio messages to text.
     """
@@ -104,7 +104,7 @@ class CreateStreamRequest(UniversalBaseModel):
     Choose a language to transcribe incoming audio messages to text.
     """
 
-    translation_model: typing.Optional[TranslationModels] = None
+    translation_model: typing.Optional[CreateStreamRequestTranslationModel] = None
     user_language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -120,7 +120,7 @@ class CreateStreamRequest(UniversalBaseModel):
     Translation Glossary for LLM Language (English) -> User Langauge
     """
 
-    lipsync_model: typing.Optional[LipsyncModels] = None
+    lipsync_model: typing.Optional[CreateStreamRequestLipsyncModel] = None
     tools: typing.Optional[typing.List[LlmTools]] = pydantic.Field(default=None)
     """
     Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
@@ -131,8 +131,8 @@ class CreateStreamRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[ResponseFormatType] = None
-    tts_provider: typing.Optional[TextToSpeechProviders] = None
+    response_format_type: typing.Optional[CreateStreamRequestResponseFormatType] = None
+    tts_provider: typing.Optional[CreateStreamRequestTtsProvider] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None

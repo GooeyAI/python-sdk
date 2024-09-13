@@ -6,14 +6,14 @@ from .types.copilot_completion_request_functions_item import CopilotCompletionRe
 from .. import core
 from ..types.conversation_entry import ConversationEntry
 from ..types.large_language_models import LargeLanguageModels
-from ..types.embedding_models import EmbeddingModels
-from ..types.citation_styles import CitationStyles
-from ..types.asr_models import AsrModels
-from ..types.translation_models import TranslationModels
-from ..types.lipsync_models import LipsyncModels
+from .types.copilot_completion_request_embedding_model import CopilotCompletionRequestEmbeddingModel
+from .types.copilot_completion_request_citation_style import CopilotCompletionRequestCitationStyle
+from .types.copilot_completion_request_asr_model import CopilotCompletionRequestAsrModel
+from .types.copilot_completion_request_translation_model import CopilotCompletionRequestTranslationModel
+from .types.copilot_completion_request_lipsync_model import CopilotCompletionRequestLipsyncModel
 from ..types.llm_tools import LlmTools
-from ..types.response_format_type import ResponseFormatType
-from ..types.text_to_speech_providers import TextToSpeechProviders
+from .types.copilot_completion_request_response_format_type import CopilotCompletionRequestResponseFormatType
+from .types.copilot_completion_request_tts_provider import CopilotCompletionRequestTtsProvider
 from .types.copilot_completion_request_openai_voice_name import CopilotCompletionRequestOpenaiVoiceName
 from .types.copilot_completion_request_openai_tts_model import CopilotCompletionRequestOpenaiTtsModel
 from .types.copilot_completion_request_sadtalker_settings import CopilotCompletionRequestSadtalkerSettings
@@ -60,25 +60,25 @@ class CopilotClient:
         max_references: typing.Optional[int] = None,
         max_context_words: typing.Optional[int] = None,
         scroll_jump: typing.Optional[int] = None,
-        embedding_model: typing.Optional[EmbeddingModels] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
         dense_weight: typing.Optional[float] = None,
-        citation_style: typing.Optional[CitationStyles] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
         use_url_shortener: typing.Optional[bool] = None,
-        asr_model: typing.Optional[AsrModels] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
         asr_language: typing.Optional[str] = None,
-        translation_model: typing.Optional[TranslationModels] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
-        lipsync_model: typing.Optional[LipsyncModels] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
         tools: typing.Optional[typing.List[LlmTools]] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[ResponseFormatType] = None,
-        tts_provider: typing.Optional[TextToSpeechProviders] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -152,7 +152,7 @@ class CopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[EmbeddingModels]
+        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
 
         dense_weight : typing.Optional[float]
 
@@ -160,17 +160,17 @@ class CopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[CitationStyles]
+        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[AsrModels]
+        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[TranslationModels]
+        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -181,7 +181,7 @@ class CopilotClient:
         output_glossary_document : typing.Optional[core.File]
             See core.File for more documentation
 
-        lipsync_model : typing.Optional[LipsyncModels]
+        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
         tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
@@ -196,9 +196,9 @@ class CopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[ResponseFormatType]
+        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
 
-        tts_provider : typing.Optional[TextToSpeechProviders]
+        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -412,25 +412,25 @@ class AsyncCopilotClient:
         max_references: typing.Optional[int] = None,
         max_context_words: typing.Optional[int] = None,
         scroll_jump: typing.Optional[int] = None,
-        embedding_model: typing.Optional[EmbeddingModels] = None,
+        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
         dense_weight: typing.Optional[float] = None,
-        citation_style: typing.Optional[CitationStyles] = None,
+        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
         use_url_shortener: typing.Optional[bool] = None,
-        asr_model: typing.Optional[AsrModels] = None,
+        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
         asr_language: typing.Optional[str] = None,
-        translation_model: typing.Optional[TranslationModels] = None,
+        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
-        lipsync_model: typing.Optional[LipsyncModels] = None,
+        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
         tools: typing.Optional[typing.List[LlmTools]] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[ResponseFormatType] = None,
-        tts_provider: typing.Optional[TextToSpeechProviders] = None,
+        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
+        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -504,7 +504,7 @@ class AsyncCopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[EmbeddingModels]
+        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
 
         dense_weight : typing.Optional[float]
 
@@ -512,17 +512,17 @@ class AsyncCopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[CitationStyles]
+        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[AsrModels]
+        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[TranslationModels]
+        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -533,7 +533,7 @@ class AsyncCopilotClient:
         output_glossary_document : typing.Optional[core.File]
             See core.File for more documentation
 
-        lipsync_model : typing.Optional[LipsyncModels]
+        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
 
         tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
@@ -548,9 +548,9 @@ class AsyncCopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[ResponseFormatType]
+        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
 
-        tts_provider : typing.Optional[TextToSpeechProviders]
+        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
 
         uberduck_voice_name : typing.Optional[str]
 

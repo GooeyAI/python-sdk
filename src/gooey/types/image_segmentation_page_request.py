@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .image_segmentation_models import ImageSegmentationModels
+from .image_segmentation_page_request_selected_model import ImageSegmentationPageRequestSelectedModel
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -17,7 +17,7 @@ class ImageSegmentationPageRequest(UniversalBaseModel):
     """
 
     input_image: str
-    selected_model: typing.Optional[ImageSegmentationModels] = None
+    selected_model: typing.Optional[ImageSegmentationPageRequestSelectedModel] = None
     mask_threshold: typing.Optional[float] = None
     rect_persepective_transform: typing.Optional[bool] = None
     reflection_opacity: typing.Optional[float] = None
