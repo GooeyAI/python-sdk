@@ -2,7 +2,7 @@
 
 import typing
 
-RemixImageRequestSelectedModel = typing.Union[
+ImageToImageModels = typing.Union[
     typing.Literal[
         "dream_shaper",
         "dreamlike_2",

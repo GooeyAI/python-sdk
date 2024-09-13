@@ -2,7 +2,7 @@
 
 import typing
 
-CopilotCompletionRequestCitationStyle = typing.Union[
+CitationStyles = typing.Union[
     typing.Literal[
         "number",
         "title",

@@ -5,8 +5,9 @@ import typing
 from .recipe_function import RecipeFunction
 import pydantic
 from .large_language_models import LargeLanguageModels
+from .combine_documents_chains import CombineDocumentsChains
 from .asr_models import AsrModels
-from .doc_summary_page_request_response_format_type import DocSummaryPageRequestResponseFormatType
+from .response_format_type import ResponseFormatType
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -22,7 +23,7 @@ class DocSummaryPageRequest(UniversalBaseModel):
     task_instructions: typing.Optional[str] = None
     merge_instructions: typing.Optional[str] = None
     selected_model: typing.Optional[LargeLanguageModels] = None
-    chain_type: typing.Optional[typing.Literal["map_reduce"]] = None
+    chain_type: typing.Optional[CombineDocumentsChains] = None
     selected_asr_model: typing.Optional[AsrModels] = None
     google_translate_target: typing.Optional[str] = None
     avoid_repetition: typing.Optional[bool] = None
@@ -30,7 +31,7 @@ class DocSummaryPageRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[DocSummaryPageRequestResponseFormatType] = None
+    response_format_type: typing.Optional[ResponseFormatType] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:

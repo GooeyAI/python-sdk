@@ -2,6 +2,6 @@
 
 import typing
 
-LipsyncTtsRequestTtsProvider = typing.Union[
+TextToSpeechProviders = typing.Union[
     typing.Literal["GOOGLE_TTS", "ELEVEN_LABS", "UBERDUCK", "BARK", "AZURE_TTS", "OPEN_AI"], typing.Any
 ]

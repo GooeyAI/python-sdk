@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .translation_page_request_selected_model import TranslationPageRequestSelectedModel
+from .translation_models import TranslationModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -17,7 +17,7 @@ class TranslationPageRequest(UniversalBaseModel):
     """
 
     texts: typing.Optional[typing.List[str]] = None
-    selected_model: typing.Optional[TranslationPageRequestSelectedModel] = None
+    selected_model: typing.Optional[TranslationModels] = None
     translation_source: typing.Optional[str] = None
     translation_target: typing.Optional[str] = None
     glossary_document: typing.Optional[str] = None

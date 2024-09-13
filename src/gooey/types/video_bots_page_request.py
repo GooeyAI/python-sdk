@@ -7,13 +7,13 @@ import pydantic
 from .conversation_entry import ConversationEntry
 from .large_language_models import LargeLanguageModels
 from .embedding_models import EmbeddingModels
-from .video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
+from .citation_styles import CitationStyles
 from .asr_models import AsrModels
-from .video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
+from .translation_models import TranslationModels
 from .lipsync_models import LipsyncModels
 from .llm_tools import LlmTools
-from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
-from .video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
+from .response_format_type import ResponseFormatType
+from .text_to_speech_providers import TextToSpeechProviders
 from .video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
 from .video_bots_page_request_openai_tts_model import VideoBotsPageRequestOpenaiTtsModel
 from .video_bots_page_request_sadtalker_settings import VideoBotsPageRequestSadtalkerSettings
@@ -59,7 +59,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
     Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
     """
 
-    citation_style: typing.Optional[VideoBotsPageRequestCitationStyle] = None
+    citation_style: typing.Optional[CitationStyles] = None
     use_url_shortener: typing.Optional[bool] = None
     asr_model: typing.Optional[AsrModels] = pydantic.Field(default=None)
     """
@@ -71,7 +71,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
     Choose a language to transcribe incoming audio messages to text.
     """
 
-    translation_model: typing.Optional[VideoBotsPageRequestTranslationModel] = None
+    translation_model: typing.Optional[TranslationModels] = None
     user_language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -90,8 +90,8 @@ class VideoBotsPageRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[VideoBotsPageRequestResponseFormatType] = None
-    tts_provider: typing.Optional[VideoBotsPageRequestTtsProvider] = None
+    response_format_type: typing.Optional[ResponseFormatType] = None
+    tts_provider: typing.Optional[TextToSpeechProviders] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None

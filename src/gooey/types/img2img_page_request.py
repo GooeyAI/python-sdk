@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .img2img_page_request_selected_model import Img2ImgPageRequestSelectedModel
+from .image_to_image_models import ImageToImageModels
 from .img2img_page_request_selected_controlnet_model import Img2ImgPageRequestSelectedControlnetModel
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -19,7 +19,7 @@ class Img2ImgPageRequest(UniversalBaseModel):
 
     input_image: str
     text_prompt: typing.Optional[str] = None
-    selected_model: typing.Optional[Img2ImgPageRequestSelectedModel] = None
+    selected_model: typing.Optional[ImageToImageModels] = None
     selected_controlnet_model: typing.Optional[Img2ImgPageRequestSelectedControlnetModel] = None
     negative_prompt: typing.Optional[str] = None
     num_outputs: typing.Optional[int] = None

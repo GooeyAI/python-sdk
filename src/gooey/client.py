@@ -22,81 +22,64 @@ from .errors.too_many_requests_error import TooManyRequestsError
 from json.decoder import JSONDecodeError
 from . import core
 from .types.vcard import Vcard
-from .types.qr_code_request_image_prompt_controlnet_models_item import QrCodeRequestImagePromptControlnetModelsItem
-from .types.qr_code_request_selected_model import QrCodeRequestSelectedModel
-from .types.qr_code_request_selected_controlnet_model_item import QrCodeRequestSelectedControlnetModelItem
-from .types.qr_code_request_scheduler import QrCodeRequestScheduler
+from .types.control_net_models import ControlNetModels
+from .types.text_to_image_models import TextToImageModels
+from .types.schedulers import Schedulers
 from .types.qr_code_generator_page_output import QrCodeGeneratorPageOutput
 from .types.large_language_models import LargeLanguageModels
 from .types.embedding_models import EmbeddingModels
-from .types.related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
+from .types.response_format_type import ResponseFormatType
 from .types.serp_search_locations import SerpSearchLocations
 from .types.serp_search_type import SerpSearchType
 from .types.related_qn_a_page_output import RelatedQnAPageOutput
-from .types.seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
 from .types.seo_summary_page_output import SeoSummaryPageOutput
-from .types.google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
 from .types.google_gpt_page_output import GoogleGptPageOutput
-from .types.social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
 from .types.social_lookup_email_page_output import SocialLookupEmailPageOutput
 from .types.bulk_runner_page_output import BulkRunnerPageOutput
 from .types.eval_prompt import EvalPrompt
 from .types.agg_function import AggFunction
-from .types.bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
 from .types.bulk_eval_page_output import BulkEvalPageOutput
 from .types.asr_models import AsrModels
-from .types.synthesize_data_request_response_format_type import SynthesizeDataRequestResponseFormatType
 from .types.doc_extract_page_output import DocExtractPageOutput
-from .types.compare_llm_page_request_response_format_type import CompareLlmPageRequestResponseFormatType
 from .types.compare_llm_page_output import CompareLlmPageOutput
 from .types.doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
-from .types.doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
-from .types.doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
+from .types.citation_styles import CitationStyles
 from .types.doc_search_page_output import DocSearchPageOutput
-from .types.smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
 from .types.smart_gpt_page_output import SmartGptPageOutput
-from .types.doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
+from .types.combine_documents_chains import CombineDocumentsChains
 from .types.doc_summary_page_output import DocSummaryPageOutput
 from .types.functions_page_output import FunctionsPageOutput
 from .types.sad_talker_settings import SadTalkerSettings
 from .types.lipsync_models import LipsyncModels
 from .types.lipsync_page_output import LipsyncPageOutput
-from .types.lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
+from .types.text_to_speech_providers import TextToSpeechProviders
 from .types.lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
 from .types.lipsync_tts_request_openai_tts_model import LipsyncTtsRequestOpenaiTtsModel
 from .types.lipsync_tts_page_output import LipsyncTtsPageOutput
-from .types.text_to_speech_page_request_tts_provider import TextToSpeechPageRequestTtsProvider
 from .types.text_to_speech_page_request_openai_voice_name import TextToSpeechPageRequestOpenaiVoiceName
 from .types.text_to_speech_page_request_openai_tts_model import TextToSpeechPageRequestOpenaiTtsModel
 from .types.text_to_speech_page_output import TextToSpeechPageOutput
-from .types.speech_recognition_request_translation_model import SpeechRecognitionRequestTranslationModel
-from .types.speech_recognition_request_output_format import SpeechRecognitionRequestOutputFormat
+from .types.translation_models import TranslationModels
+from .types.asr_output_format import AsrOutputFormat
 from .types.asr_page_output import AsrPageOutput
+from .types.text2audio_models import Text2AudioModels
 from .types.text2audio_page_output import Text2AudioPageOutput
-from .types.translate_request_selected_model import TranslateRequestSelectedModel
 from .types.translation_page_output import TranslationPageOutput
-from .types.remix_image_request_selected_model import RemixImageRequestSelectedModel
+from .types.image_to_image_models import ImageToImageModels
 from .types.remix_image_request_selected_controlnet_model import RemixImageRequestSelectedControlnetModel
 from .types.img2img_page_output import Img2ImgPageOutput
-from .types.compare_text2img_page_request_selected_models_item import CompareText2ImgPageRequestSelectedModelsItem
-from .types.compare_text2img_page_request_scheduler import CompareText2ImgPageRequestScheduler
 from .types.compare_text2img_page_output import CompareText2ImgPageOutput
-from .types.product_image_request_selected_model import ProductImageRequestSelectedModel
+from .types.inpainting_models import InpaintingModels
 from .types.object_inpainting_page_output import ObjectInpaintingPageOutput
-from .types.portrait_request_selected_model import PortraitRequestSelectedModel
 from .types.face_inpainting_page_output import FaceInpaintingPageOutput
-from .types.email_face_inpainting_page_request_selected_model import EmailFaceInpaintingPageRequestSelectedModel
 from .types.email_face_inpainting_page_output import EmailFaceInpaintingPageOutput
-from .types.google_image_gen_page_request_selected_model import GoogleImageGenPageRequestSelectedModel
 from .types.google_image_gen_page_output import GoogleImageGenPageOutput
-from .types.remove_background_request_selected_model import RemoveBackgroundRequestSelectedModel
+from .types.image_segmentation_models import ImageSegmentationModels
 from .types.image_segmentation_page_output import ImageSegmentationPageOutput
-from .types.upscale_request_selected_models_item import UpscaleRequestSelectedModelsItem
+from .types.upscaler_models import UpscalerModels
 from .types.compare_upscaler_page_output import CompareUpscalerPageOutput
 from .types.embeddings_page_output import EmbeddingsPageOutput
 from .types.related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
-from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
-from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .types.related_qn_a_doc_page_output import RelatedQnADocPageOutput
 from .types.balance_response import BalanceResponse
 from .core.client_wrapper import AsyncClientWrapper
@@ -333,22 +316,20 @@ class Gooey:
         use_url_shortener: typing.Optional[bool] = None,
         negative_prompt: typing.Optional[str] = None,
         image_prompt: typing.Optional[str] = None,
-        image_prompt_controlnet_models: typing.Optional[
-            typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = None,
+        image_prompt_controlnet_models: typing.Optional[typing.List[ControlNetModels]] = None,
         image_prompt_strength: typing.Optional[float] = None,
         image_prompt_scale: typing.Optional[float] = None,
         image_prompt_pos_x: typing.Optional[float] = None,
         image_prompt_pos_y: typing.Optional[float] = None,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        selected_model: typing.Optional[TextToImageModels] = None,
+        selected_controlnet_model: typing.Optional[typing.List[ControlNetModels]] = None,
         output_width: typing.Optional[int] = None,
         output_height: typing.Optional[int] = None,
         guidance_scale: typing.Optional[float] = None,
         controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        scheduler: typing.Optional[Schedulers] = None,
         seed: typing.Optional[int] = None,
         obj_scale: typing.Optional[float] = None,
         obj_pos_x: typing.Optional[float] = None,
@@ -384,7 +365,7 @@ class Gooey:
 
         image_prompt : typing.Optional[str]
 
-        image_prompt_controlnet_models : typing.Optional[typing.List[QrCodeRequestImagePromptControlnetModelsItem]]
+        image_prompt_controlnet_models : typing.Optional[typing.List[ControlNetModels]]
 
         image_prompt_strength : typing.Optional[float]
 
@@ -394,9 +375,9 @@ class Gooey:
 
         image_prompt_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[QrCodeRequestSelectedModel]
+        selected_model : typing.Optional[TextToImageModels]
 
-        selected_controlnet_model : typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]]
+        selected_controlnet_model : typing.Optional[typing.List[ControlNetModels]]
 
         output_width : typing.Optional[int]
 
@@ -410,7 +391,7 @@ class Gooey:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[QrCodeRequestScheduler]
+        scheduler : typing.Optional[Schedulers]
 
         seed : typing.Optional[int]
 
@@ -549,7 +530,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -603,7 +584,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -735,7 +716,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -778,7 +759,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -912,7 +893,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -966,7 +947,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -1093,7 +1074,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SocialLookupEmailPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SocialLookupEmailPageOutput:
@@ -1123,7 +1104,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SocialLookupEmailPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -1364,7 +1345,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkEvalPageOutput:
@@ -1408,7 +1389,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -1517,7 +1498,7 @@ class Gooey:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
@@ -1558,7 +1539,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SynthesizeDataRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -1665,7 +1646,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CompareLlmPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareLlmPageOutput:
@@ -1693,7 +1674,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[CompareLlmPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -1798,13 +1779,13 @@ class Gooey:
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
+        citation_style: typing.Optional[CitationStyles] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSearchPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSearchPageOutput:
@@ -1846,7 +1827,7 @@ class Gooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -1858,7 +1839,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[DocSearchPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -1974,7 +1955,7 @@ class Gooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SmartGptPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SmartGptPageOutput:
@@ -2008,7 +1989,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SmartGptPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -2110,7 +2091,7 @@ class Gooey:
         task_instructions: typing.Optional[str] = None,
         merge_instructions: typing.Optional[str] = None,
         selected_model: typing.Optional[LargeLanguageModels] = None,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        chain_type: typing.Optional[CombineDocumentsChains] = None,
         selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         avoid_repetition: typing.Optional[bool] = None,
@@ -2118,7 +2099,7 @@ class Gooey:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
@@ -2141,7 +2122,7 @@ class Gooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        chain_type : typing.Optional[typing.Literal["map_reduce"]]
+        chain_type : typing.Optional[CombineDocumentsChains]
 
         selected_asr_model : typing.Optional[AsrModels]
 
@@ -2157,7 +2138,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[DocSummaryRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -2487,7 +2468,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        tts_provider: typing.Optional[TextToSpeechProviders] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -2527,7 +2508,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        tts_provider : typing.Optional[LipsyncTtsRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -2693,7 +2674,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
+        tts_provider: typing.Optional[TextToSpeechProviders] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
         uberduck_speaking_rate: typing.Optional[float] = OMIT,
         google_voice_name: typing.Optional[str] = OMIT,
@@ -2726,7 +2707,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        tts_provider : typing.Optional[TextToSpeechPageRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -2870,8 +2851,8 @@ class Gooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         selected_model: typing.Optional[AsrModels] = None,
         language: typing.Optional[str] = None,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        translation_model: typing.Optional[TranslationModels] = None,
+        output_format: typing.Optional[AsrOutputFormat] = None,
         google_translate_target: typing.Optional[str] = None,
         translation_source: typing.Optional[str] = None,
         translation_target: typing.Optional[str] = None,
@@ -2896,9 +2877,9 @@ class Gooey:
 
         language : typing.Optional[str]
 
-        translation_model : typing.Optional[SpeechRecognitionRequestTranslationModel]
+        translation_model : typing.Optional[TranslationModels]
 
-        output_format : typing.Optional[SpeechRecognitionRequestOutputFormat]
+        output_format : typing.Optional[AsrOutputFormat]
 
         google_translate_target : typing.Optional[str]
             use `translation_model` & `translation_target` instead.
@@ -3012,7 +2993,7 @@ class Gooey:
         guidance_scale: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[Text2AudioModels]] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Text2AudioPageOutput:
@@ -3042,7 +3023,7 @@ class Gooey:
 
         sd2upscaling : typing.Optional[bool]
 
-        selected_models : typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]
+        selected_models : typing.Optional[typing.Sequence[Text2AudioModels]]
 
         settings : typing.Optional[RunSettings]
 
@@ -3139,7 +3120,7 @@ class Gooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         texts: typing.Optional[typing.List[str]] = None,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        selected_model: typing.Optional[TranslationModels] = None,
         translation_source: typing.Optional[str] = None,
         translation_target: typing.Optional[str] = None,
         glossary_document: typing.Optional[core.File] = None,
@@ -3158,7 +3139,7 @@ class Gooey:
 
         texts : typing.Optional[typing.List[str]]
 
-        selected_model : typing.Optional[TranslateRequestSelectedModel]
+        selected_model : typing.Optional[TranslationModels]
 
         translation_source : typing.Optional[str]
 
@@ -3259,7 +3240,7 @@ class Gooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         text_prompt: typing.Optional[str] = None,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_model: typing.Optional[ImageToImageModels] = None,
         selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
@@ -3289,7 +3270,7 @@ class Gooey:
 
         text_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[RemixImageRequestSelectedModel]
+        selected_model : typing.Optional[ImageToImageModels]
 
         selected_controlnet_model : typing.Optional[RemixImageRequestSelectedControlnetModel]
 
@@ -3423,8 +3404,8 @@ class Gooey:
         guidance_scale: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[TextToImageModels]] = OMIT,
+        scheduler: typing.Optional[Schedulers] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -3462,9 +3443,9 @@ class Gooey:
 
         sd2upscaling : typing.Optional[bool]
 
-        selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.Sequence[TextToImageModels]]
 
-        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
+        scheduler : typing.Optional[Schedulers]
 
         edit_instruction : typing.Optional[str]
 
@@ -3576,7 +3557,7 @@ class Gooey:
         obj_pos_x: typing.Optional[float] = None,
         obj_pos_y: typing.Optional[float] = None,
         mask_threshold: typing.Optional[float] = None,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        selected_model: typing.Optional[InpaintingModels] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
@@ -3611,7 +3592,7 @@ class Gooey:
 
         mask_threshold : typing.Optional[float]
 
-        selected_model : typing.Optional[ProductImageRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -3736,7 +3717,7 @@ class Gooey:
         face_scale: typing.Optional[float] = None,
         face_pos_x: typing.Optional[float] = None,
         face_pos_y: typing.Optional[float] = None,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        selected_model: typing.Optional[InpaintingModels] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
@@ -3769,7 +3750,7 @@ class Gooey:
 
         face_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[PortraitRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -3894,7 +3875,7 @@ class Gooey:
         face_scale: typing.Optional[float] = OMIT,
         face_pos_x: typing.Optional[float] = OMIT,
         face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[EmailFaceInpaintingPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[InpaintingModels] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
@@ -3936,7 +3917,7 @@ class Gooey:
 
         face_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -4083,7 +4064,7 @@ class Gooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[ImageToImageModels] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
@@ -4114,7 +4095,7 @@ class Gooey:
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
 
-        selected_model : typing.Optional[GoogleImageGenPageRequestSelectedModel]
+        selected_model : typing.Optional[ImageToImageModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -4232,7 +4213,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        selected_model: typing.Optional[ImageSegmentationModels] = None,
         mask_threshold: typing.Optional[float] = None,
         rect_persepective_transform: typing.Optional[bool] = None,
         reflection_opacity: typing.Optional[float] = None,
@@ -4255,7 +4236,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[RemoveBackgroundRequestSelectedModel]
+        selected_model : typing.Optional[ImageSegmentationModels]
 
         mask_threshold : typing.Optional[float]
 
@@ -4365,7 +4346,7 @@ class Gooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         input_image: typing.Optional[core.File] = None,
         input_video: typing.Optional[core.File] = None,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_models: typing.Optional[typing.List[UpscalerModels]] = None,
         selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -4389,7 +4370,7 @@ class Gooey:
         input_video : typing.Optional[core.File]
             See core.File for more documentation
 
-        selected_models : typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.List[UpscalerModels]]
 
         selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
 
@@ -4603,13 +4584,13 @@ class Gooey:
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
+        citation_style: typing.Optional[CitationStyles] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -4655,7 +4636,7 @@ class Gooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -4667,7 +4648,7 @@ class Gooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -5057,22 +5038,20 @@ class AsyncGooey:
         use_url_shortener: typing.Optional[bool] = None,
         negative_prompt: typing.Optional[str] = None,
         image_prompt: typing.Optional[str] = None,
-        image_prompt_controlnet_models: typing.Optional[
-            typing.List[QrCodeRequestImagePromptControlnetModelsItem]
-        ] = None,
+        image_prompt_controlnet_models: typing.Optional[typing.List[ControlNetModels]] = None,
         image_prompt_strength: typing.Optional[float] = None,
         image_prompt_scale: typing.Optional[float] = None,
         image_prompt_pos_x: typing.Optional[float] = None,
         image_prompt_pos_y: typing.Optional[float] = None,
-        selected_model: typing.Optional[QrCodeRequestSelectedModel] = None,
-        selected_controlnet_model: typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]] = None,
+        selected_model: typing.Optional[TextToImageModels] = None,
+        selected_controlnet_model: typing.Optional[typing.List[ControlNetModels]] = None,
         output_width: typing.Optional[int] = None,
         output_height: typing.Optional[int] = None,
         guidance_scale: typing.Optional[float] = None,
         controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
-        scheduler: typing.Optional[QrCodeRequestScheduler] = None,
+        scheduler: typing.Optional[Schedulers] = None,
         seed: typing.Optional[int] = None,
         obj_scale: typing.Optional[float] = None,
         obj_pos_x: typing.Optional[float] = None,
@@ -5108,7 +5087,7 @@ class AsyncGooey:
 
         image_prompt : typing.Optional[str]
 
-        image_prompt_controlnet_models : typing.Optional[typing.List[QrCodeRequestImagePromptControlnetModelsItem]]
+        image_prompt_controlnet_models : typing.Optional[typing.List[ControlNetModels]]
 
         image_prompt_strength : typing.Optional[float]
 
@@ -5118,9 +5097,9 @@ class AsyncGooey:
 
         image_prompt_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[QrCodeRequestSelectedModel]
+        selected_model : typing.Optional[TextToImageModels]
 
-        selected_controlnet_model : typing.Optional[typing.List[QrCodeRequestSelectedControlnetModelItem]]
+        selected_controlnet_model : typing.Optional[typing.List[ControlNetModels]]
 
         output_width : typing.Optional[int]
 
@@ -5134,7 +5113,7 @@ class AsyncGooey:
 
         quality : typing.Optional[int]
 
-        scheduler : typing.Optional[QrCodeRequestScheduler]
+        scheduler : typing.Optional[Schedulers]
 
         seed : typing.Optional[int]
 
@@ -5281,7 +5260,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -5335,7 +5314,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -5475,7 +5454,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -5518,7 +5497,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -5660,7 +5639,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -5714,7 +5693,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 
@@ -5849,7 +5828,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SocialLookupEmailPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SocialLookupEmailPageOutput:
@@ -5879,7 +5858,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SocialLookupEmailPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6136,7 +6115,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[BulkEvalPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkEvalPageOutput:
@@ -6180,7 +6159,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[BulkEvalPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6297,7 +6276,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[SynthesizeDataRequestResponseFormatType] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
@@ -6338,7 +6317,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SynthesizeDataRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6453,7 +6432,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[CompareLlmPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareLlmPageOutput:
@@ -6481,7 +6460,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[CompareLlmPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6594,13 +6573,13 @@ class AsyncGooey:
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        citation_style: typing.Optional[DocSearchPageRequestCitationStyle] = OMIT,
+        citation_style: typing.Optional[CitationStyles] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[DocSearchPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSearchPageOutput:
@@ -6642,7 +6621,7 @@ class AsyncGooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        citation_style : typing.Optional[DocSearchPageRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -6654,7 +6633,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[DocSearchPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6778,7 +6757,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[SmartGptPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SmartGptPageOutput:
@@ -6812,7 +6791,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[SmartGptPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -6922,7 +6901,7 @@ class AsyncGooey:
         task_instructions: typing.Optional[str] = None,
         merge_instructions: typing.Optional[str] = None,
         selected_model: typing.Optional[LargeLanguageModels] = None,
-        chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
+        chain_type: typing.Optional[CombineDocumentsChains] = None,
         selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         avoid_repetition: typing.Optional[bool] = None,
@@ -6930,7 +6909,7 @@ class AsyncGooey:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[DocSummaryRequestResponseFormatType] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
@@ -6953,7 +6932,7 @@ class AsyncGooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        chain_type : typing.Optional[typing.Literal["map_reduce"]]
+        chain_type : typing.Optional[CombineDocumentsChains]
 
         selected_asr_model : typing.Optional[AsrModels]
 
@@ -6969,7 +6948,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[DocSummaryRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         settings : typing.Optional[RunSettings]
 
@@ -7323,7 +7302,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        tts_provider: typing.Optional[LipsyncTtsRequestTtsProvider] = None,
+        tts_provider: typing.Optional[TextToSpeechProviders] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -7363,7 +7342,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        tts_provider : typing.Optional[LipsyncTtsRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -7537,7 +7516,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        tts_provider: typing.Optional[TextToSpeechPageRequestTtsProvider] = OMIT,
+        tts_provider: typing.Optional[TextToSpeechProviders] = OMIT,
         uberduck_voice_name: typing.Optional[str] = OMIT,
         uberduck_speaking_rate: typing.Optional[float] = OMIT,
         google_voice_name: typing.Optional[str] = OMIT,
@@ -7570,7 +7549,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        tts_provider : typing.Optional[TextToSpeechPageRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -7722,8 +7701,8 @@ class AsyncGooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         selected_model: typing.Optional[AsrModels] = None,
         language: typing.Optional[str] = None,
-        translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
-        output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
+        translation_model: typing.Optional[TranslationModels] = None,
+        output_format: typing.Optional[AsrOutputFormat] = None,
         google_translate_target: typing.Optional[str] = None,
         translation_source: typing.Optional[str] = None,
         translation_target: typing.Optional[str] = None,
@@ -7748,9 +7727,9 @@ class AsyncGooey:
 
         language : typing.Optional[str]
 
-        translation_model : typing.Optional[SpeechRecognitionRequestTranslationModel]
+        translation_model : typing.Optional[TranslationModels]
 
-        output_format : typing.Optional[SpeechRecognitionRequestOutputFormat]
+        output_format : typing.Optional[AsrOutputFormat]
 
         google_translate_target : typing.Optional[str]
             use `translation_model` & `translation_target` instead.
@@ -7872,7 +7851,7 @@ class AsyncGooey:
         guidance_scale: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[Text2AudioModels]] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Text2AudioPageOutput:
@@ -7902,7 +7881,7 @@ class AsyncGooey:
 
         sd2upscaling : typing.Optional[bool]
 
-        selected_models : typing.Optional[typing.Sequence[typing.Literal["audio_ldm"]]]
+        selected_models : typing.Optional[typing.Sequence[Text2AudioModels]]
 
         settings : typing.Optional[RunSettings]
 
@@ -8007,7 +7986,7 @@ class AsyncGooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         texts: typing.Optional[typing.List[str]] = None,
-        selected_model: typing.Optional[TranslateRequestSelectedModel] = None,
+        selected_model: typing.Optional[TranslationModels] = None,
         translation_source: typing.Optional[str] = None,
         translation_target: typing.Optional[str] = None,
         glossary_document: typing.Optional[core.File] = None,
@@ -8026,7 +8005,7 @@ class AsyncGooey:
 
         texts : typing.Optional[typing.List[str]]
 
-        selected_model : typing.Optional[TranslateRequestSelectedModel]
+        selected_model : typing.Optional[TranslationModels]
 
         translation_source : typing.Optional[str]
 
@@ -8135,7 +8114,7 @@ class AsyncGooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         text_prompt: typing.Optional[str] = None,
-        selected_model: typing.Optional[RemixImageRequestSelectedModel] = None,
+        selected_model: typing.Optional[ImageToImageModels] = None,
         selected_controlnet_model: typing.Optional[RemixImageRequestSelectedControlnetModel] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
@@ -8165,7 +8144,7 @@ class AsyncGooey:
 
         text_prompt : typing.Optional[str]
 
-        selected_model : typing.Optional[RemixImageRequestSelectedModel]
+        selected_model : typing.Optional[ImageToImageModels]
 
         selected_controlnet_model : typing.Optional[RemixImageRequestSelectedControlnetModel]
 
@@ -8307,8 +8286,8 @@ class AsyncGooey:
         guidance_scale: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         sd2upscaling: typing.Optional[bool] = OMIT,
-        selected_models: typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]] = OMIT,
-        scheduler: typing.Optional[CompareText2ImgPageRequestScheduler] = OMIT,
+        selected_models: typing.Optional[typing.Sequence[TextToImageModels]] = OMIT,
+        scheduler: typing.Optional[Schedulers] = OMIT,
         edit_instruction: typing.Optional[str] = OMIT,
         image_guidance_scale: typing.Optional[float] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
@@ -8346,9 +8325,9 @@ class AsyncGooey:
 
         sd2upscaling : typing.Optional[bool]
 
-        selected_models : typing.Optional[typing.Sequence[CompareText2ImgPageRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.Sequence[TextToImageModels]]
 
-        scheduler : typing.Optional[CompareText2ImgPageRequestScheduler]
+        scheduler : typing.Optional[Schedulers]
 
         edit_instruction : typing.Optional[str]
 
@@ -8468,7 +8447,7 @@ class AsyncGooey:
         obj_pos_x: typing.Optional[float] = None,
         obj_pos_y: typing.Optional[float] = None,
         mask_threshold: typing.Optional[float] = None,
-        selected_model: typing.Optional[ProductImageRequestSelectedModel] = None,
+        selected_model: typing.Optional[InpaintingModels] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
@@ -8503,7 +8482,7 @@ class AsyncGooey:
 
         mask_threshold : typing.Optional[float]
 
-        selected_model : typing.Optional[ProductImageRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -8636,7 +8615,7 @@ class AsyncGooey:
         face_scale: typing.Optional[float] = None,
         face_pos_x: typing.Optional[float] = None,
         face_pos_y: typing.Optional[float] = None,
-        selected_model: typing.Optional[PortraitRequestSelectedModel] = None,
+        selected_model: typing.Optional[InpaintingModels] = None,
         negative_prompt: typing.Optional[str] = None,
         num_outputs: typing.Optional[int] = None,
         quality: typing.Optional[int] = None,
@@ -8669,7 +8648,7 @@ class AsyncGooey:
 
         face_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[PortraitRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -8802,7 +8781,7 @@ class AsyncGooey:
         face_scale: typing.Optional[float] = OMIT,
         face_pos_x: typing.Optional[float] = OMIT,
         face_pos_y: typing.Optional[float] = OMIT,
-        selected_model: typing.Optional[EmailFaceInpaintingPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[InpaintingModels] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
@@ -8844,7 +8823,7 @@ class AsyncGooey:
 
         face_pos_y : typing.Optional[float]
 
-        selected_model : typing.Optional[EmailFaceInpaintingPageRequestSelectedModel]
+        selected_model : typing.Optional[InpaintingModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -8999,7 +8978,7 @@ class AsyncGooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
-        selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[ImageToImageModels] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[int] = OMIT,
@@ -9030,7 +9009,7 @@ class AsyncGooey:
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
 
-        selected_model : typing.Optional[GoogleImageGenPageRequestSelectedModel]
+        selected_model : typing.Optional[ImageToImageModels]
 
         negative_prompt : typing.Optional[str]
 
@@ -9156,7 +9135,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        selected_model: typing.Optional[RemoveBackgroundRequestSelectedModel] = None,
+        selected_model: typing.Optional[ImageSegmentationModels] = None,
         mask_threshold: typing.Optional[float] = None,
         rect_persepective_transform: typing.Optional[bool] = None,
         reflection_opacity: typing.Optional[float] = None,
@@ -9179,7 +9158,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[RemoveBackgroundRequestSelectedModel]
+        selected_model : typing.Optional[ImageSegmentationModels]
 
         mask_threshold : typing.Optional[float]
 
@@ -9297,7 +9276,7 @@ class AsyncGooey:
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         input_image: typing.Optional[core.File] = None,
         input_video: typing.Optional[core.File] = None,
-        selected_models: typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]] = None,
+        selected_models: typing.Optional[typing.List[UpscalerModels]] = None,
         selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -9321,7 +9300,7 @@ class AsyncGooey:
         input_video : typing.Optional[core.File]
             See core.File for more documentation
 
-        selected_models : typing.Optional[typing.List[UpscaleRequestSelectedModelsItem]]
+        selected_models : typing.Optional[typing.List[UpscalerModels]]
 
         selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
 
@@ -9551,13 +9530,13 @@ class AsyncGooey:
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
         selected_model: typing.Optional[LargeLanguageModels] = OMIT,
-        citation_style: typing.Optional[RelatedQnADocPageRequestCitationStyle] = OMIT,
+        citation_style: typing.Optional[CitationStyles] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
         quality: typing.Optional[float] = OMIT,
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
-        response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
+        response_format_type: typing.Optional[ResponseFormatType] = OMIT,
         serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
@@ -9603,7 +9582,7 @@ class AsyncGooey:
 
         selected_model : typing.Optional[LargeLanguageModels]
 
-        citation_style : typing.Optional[RelatedQnADocPageRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         avoid_repetition : typing.Optional[bool]
 
@@ -9615,7 +9594,7 @@ class AsyncGooey:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
         serp_search_location : typing.Optional[SerpSearchLocations]
 

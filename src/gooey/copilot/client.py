@@ -7,13 +7,13 @@ from .. import core
 from ..types.conversation_entry import ConversationEntry
 from ..types.large_language_models import LargeLanguageModels
 from ..types.embedding_models import EmbeddingModels
-from .types.copilot_completion_request_citation_style import CopilotCompletionRequestCitationStyle
+from ..types.citation_styles import CitationStyles
 from ..types.asr_models import AsrModels
-from .types.copilot_completion_request_translation_model import CopilotCompletionRequestTranslationModel
+from ..types.translation_models import TranslationModels
 from ..types.lipsync_models import LipsyncModels
 from ..types.llm_tools import LlmTools
-from .types.copilot_completion_request_response_format_type import CopilotCompletionRequestResponseFormatType
-from .types.copilot_completion_request_tts_provider import CopilotCompletionRequestTtsProvider
+from ..types.response_format_type import ResponseFormatType
+from ..types.text_to_speech_providers import TextToSpeechProviders
 from .types.copilot_completion_request_openai_voice_name import CopilotCompletionRequestOpenaiVoiceName
 from .types.copilot_completion_request_openai_tts_model import CopilotCompletionRequestOpenaiTtsModel
 from .types.copilot_completion_request_sadtalker_settings import CopilotCompletionRequestSadtalkerSettings
@@ -62,11 +62,11 @@ class CopilotClient:
         scroll_jump: typing.Optional[int] = None,
         embedding_model: typing.Optional[EmbeddingModels] = None,
         dense_weight: typing.Optional[float] = None,
-        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        citation_style: typing.Optional[CitationStyles] = None,
         use_url_shortener: typing.Optional[bool] = None,
         asr_model: typing.Optional[AsrModels] = None,
         asr_language: typing.Optional[str] = None,
-        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        translation_model: typing.Optional[TranslationModels] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
@@ -77,8 +77,8 @@ class CopilotClient:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
-        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
+        tts_provider: typing.Optional[TextToSpeechProviders] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -160,7 +160,7 @@ class CopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         use_url_shortener : typing.Optional[bool]
 
@@ -170,7 +170,7 @@ class CopilotClient:
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
+        translation_model : typing.Optional[TranslationModels]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -196,9 +196,9 @@ class CopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
-        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 
@@ -414,11 +414,11 @@ class AsyncCopilotClient:
         scroll_jump: typing.Optional[int] = None,
         embedding_model: typing.Optional[EmbeddingModels] = None,
         dense_weight: typing.Optional[float] = None,
-        citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
+        citation_style: typing.Optional[CitationStyles] = None,
         use_url_shortener: typing.Optional[bool] = None,
         asr_model: typing.Optional[AsrModels] = None,
         asr_language: typing.Optional[str] = None,
-        translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
+        translation_model: typing.Optional[TranslationModels] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
@@ -429,8 +429,8 @@ class AsyncCopilotClient:
         quality: typing.Optional[float] = None,
         max_tokens: typing.Optional[int] = None,
         sampling_temperature: typing.Optional[float] = None,
-        response_format_type: typing.Optional[CopilotCompletionRequestResponseFormatType] = None,
-        tts_provider: typing.Optional[CopilotCompletionRequestTtsProvider] = None,
+        response_format_type: typing.Optional[ResponseFormatType] = None,
+        tts_provider: typing.Optional[TextToSpeechProviders] = None,
         uberduck_voice_name: typing.Optional[str] = None,
         uberduck_speaking_rate: typing.Optional[float] = None,
         google_voice_name: typing.Optional[str] = None,
@@ -512,7 +512,7 @@ class AsyncCopilotClient:
             Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
 
 
-        citation_style : typing.Optional[CopilotCompletionRequestCitationStyle]
+        citation_style : typing.Optional[CitationStyles]
 
         use_url_shortener : typing.Optional[bool]
 
@@ -522,7 +522,7 @@ class AsyncCopilotClient:
         asr_language : typing.Optional[str]
             Choose a language to transcribe incoming audio messages to text.
 
-        translation_model : typing.Optional[CopilotCompletionRequestTranslationModel]
+        translation_model : typing.Optional[TranslationModels]
 
         user_language : typing.Optional[str]
             Choose a language to translate incoming text & audio messages to English and responses back to your selected language. Useful for low-resource languages.
@@ -548,9 +548,9 @@ class AsyncCopilotClient:
 
         sampling_temperature : typing.Optional[float]
 
-        response_format_type : typing.Optional[CopilotCompletionRequestResponseFormatType]
+        response_format_type : typing.Optional[ResponseFormatType]
 
-        tts_provider : typing.Optional[CopilotCompletionRequestTtsProvider]
+        tts_provider : typing.Optional[TextToSpeechProviders]
 
         uberduck_voice_name : typing.Optional[str]
 

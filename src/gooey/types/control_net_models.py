@@ -2,7 +2,7 @@
 
 import typing
 
-Img2ImgPageRequestSelectedControlnetModelItem = typing.Union[
+ControlNetModels = typing.Union[
     typing.Literal[
         "sd_controlnet_canny",
         "sd_controlnet_depth",

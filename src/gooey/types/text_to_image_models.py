@@ -2,7 +2,7 @@
 
 import typing
 
-CompareText2ImgPageRequestSelectedModelsItem = typing.Union[
+TextToImageModels = typing.Union[
     typing.Literal[
         "dream_shaper",
         "dreamlike_2",

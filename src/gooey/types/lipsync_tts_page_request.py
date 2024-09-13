@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
+from .text_to_speech_providers import TextToSpeechProviders
 from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
 from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
 from .sad_talker_settings import SadTalkerSettings
@@ -21,7 +21,7 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     """
 
     text_prompt: str
-    tts_provider: typing.Optional[LipsyncTtsPageRequestTtsProvider] = None
+    tts_provider: typing.Optional[TextToSpeechProviders] = None
     uberduck_voice_name: typing.Optional[str] = None
     uberduck_speaking_rate: typing.Optional[float] = None
     google_voice_name: typing.Optional[str] = None

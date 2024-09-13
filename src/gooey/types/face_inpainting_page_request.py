@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .face_inpainting_page_request_selected_model import FaceInpaintingPageRequestSelectedModel
+from .inpainting_models import InpaintingModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -21,7 +21,7 @@ class FaceInpaintingPageRequest(UniversalBaseModel):
     face_scale: typing.Optional[float] = None
     face_pos_x: typing.Optional[float] = None
     face_pos_y: typing.Optional[float] = None
-    selected_model: typing.Optional[FaceInpaintingPageRequestSelectedModel] = None
+    selected_model: typing.Optional[InpaintingModels] = None
     negative_prompt: typing.Optional[str] = None
     num_outputs: typing.Optional[int] = None
     quality: typing.Optional[int] = None

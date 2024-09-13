@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .compare_upscaler_page_request_selected_models_item import CompareUpscalerPageRequestSelectedModelsItem
+from .upscaler_models import UpscalerModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -23,7 +23,7 @@ class CompareUpscalerPageRequest(UniversalBaseModel):
     The final upsampling scale of the image
     """
 
-    selected_models: typing.Optional[typing.List[CompareUpscalerPageRequestSelectedModelsItem]] = None
+    selected_models: typing.Optional[typing.List[UpscalerModels]] = None
     selected_bg_model: typing.Optional[typing.Literal["real_esrgan_x2"]] = None
     settings: typing.Optional[RunSettings] = None
 

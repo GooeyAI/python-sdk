@@ -6,7 +6,7 @@ from .recipe_function import RecipeFunction
 import pydantic
 from .asr_models import AsrModels
 from .large_language_models import LargeLanguageModels
-from .doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
+from .response_format_type import ResponseFormatType
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -30,7 +30,7 @@ class DocExtractPageRequest(UniversalBaseModel):
     quality: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     sampling_temperature: typing.Optional[float] = None
-    response_format_type: typing.Optional[DocExtractPageRequestResponseFormatType] = None
+    response_format_type: typing.Optional[ResponseFormatType] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:

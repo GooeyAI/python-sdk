@@ -5,14 +5,9 @@ import typing
 from .recipe_function import RecipeFunction
 import pydantic
 from .vcard import Vcard
-from .qr_code_generator_page_request_image_prompt_controlnet_models_item import (
-    QrCodeGeneratorPageRequestImagePromptControlnetModelsItem,
-)
-from .qr_code_generator_page_request_selected_model import QrCodeGeneratorPageRequestSelectedModel
-from .qr_code_generator_page_request_selected_controlnet_model_item import (
-    QrCodeGeneratorPageRequestSelectedControlnetModelItem,
-)
-from .qr_code_generator_page_request_scheduler import QrCodeGeneratorPageRequestScheduler
+from .control_net_models import ControlNetModels
+from .text_to_image_models import TextToImageModels
+from .schedulers import Schedulers
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -32,24 +27,20 @@ class QrCodeGeneratorPageRequest(UniversalBaseModel):
     text_prompt: str
     negative_prompt: typing.Optional[str] = None
     image_prompt: typing.Optional[str] = None
-    image_prompt_controlnet_models: typing.Optional[
-        typing.List[QrCodeGeneratorPageRequestImagePromptControlnetModelsItem]
-    ] = None
+    image_prompt_controlnet_models: typing.Optional[typing.List[ControlNetModels]] = None
     image_prompt_strength: typing.Optional[float] = None
     image_prompt_scale: typing.Optional[float] = None
     image_prompt_pos_x: typing.Optional[float] = None
     image_prompt_pos_y: typing.Optional[float] = None
-    selected_model: typing.Optional[QrCodeGeneratorPageRequestSelectedModel] = None
-    selected_controlnet_model: typing.Optional[typing.List[QrCodeGeneratorPageRequestSelectedControlnetModelItem]] = (
-        None
-    )
+    selected_model: typing.Optional[TextToImageModels] = None
+    selected_controlnet_model: typing.Optional[typing.List[ControlNetModels]] = None
     output_width: typing.Optional[int] = None
     output_height: typing.Optional[int] = None
     guidance_scale: typing.Optional[float] = None
     controlnet_conditioning_scale: typing.Optional[typing.List[float]] = None
     num_outputs: typing.Optional[int] = None
     quality: typing.Optional[int] = None
-    scheduler: typing.Optional[QrCodeGeneratorPageRequestScheduler] = None
+    scheduler: typing.Optional[Schedulers] = None
     seed: typing.Optional[int] = None
     obj_scale: typing.Optional[float] = None
     obj_pos_x: typing.Optional[float] = None
