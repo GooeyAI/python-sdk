@@ -6,11 +6,11 @@ from .video_bots_page_request_functions_item import VideoBotsPageRequestFunction
 import pydantic
 from .conversation_entry import ConversationEntry
 from .large_language_models import LargeLanguageModels
-from .video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddingModel
+from .embedding_models import EmbeddingModels
 from .video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
-from .video_bots_page_request_asr_model import VideoBotsPageRequestAsrModel
+from .asr_models import AsrModels
 from .video_bots_page_request_translation_model import VideoBotsPageRequestTranslationModel
-from .video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
+from .lipsync_models import LipsyncModels
 from .llm_tools import LlmTools
 from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
 from .video_bots_page_request_tts_provider import VideoBotsPageRequestTtsProvider
@@ -52,7 +52,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
     max_references: typing.Optional[int] = None
     max_context_words: typing.Optional[int] = None
     scroll_jump: typing.Optional[int] = None
-    embedding_model: typing.Optional[VideoBotsPageRequestEmbeddingModel] = None
+    embedding_model: typing.Optional[EmbeddingModels] = None
     dense_weight: typing.Optional[float] = pydantic.Field(default=None)
     """
     Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
@@ -61,7 +61,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
 
     citation_style: typing.Optional[VideoBotsPageRequestCitationStyle] = None
     use_url_shortener: typing.Optional[bool] = None
-    asr_model: typing.Optional[VideoBotsPageRequestAsrModel] = pydantic.Field(default=None)
+    asr_model: typing.Optional[AsrModels] = pydantic.Field(default=None)
     """
     Choose a model to transcribe incoming audio messages to text.
     """
@@ -79,7 +79,7 @@ class VideoBotsPageRequest(UniversalBaseModel):
 
     input_glossary_document: typing.Optional[str] = None
     output_glossary_document: typing.Optional[str] = None
-    lipsync_model: typing.Optional[VideoBotsPageRequestLipsyncModel] = None
+    lipsync_model: typing.Optional[LipsyncModels] = None
     tools: typing.Optional[typing.List[LlmTools]] = pydantic.Field(default=None)
     """
     Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).

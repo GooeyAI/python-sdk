@@ -8,7 +8,7 @@ from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvi
 from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
 from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
 from .sad_talker_settings import SadTalkerSettings
-from .lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
+from .lipsync_models import LipsyncModels
 from .run_settings import RunSettings
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -49,7 +49,7 @@ class LipsyncTtsPageRequest(UniversalBaseModel):
     face_padding_left: typing.Optional[int] = None
     face_padding_right: typing.Optional[int] = None
     sadtalker_settings: typing.Optional[SadTalkerSettings] = None
-    selected_model: typing.Optional[LipsyncTtsPageRequestSelectedModel] = None
+    selected_model: typing.Optional[LipsyncModels] = None
     settings: typing.Optional[RunSettings] = None
 
     if IS_PYDANTIC_V2:

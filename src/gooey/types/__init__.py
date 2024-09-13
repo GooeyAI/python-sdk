@@ -4,14 +4,15 @@ from .agg_function import AggFunction
 from .agg_function_function import AggFunctionFunction
 from .agg_function_result import AggFunctionResult
 from .agg_function_result_function import AggFunctionResultFunction
+from .animation_models import AnimationModels
 from .animation_prompt import AnimationPrompt
 from .asr_chunk import AsrChunk
+from .asr_models import AsrModels
 from .asr_output_json import AsrOutputJson
 from .asr_page_output import AsrPageOutput
 from .asr_page_output_output_text_item import AsrPageOutputOutputTextItem
 from .asr_page_request import AsrPageRequest
 from .asr_page_request_output_format import AsrPageRequestOutputFormat
-from .asr_page_request_selected_model import AsrPageRequestSelectedModel
 from .asr_page_request_translation_model import AsrPageRequestTranslationModel
 from .asr_page_status_response import AsrPageStatusResponse
 from .async_api_response_model_v3 import AsyncApiResponseModelV3
@@ -55,10 +56,7 @@ from .conversation_entry_content_item import (
 from .conversation_entry_role import ConversationEntryRole
 from .conversation_start import ConversationStart
 from .create_stream_request import CreateStreamRequest
-from .create_stream_request_asr_model import CreateStreamRequestAsrModel
 from .create_stream_request_citation_style import CreateStreamRequestCitationStyle
-from .create_stream_request_embedding_model import CreateStreamRequestEmbeddingModel
-from .create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
 from .create_stream_request_openai_tts_model import CreateStreamRequestOpenaiTtsModel
 from .create_stream_request_openai_voice_name import CreateStreamRequestOpenaiVoiceName
 from .create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
@@ -66,31 +64,26 @@ from .create_stream_request_translation_model import CreateStreamRequestTranslat
 from .create_stream_request_tts_provider import CreateStreamRequestTtsProvider
 from .create_stream_response import CreateStreamResponse
 from .deforum_sd_page_output import DeforumSdPageOutput
-from .deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
 from .deforum_sd_page_status_response import DeforumSdPageStatusResponse
 from .doc_extract_page_output import DocExtractPageOutput
 from .doc_extract_page_request import DocExtractPageRequest
 from .doc_extract_page_request_response_format_type import DocExtractPageRequestResponseFormatType
-from .doc_extract_page_request_selected_asr_model import DocExtractPageRequestSelectedAsrModel
 from .doc_extract_page_status_response import DocExtractPageStatusResponse
 from .doc_search_page_output import DocSearchPageOutput
 from .doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
-from .doc_search_page_request_embedding_model import DocSearchPageRequestEmbeddingModel
 from .doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
 from .doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
 from .doc_search_page_status_response import DocSearchPageStatusResponse
 from .doc_summary_page_output import DocSummaryPageOutput
 from .doc_summary_page_request import DocSummaryPageRequest
 from .doc_summary_page_request_response_format_type import DocSummaryPageRequestResponseFormatType
-from .doc_summary_page_request_selected_asr_model import DocSummaryPageRequestSelectedAsrModel
 from .doc_summary_page_status_response import DocSummaryPageStatusResponse
 from .doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
-from .doc_summary_request_selected_asr_model import DocSummaryRequestSelectedAsrModel
 from .email_face_inpainting_page_output import EmailFaceInpaintingPageOutput
 from .email_face_inpainting_page_request_selected_model import EmailFaceInpaintingPageRequestSelectedModel
 from .email_face_inpainting_page_status_response import EmailFaceInpaintingPageStatusResponse
+from .embedding_models import EmbeddingModels
 from .embeddings_page_output import EmbeddingsPageOutput
-from .embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
 from .embeddings_page_status_response import EmbeddingsPageStatusResponse
 from .eval_prompt import EvalPrompt
 from .face_inpainting_page_output import FaceInpaintingPageOutput
@@ -103,7 +96,6 @@ from .functions_page_status_response import FunctionsPageStatusResponse
 from .generic_error_response import GenericErrorResponse
 from .generic_error_response_detail import GenericErrorResponseDetail
 from .google_gpt_page_output import GoogleGptPageOutput
-from .google_gpt_page_request_embedding_model import GoogleGptPageRequestEmbeddingModel
 from .google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
 from .google_gpt_page_status_response import GoogleGptPageStatusResponse
 from .google_image_gen_page_output import GoogleImageGenPageOutput
@@ -126,21 +118,18 @@ from .large_language_models import LargeLanguageModels
 from .letter_writer_page_output import LetterWriterPageOutput
 from .letter_writer_page_request import LetterWriterPageRequest
 from .letter_writer_page_status_response import LetterWriterPageStatusResponse
+from .lipsync_models import LipsyncModels
 from .lipsync_page_output import LipsyncPageOutput
 from .lipsync_page_request import LipsyncPageRequest
-from .lipsync_page_request_selected_model import LipsyncPageRequestSelectedModel
 from .lipsync_page_status_response import LipsyncPageStatusResponse
-from .lipsync_request_selected_model import LipsyncRequestSelectedModel
 from .lipsync_tts_page_output import LipsyncTtsPageOutput
 from .lipsync_tts_page_request import LipsyncTtsPageRequest
 from .lipsync_tts_page_request_openai_tts_model import LipsyncTtsPageRequestOpenaiTtsModel
 from .lipsync_tts_page_request_openai_voice_name import LipsyncTtsPageRequestOpenaiVoiceName
-from .lipsync_tts_page_request_selected_model import LipsyncTtsPageRequestSelectedModel
 from .lipsync_tts_page_request_tts_provider import LipsyncTtsPageRequestTtsProvider
 from .lipsync_tts_page_status_response import LipsyncTtsPageStatusResponse
 from .lipsync_tts_request_openai_tts_model import LipsyncTtsRequestOpenaiTtsModel
 from .lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
-from .lipsync_tts_request_selected_model import LipsyncTtsRequestSelectedModel
 from .lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
 from .llm_tools import LlmTools
 from .message_part import MessagePart
@@ -174,12 +163,10 @@ from .related_doc_search_response import RelatedDocSearchResponse
 from .related_google_gpt_response import RelatedGoogleGptResponse
 from .related_qn_a_doc_page_output import RelatedQnADocPageOutput
 from .related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
-from .related_qn_a_doc_page_request_embedding_model import RelatedQnADocPageRequestEmbeddingModel
 from .related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
 from .related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .related_qn_a_doc_page_status_response import RelatedQnADocPageStatusResponse
 from .related_qn_a_page_output import RelatedQnAPageOutput
-from .related_qn_a_page_request_embedding_model import RelatedQnAPageRequestEmbeddingModel
 from .related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
 from .related_qn_a_page_status_response import RelatedQnAPageStatusResponse
 from .remix_image_request_selected_controlnet_model import RemixImageRequestSelectedControlnetModel
@@ -196,11 +183,10 @@ from .run_start import RunStart
 from .sad_talker_settings import SadTalkerSettings
 from .sad_talker_settings_preprocess import SadTalkerSettingsPreprocess
 from .search_reference import SearchReference
-from .security_schemes import SecuritySchemes
 from .seo_summary_page_output import SeoSummaryPageOutput
 from .seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
 from .seo_summary_page_status_response import SeoSummaryPageStatusResponse
-from .serp_search_location import SerpSearchLocation
+from .serp_search_locations import SerpSearchLocations
 from .serp_search_type import SerpSearchType
 from .smart_gpt_page_output import SmartGptPageOutput
 from .smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
@@ -209,11 +195,9 @@ from .social_lookup_email_page_output import SocialLookupEmailPageOutput
 from .social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
 from .social_lookup_email_page_status_response import SocialLookupEmailPageStatusResponse
 from .speech_recognition_request_output_format import SpeechRecognitionRequestOutputFormat
-from .speech_recognition_request_selected_model import SpeechRecognitionRequestSelectedModel
 from .speech_recognition_request_translation_model import SpeechRecognitionRequestTranslationModel
 from .stream_error import StreamError
 from .synthesize_data_request_response_format_type import SynthesizeDataRequestResponseFormatType
-from .synthesize_data_request_selected_asr_model import SynthesizeDataRequestSelectedAsrModel
 from .text2audio_page_output import Text2AudioPageOutput
 from .text2audio_page_status_response import Text2AudioPageStatusResponse
 from .text_to_speech_page_output import TextToSpeechPageOutput
@@ -235,12 +219,9 @@ from .video_bots_page_output import VideoBotsPageOutput
 from .video_bots_page_output_final_keyword_query import VideoBotsPageOutputFinalKeywordQuery
 from .video_bots_page_output_final_prompt import VideoBotsPageOutputFinalPrompt
 from .video_bots_page_request import VideoBotsPageRequest
-from .video_bots_page_request_asr_model import VideoBotsPageRequestAsrModel
 from .video_bots_page_request_citation_style import VideoBotsPageRequestCitationStyle
-from .video_bots_page_request_embedding_model import VideoBotsPageRequestEmbeddingModel
 from .video_bots_page_request_functions_item import VideoBotsPageRequestFunctionsItem
 from .video_bots_page_request_functions_item_trigger import VideoBotsPageRequestFunctionsItemTrigger
-from .video_bots_page_request_lipsync_model import VideoBotsPageRequestLipsyncModel
 from .video_bots_page_request_openai_tts_model import VideoBotsPageRequestOpenaiTtsModel
 from .video_bots_page_request_openai_voice_name import VideoBotsPageRequestOpenaiVoiceName
 from .video_bots_page_request_response_format_type import VideoBotsPageRequestResponseFormatType
@@ -255,14 +236,15 @@ __all__ = [
     "AggFunctionFunction",
     "AggFunctionResult",
     "AggFunctionResultFunction",
+    "AnimationModels",
     "AnimationPrompt",
     "AsrChunk",
+    "AsrModels",
     "AsrOutputJson",
     "AsrPageOutput",
     "AsrPageOutputOutputTextItem",
     "AsrPageRequest",
     "AsrPageRequestOutputFormat",
-    "AsrPageRequestSelectedModel",
     "AsrPageRequestTranslationModel",
     "AsrPageStatusResponse",
     "AsyncApiResponseModelV3",
@@ -304,10 +286,7 @@ __all__ = [
     "ConversationEntryRole",
     "ConversationStart",
     "CreateStreamRequest",
-    "CreateStreamRequestAsrModel",
     "CreateStreamRequestCitationStyle",
-    "CreateStreamRequestEmbeddingModel",
-    "CreateStreamRequestLipsyncModel",
     "CreateStreamRequestOpenaiTtsModel",
     "CreateStreamRequestOpenaiVoiceName",
     "CreateStreamRequestResponseFormatType",
@@ -315,31 +294,26 @@ __all__ = [
     "CreateStreamRequestTtsProvider",
     "CreateStreamResponse",
     "DeforumSdPageOutput",
-    "DeforumSdPageRequestSelectedModel",
     "DeforumSdPageStatusResponse",
     "DocExtractPageOutput",
     "DocExtractPageRequest",
     "DocExtractPageRequestResponseFormatType",
-    "DocExtractPageRequestSelectedAsrModel",
     "DocExtractPageStatusResponse",
     "DocSearchPageOutput",
     "DocSearchPageRequestCitationStyle",
-    "DocSearchPageRequestEmbeddingModel",
     "DocSearchPageRequestKeywordQuery",
     "DocSearchPageRequestResponseFormatType",
     "DocSearchPageStatusResponse",
     "DocSummaryPageOutput",
     "DocSummaryPageRequest",
     "DocSummaryPageRequestResponseFormatType",
-    "DocSummaryPageRequestSelectedAsrModel",
     "DocSummaryPageStatusResponse",
     "DocSummaryRequestResponseFormatType",
-    "DocSummaryRequestSelectedAsrModel",
     "EmailFaceInpaintingPageOutput",
     "EmailFaceInpaintingPageRequestSelectedModel",
     "EmailFaceInpaintingPageStatusResponse",
+    "EmbeddingModels",
     "EmbeddingsPageOutput",
-    "EmbeddingsPageRequestSelectedModel",
     "EmbeddingsPageStatusResponse",
     "EvalPrompt",
     "FaceInpaintingPageOutput",
@@ -352,7 +326,6 @@ __all__ = [
     "GenericErrorResponse",
     "GenericErrorResponseDetail",
     "GoogleGptPageOutput",
-    "GoogleGptPageRequestEmbeddingModel",
     "GoogleGptPageRequestResponseFormatType",
     "GoogleGptPageStatusResponse",
     "GoogleImageGenPageOutput",
@@ -375,21 +348,18 @@ __all__ = [
     "LetterWriterPageOutput",
     "LetterWriterPageRequest",
     "LetterWriterPageStatusResponse",
+    "LipsyncModels",
     "LipsyncPageOutput",
     "LipsyncPageRequest",
-    "LipsyncPageRequestSelectedModel",
     "LipsyncPageStatusResponse",
-    "LipsyncRequestSelectedModel",
     "LipsyncTtsPageOutput",
     "LipsyncTtsPageRequest",
     "LipsyncTtsPageRequestOpenaiTtsModel",
     "LipsyncTtsPageRequestOpenaiVoiceName",
-    "LipsyncTtsPageRequestSelectedModel",
     "LipsyncTtsPageRequestTtsProvider",
     "LipsyncTtsPageStatusResponse",
     "LipsyncTtsRequestOpenaiTtsModel",
     "LipsyncTtsRequestOpenaiVoiceName",
-    "LipsyncTtsRequestSelectedModel",
     "LipsyncTtsRequestTtsProvider",
     "LlmTools",
     "MessagePart",
@@ -419,12 +389,10 @@ __all__ = [
     "RelatedGoogleGptResponse",
     "RelatedQnADocPageOutput",
     "RelatedQnADocPageRequestCitationStyle",
-    "RelatedQnADocPageRequestEmbeddingModel",
     "RelatedQnADocPageRequestKeywordQuery",
     "RelatedQnADocPageRequestResponseFormatType",
     "RelatedQnADocPageStatusResponse",
     "RelatedQnAPageOutput",
-    "RelatedQnAPageRequestEmbeddingModel",
     "RelatedQnAPageRequestResponseFormatType",
     "RelatedQnAPageStatusResponse",
     "RemixImageRequestSelectedControlnetModel",
@@ -441,11 +409,10 @@ __all__ = [
     "SadTalkerSettings",
     "SadTalkerSettingsPreprocess",
     "SearchReference",
-    "SecuritySchemes",
     "SeoSummaryPageOutput",
     "SeoSummaryPageRequestResponseFormatType",
     "SeoSummaryPageStatusResponse",
-    "SerpSearchLocation",
+    "SerpSearchLocations",
     "SerpSearchType",
     "SmartGptPageOutput",
     "SmartGptPageRequestResponseFormatType",
@@ -454,11 +421,9 @@ __all__ = [
     "SocialLookupEmailPageRequestResponseFormatType",
     "SocialLookupEmailPageStatusResponse",
     "SpeechRecognitionRequestOutputFormat",
-    "SpeechRecognitionRequestSelectedModel",
     "SpeechRecognitionRequestTranslationModel",
     "StreamError",
     "SynthesizeDataRequestResponseFormatType",
-    "SynthesizeDataRequestSelectedAsrModel",
     "Text2AudioPageOutput",
     "Text2AudioPageStatusResponse",
     "TextToSpeechPageOutput",
@@ -480,12 +445,9 @@ __all__ = [
     "VideoBotsPageOutputFinalKeywordQuery",
     "VideoBotsPageOutputFinalPrompt",
     "VideoBotsPageRequest",
-    "VideoBotsPageRequestAsrModel",
     "VideoBotsPageRequestCitationStyle",
-    "VideoBotsPageRequestEmbeddingModel",
     "VideoBotsPageRequestFunctionsItem",
     "VideoBotsPageRequestFunctionsItemTrigger",
-    "VideoBotsPageRequestLipsyncModel",
     "VideoBotsPageRequestOpenaiTtsModel",
     "VideoBotsPageRequestOpenaiVoiceName",
     "VideoBotsPageRequestResponseFormatType",

@@ -7,11 +7,11 @@ from .button_pressed import ButtonPressed
 from .recipe_function import RecipeFunction
 from .conversation_entry import ConversationEntry
 from .large_language_models import LargeLanguageModels
-from .create_stream_request_embedding_model import CreateStreamRequestEmbeddingModel
+from .embedding_models import EmbeddingModels
 from .create_stream_request_citation_style import CreateStreamRequestCitationStyle
-from .create_stream_request_asr_model import CreateStreamRequestAsrModel
+from .asr_models import AsrModels
 from .create_stream_request_translation_model import CreateStreamRequestTranslationModel
-from .create_stream_request_lipsync_model import CreateStreamRequestLipsyncModel
+from .lipsync_models import LipsyncModels
 from .llm_tools import LlmTools
 from .create_stream_request_response_format_type import CreateStreamRequestResponseFormatType
 from .create_stream_request_tts_provider import CreateStreamRequestTtsProvider
@@ -85,7 +85,7 @@ class CreateStreamRequest(UniversalBaseModel):
     max_references: typing.Optional[int] = None
     max_context_words: typing.Optional[int] = None
     scroll_jump: typing.Optional[int] = None
-    embedding_model: typing.Optional[CreateStreamRequestEmbeddingModel] = None
+    embedding_model: typing.Optional[EmbeddingModels] = None
     dense_weight: typing.Optional[float] = pydantic.Field(default=None)
     """
     Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
@@ -94,7 +94,7 @@ class CreateStreamRequest(UniversalBaseModel):
 
     citation_style: typing.Optional[CreateStreamRequestCitationStyle] = None
     use_url_shortener: typing.Optional[bool] = None
-    asr_model: typing.Optional[CreateStreamRequestAsrModel] = pydantic.Field(default=None)
+    asr_model: typing.Optional[AsrModels] = pydantic.Field(default=None)
     """
     Choose a model to transcribe incoming audio messages to text.
     """
@@ -120,7 +120,7 @@ class CreateStreamRequest(UniversalBaseModel):
     Translation Glossary for LLM Language (English) -> User Langauge
     """
 
-    lipsync_model: typing.Optional[CreateStreamRequestLipsyncModel] = None
+    lipsync_model: typing.Optional[LipsyncModels] = None
     tools: typing.Optional[typing.List[LlmTools]] = pydantic.Field(default=None)
     """
     Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).

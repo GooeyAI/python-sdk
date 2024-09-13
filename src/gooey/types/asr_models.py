@@ -2,7 +2,7 @@
 
 import typing
 
-AsrPageRequestSelectedModel = typing.Union[
+AsrModels = typing.Union[
     typing.Literal[
         "whisper_large_v2",
         "whisper_large_v3",

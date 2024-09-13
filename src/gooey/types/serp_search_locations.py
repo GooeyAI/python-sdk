@@ -2,7 +2,7 @@
 
 import typing
 
-SerpSearchLocation = typing.Union[
+SerpSearchLocations = typing.Union[
     typing.Literal[
         "af",
         "al",

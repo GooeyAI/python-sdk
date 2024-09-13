@@ -2,7 +2,7 @@
 
 import typing
 
-VideoBotsPageRequestEmbeddingModel = typing.Union[
+EmbeddingModels = typing.Union[
     typing.Literal[
         "openai_3_large",
         "openai_3_small",

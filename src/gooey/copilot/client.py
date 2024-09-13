@@ -6,11 +6,11 @@ from .types.copilot_completion_request_functions_item import CopilotCompletionRe
 from .. import core
 from ..types.conversation_entry import ConversationEntry
 from ..types.large_language_models import LargeLanguageModels
-from .types.copilot_completion_request_embedding_model import CopilotCompletionRequestEmbeddingModel
+from ..types.embedding_models import EmbeddingModels
 from .types.copilot_completion_request_citation_style import CopilotCompletionRequestCitationStyle
-from .types.copilot_completion_request_asr_model import CopilotCompletionRequestAsrModel
+from ..types.asr_models import AsrModels
 from .types.copilot_completion_request_translation_model import CopilotCompletionRequestTranslationModel
-from .types.copilot_completion_request_lipsync_model import CopilotCompletionRequestLipsyncModel
+from ..types.lipsync_models import LipsyncModels
 from ..types.llm_tools import LlmTools
 from .types.copilot_completion_request_response_format_type import CopilotCompletionRequestResponseFormatType
 from .types.copilot_completion_request_tts_provider import CopilotCompletionRequestTtsProvider
@@ -60,17 +60,17 @@ class CopilotClient:
         max_references: typing.Optional[int] = None,
         max_context_words: typing.Optional[int] = None,
         scroll_jump: typing.Optional[int] = None,
-        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        embedding_model: typing.Optional[EmbeddingModels] = None,
         dense_weight: typing.Optional[float] = None,
         citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
         use_url_shortener: typing.Optional[bool] = None,
-        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_model: typing.Optional[AsrModels] = None,
         asr_language: typing.Optional[str] = None,
         translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
-        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        lipsync_model: typing.Optional[LipsyncModels] = None,
         tools: typing.Optional[typing.List[LlmTools]] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
@@ -152,7 +152,7 @@ class CopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -164,7 +164,7 @@ class CopilotClient:
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
+        asr_model : typing.Optional[AsrModels]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
@@ -181,7 +181,7 @@ class CopilotClient:
         output_glossary_document : typing.Optional[core.File]
             See core.File for more documentation
 
-        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
+        lipsync_model : typing.Optional[LipsyncModels]
 
         tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).
@@ -412,17 +412,17 @@ class AsyncCopilotClient:
         max_references: typing.Optional[int] = None,
         max_context_words: typing.Optional[int] = None,
         scroll_jump: typing.Optional[int] = None,
-        embedding_model: typing.Optional[CopilotCompletionRequestEmbeddingModel] = None,
+        embedding_model: typing.Optional[EmbeddingModels] = None,
         dense_weight: typing.Optional[float] = None,
         citation_style: typing.Optional[CopilotCompletionRequestCitationStyle] = None,
         use_url_shortener: typing.Optional[bool] = None,
-        asr_model: typing.Optional[CopilotCompletionRequestAsrModel] = None,
+        asr_model: typing.Optional[AsrModels] = None,
         asr_language: typing.Optional[str] = None,
         translation_model: typing.Optional[CopilotCompletionRequestTranslationModel] = None,
         user_language: typing.Optional[str] = None,
         input_glossary_document: typing.Optional[core.File] = None,
         output_glossary_document: typing.Optional[core.File] = None,
-        lipsync_model: typing.Optional[CopilotCompletionRequestLipsyncModel] = None,
+        lipsync_model: typing.Optional[LipsyncModels] = None,
         tools: typing.Optional[typing.List[LlmTools]] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
@@ -504,7 +504,7 @@ class AsyncCopilotClient:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[CopilotCompletionRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -516,7 +516,7 @@ class AsyncCopilotClient:
 
         use_url_shortener : typing.Optional[bool]
 
-        asr_model : typing.Optional[CopilotCompletionRequestAsrModel]
+        asr_model : typing.Optional[AsrModels]
             Choose a model to transcribe incoming audio messages to text.
 
         asr_language : typing.Optional[str]
@@ -533,7 +533,7 @@ class AsyncCopilotClient:
         output_glossary_document : typing.Optional[core.File]
             See core.File for more documentation
 
-        lipsync_model : typing.Optional[CopilotCompletionRequestLipsyncModel]
+        lipsync_model : typing.Optional[LipsyncModels]
 
         tools : typing.Optional[typing.List[LlmTools]]
             Give your copilot superpowers by giving it access to tools. Powered by [Function calling](https://platform.openai.com/docs/guides/function-calling).

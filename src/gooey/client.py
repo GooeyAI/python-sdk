@@ -9,7 +9,7 @@ from .core.client_wrapper import SyncClientWrapper
 from .copilot.client import CopilotClient
 from .types.animation_prompt import AnimationPrompt
 from .types.recipe_function import RecipeFunction
-from .types.deforum_sd_page_request_selected_model import DeforumSdPageRequestSelectedModel
+from .types.animation_models import AnimationModels
 from .types.run_settings import RunSettings
 from .core.request_options import RequestOptions
 from .types.deforum_sd_page_output import DeforumSdPageOutput
@@ -28,14 +28,13 @@ from .types.qr_code_request_selected_controlnet_model_item import QrCodeRequestS
 from .types.qr_code_request_scheduler import QrCodeRequestScheduler
 from .types.qr_code_generator_page_output import QrCodeGeneratorPageOutput
 from .types.large_language_models import LargeLanguageModels
-from .types.related_qn_a_page_request_embedding_model import RelatedQnAPageRequestEmbeddingModel
+from .types.embedding_models import EmbeddingModels
 from .types.related_qn_a_page_request_response_format_type import RelatedQnAPageRequestResponseFormatType
-from .types.serp_search_location import SerpSearchLocation
+from .types.serp_search_locations import SerpSearchLocations
 from .types.serp_search_type import SerpSearchType
 from .types.related_qn_a_page_output import RelatedQnAPageOutput
 from .types.seo_summary_page_request_response_format_type import SeoSummaryPageRequestResponseFormatType
 from .types.seo_summary_page_output import SeoSummaryPageOutput
-from .types.google_gpt_page_request_embedding_model import GoogleGptPageRequestEmbeddingModel
 from .types.google_gpt_page_request_response_format_type import GoogleGptPageRequestResponseFormatType
 from .types.google_gpt_page_output import GoogleGptPageOutput
 from .types.social_lookup_email_page_request_response_format_type import SocialLookupEmailPageRequestResponseFormatType
@@ -45,35 +44,31 @@ from .types.eval_prompt import EvalPrompt
 from .types.agg_function import AggFunction
 from .types.bulk_eval_page_request_response_format_type import BulkEvalPageRequestResponseFormatType
 from .types.bulk_eval_page_output import BulkEvalPageOutput
-from .types.synthesize_data_request_selected_asr_model import SynthesizeDataRequestSelectedAsrModel
+from .types.asr_models import AsrModels
 from .types.synthesize_data_request_response_format_type import SynthesizeDataRequestResponseFormatType
 from .types.doc_extract_page_output import DocExtractPageOutput
 from .types.compare_llm_page_request_response_format_type import CompareLlmPageRequestResponseFormatType
 from .types.compare_llm_page_output import CompareLlmPageOutput
 from .types.doc_search_page_request_keyword_query import DocSearchPageRequestKeywordQuery
-from .types.doc_search_page_request_embedding_model import DocSearchPageRequestEmbeddingModel
 from .types.doc_search_page_request_citation_style import DocSearchPageRequestCitationStyle
 from .types.doc_search_page_request_response_format_type import DocSearchPageRequestResponseFormatType
 from .types.doc_search_page_output import DocSearchPageOutput
 from .types.smart_gpt_page_request_response_format_type import SmartGptPageRequestResponseFormatType
 from .types.smart_gpt_page_output import SmartGptPageOutput
-from .types.doc_summary_request_selected_asr_model import DocSummaryRequestSelectedAsrModel
 from .types.doc_summary_request_response_format_type import DocSummaryRequestResponseFormatType
 from .types.doc_summary_page_output import DocSummaryPageOutput
 from .types.functions_page_output import FunctionsPageOutput
 from .types.sad_talker_settings import SadTalkerSettings
-from .types.lipsync_request_selected_model import LipsyncRequestSelectedModel
+from .types.lipsync_models import LipsyncModels
 from .types.lipsync_page_output import LipsyncPageOutput
 from .types.lipsync_tts_request_tts_provider import LipsyncTtsRequestTtsProvider
 from .types.lipsync_tts_request_openai_voice_name import LipsyncTtsRequestOpenaiVoiceName
 from .types.lipsync_tts_request_openai_tts_model import LipsyncTtsRequestOpenaiTtsModel
-from .types.lipsync_tts_request_selected_model import LipsyncTtsRequestSelectedModel
 from .types.lipsync_tts_page_output import LipsyncTtsPageOutput
 from .types.text_to_speech_page_request_tts_provider import TextToSpeechPageRequestTtsProvider
 from .types.text_to_speech_page_request_openai_voice_name import TextToSpeechPageRequestOpenaiVoiceName
 from .types.text_to_speech_page_request_openai_tts_model import TextToSpeechPageRequestOpenaiTtsModel
 from .types.text_to_speech_page_output import TextToSpeechPageOutput
-from .types.speech_recognition_request_selected_model import SpeechRecognitionRequestSelectedModel
 from .types.speech_recognition_request_translation_model import SpeechRecognitionRequestTranslationModel
 from .types.speech_recognition_request_output_format import SpeechRecognitionRequestOutputFormat
 from .types.asr_page_output import AsrPageOutput
@@ -98,10 +93,8 @@ from .types.remove_background_request_selected_model import RemoveBackgroundRequ
 from .types.image_segmentation_page_output import ImageSegmentationPageOutput
 from .types.upscale_request_selected_models_item import UpscaleRequestSelectedModelsItem
 from .types.compare_upscaler_page_output import CompareUpscalerPageOutput
-from .types.embeddings_page_request_selected_model import EmbeddingsPageRequestSelectedModel
 from .types.embeddings_page_output import EmbeddingsPageOutput
 from .types.related_qn_a_doc_page_request_keyword_query import RelatedQnADocPageRequestKeywordQuery
-from .types.related_qn_a_doc_page_request_embedding_model import RelatedQnADocPageRequestEmbeddingModel
 from .types.related_qn_a_doc_page_request_citation_style import RelatedQnADocPageRequestCitationStyle
 from .types.related_qn_a_doc_page_request_response_format_type import RelatedQnADocPageRequestResponseFormatType
 from .types.related_qn_a_doc_page_output import RelatedQnADocPageOutput
@@ -183,7 +176,7 @@ class Gooey:
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         max_frames: typing.Optional[int] = OMIT,
-        selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[AnimationModels] = OMIT,
         animation_mode: typing.Optional[str] = OMIT,
         zoom: typing.Optional[str] = OMIT,
         translation_x: typing.Optional[str] = OMIT,
@@ -210,7 +203,7 @@ class Gooey:
 
         max_frames : typing.Optional[int]
 
-        selected_model : typing.Optional[DeforumSdPageRequestSelectedModel]
+        selected_model : typing.Optional[AnimationModels]
 
         animation_mode : typing.Optional[str]
 
@@ -549,7 +542,7 @@ class Gooey:
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[RelatedQnAPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -557,7 +550,7 @@ class Gooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -592,7 +585,7 @@ class Gooey:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[RelatedQnAPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -612,7 +605,7 @@ class Gooey:
 
         response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -743,7 +736,7 @@ class Gooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -787,7 +780,7 @@ class Gooey:
 
         response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -912,7 +905,7 @@ class Gooey:
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[GoogleGptPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -920,7 +913,7 @@ class Gooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -955,7 +948,7 @@ class Gooey:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[GoogleGptPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -975,7 +968,7 @@ class Gooey:
 
         response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -1514,7 +1507,7 @@ class Gooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         sheet_url: typing.Optional[core.File] = None,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         glossary_document: typing.Optional[core.File] = None,
         task_instructions: typing.Optional[str] = None,
@@ -1544,7 +1537,7 @@ class Gooey:
         sheet_url : typing.Optional[core.File]
             See core.File for more documentation
 
-        selected_asr_model : typing.Optional[SynthesizeDataRequestSelectedAsrModel]
+        selected_asr_model : typing.Optional[AsrModels]
 
         google_translate_target : typing.Optional[str]
 
@@ -1800,7 +1793,7 @@ class Gooey:
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
         doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[DocSearchPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
@@ -1839,7 +1832,7 @@ class Gooey:
 
         doc_extract_url : typing.Optional[str]
 
-        embedding_model : typing.Optional[DocSearchPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -2118,7 +2111,7 @@ class Gooey:
         merge_instructions: typing.Optional[str] = None,
         selected_model: typing.Optional[LargeLanguageModels] = None,
         chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
@@ -2150,7 +2143,7 @@ class Gooey:
 
         chain_type : typing.Optional[typing.Literal["map_reduce"]]
 
-        selected_asr_model : typing.Optional[DocSummaryRequestSelectedAsrModel]
+        selected_asr_model : typing.Optional[AsrModels]
 
         google_translate_target : typing.Optional[str]
 
@@ -2367,7 +2360,7 @@ class Gooey:
         face_padding_left: typing.Optional[int] = None,
         face_padding_right: typing.Optional[int] = None,
         sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
-        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        selected_model: typing.Optional[LipsyncModels] = None,
         input_audio: typing.Optional[core.File] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -2395,7 +2388,7 @@ class Gooey:
 
         sadtalker_settings : typing.Optional[SadTalkerSettings]
 
-        selected_model : typing.Optional[LipsyncRequestSelectedModel]
+        selected_model : typing.Optional[LipsyncModels]
 
         input_audio : typing.Optional[core.File]
             See core.File for more documentation
@@ -2518,7 +2511,7 @@ class Gooey:
         face_padding_left: typing.Optional[int] = None,
         face_padding_right: typing.Optional[int] = None,
         sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        selected_model: typing.Optional[LipsyncModels] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
@@ -2584,7 +2577,7 @@ class Gooey:
 
         sadtalker_settings : typing.Optional[SadTalkerSettings]
 
-        selected_model : typing.Optional[LipsyncTtsRequestSelectedModel]
+        selected_model : typing.Optional[LipsyncModels]
 
         settings : typing.Optional[RunSettings]
 
@@ -2875,7 +2868,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        selected_model: typing.Optional[AsrModels] = None,
         language: typing.Optional[str] = None,
         translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
         output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
@@ -2899,7 +2892,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[SpeechRecognitionRequestSelectedModel]
+        selected_model : typing.Optional[AsrModels]
 
         language : typing.Optional[str]
 
@@ -4088,7 +4081,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
@@ -4116,7 +4109,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -4493,7 +4486,7 @@ class Gooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[EmbeddingModels] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsPageOutput:
@@ -4509,7 +4502,7 @@ class Gooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
+        selected_model : typing.Optional[EmbeddingModels]
 
         settings : typing.Optional[RunSettings]
 
@@ -4605,7 +4598,7 @@ class Gooey:
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
         doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[RelatedQnADocPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
@@ -4617,7 +4610,7 @@ class Gooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -4648,7 +4641,7 @@ class Gooey:
 
         doc_extract_url : typing.Optional[str]
 
-        embedding_model : typing.Optional[RelatedQnADocPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -4676,7 +4669,7 @@ class Gooey:
 
         response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -4899,7 +4892,7 @@ class AsyncGooey:
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         max_frames: typing.Optional[int] = OMIT,
-        selected_model: typing.Optional[DeforumSdPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[AnimationModels] = OMIT,
         animation_mode: typing.Optional[str] = OMIT,
         zoom: typing.Optional[str] = OMIT,
         translation_x: typing.Optional[str] = OMIT,
@@ -4926,7 +4919,7 @@ class AsyncGooey:
 
         max_frames : typing.Optional[int]
 
-        selected_model : typing.Optional[DeforumSdPageRequestSelectedModel]
+        selected_model : typing.Optional[AnimationModels]
 
         animation_mode : typing.Optional[str]
 
@@ -5281,7 +5274,7 @@ class AsyncGooey:
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[RelatedQnAPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -5289,7 +5282,7 @@ class AsyncGooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[RelatedQnAPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -5324,7 +5317,7 @@ class AsyncGooey:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[RelatedQnAPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -5344,7 +5337,7 @@ class AsyncGooey:
 
         response_format_type : typing.Optional[RelatedQnAPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -5483,7 +5476,7 @@ class AsyncGooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[SeoSummaryPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -5527,7 +5520,7 @@ class AsyncGooey:
 
         response_format_type : typing.Optional[SeoSummaryPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -5660,7 +5653,7 @@ class AsyncGooey:
         max_references: typing.Optional[int] = OMIT,
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
-        embedding_model: typing.Optional[GoogleGptPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         avoid_repetition: typing.Optional[bool] = OMIT,
         num_outputs: typing.Optional[int] = OMIT,
@@ -5668,7 +5661,7 @@ class AsyncGooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[GoogleGptPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -5703,7 +5696,7 @@ class AsyncGooey:
 
         scroll_jump : typing.Optional[int]
 
-        embedding_model : typing.Optional[GoogleGptPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -5723,7 +5716,7 @@ class AsyncGooey:
 
         response_format_type : typing.Optional[GoogleGptPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -6294,7 +6287,7 @@ class AsyncGooey:
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         sheet_url: typing.Optional[core.File] = None,
-        selected_asr_model: typing.Optional[SynthesizeDataRequestSelectedAsrModel] = None,
+        selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         glossary_document: typing.Optional[core.File] = None,
         task_instructions: typing.Optional[str] = None,
@@ -6324,7 +6317,7 @@ class AsyncGooey:
         sheet_url : typing.Optional[core.File]
             See core.File for more documentation
 
-        selected_asr_model : typing.Optional[SynthesizeDataRequestSelectedAsrModel]
+        selected_asr_model : typing.Optional[AsrModels]
 
         google_translate_target : typing.Optional[str]
 
@@ -6596,7 +6589,7 @@ class AsyncGooey:
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
         doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[DocSearchPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
@@ -6635,7 +6628,7 @@ class AsyncGooey:
 
         doc_extract_url : typing.Optional[str]
 
-        embedding_model : typing.Optional[DocSearchPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -6930,7 +6923,7 @@ class AsyncGooey:
         merge_instructions: typing.Optional[str] = None,
         selected_model: typing.Optional[LargeLanguageModels] = None,
         chain_type: typing.Optional[typing.Literal["map_reduce"]] = None,
-        selected_asr_model: typing.Optional[DocSummaryRequestSelectedAsrModel] = None,
+        selected_asr_model: typing.Optional[AsrModels] = None,
         google_translate_target: typing.Optional[str] = None,
         avoid_repetition: typing.Optional[bool] = None,
         num_outputs: typing.Optional[int] = None,
@@ -6962,7 +6955,7 @@ class AsyncGooey:
 
         chain_type : typing.Optional[typing.Literal["map_reduce"]]
 
-        selected_asr_model : typing.Optional[DocSummaryRequestSelectedAsrModel]
+        selected_asr_model : typing.Optional[AsrModels]
 
         google_translate_target : typing.Optional[str]
 
@@ -7195,7 +7188,7 @@ class AsyncGooey:
         face_padding_left: typing.Optional[int] = None,
         face_padding_right: typing.Optional[int] = None,
         sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
-        selected_model: typing.Optional[LipsyncRequestSelectedModel] = None,
+        selected_model: typing.Optional[LipsyncModels] = None,
         input_audio: typing.Optional[core.File] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -7223,7 +7216,7 @@ class AsyncGooey:
 
         sadtalker_settings : typing.Optional[SadTalkerSettings]
 
-        selected_model : typing.Optional[LipsyncRequestSelectedModel]
+        selected_model : typing.Optional[LipsyncModels]
 
         input_audio : typing.Optional[core.File]
             See core.File for more documentation
@@ -7354,7 +7347,7 @@ class AsyncGooey:
         face_padding_left: typing.Optional[int] = None,
         face_padding_right: typing.Optional[int] = None,
         sadtalker_settings: typing.Optional[SadTalkerSettings] = None,
-        selected_model: typing.Optional[LipsyncTtsRequestSelectedModel] = None,
+        selected_model: typing.Optional[LipsyncModels] = None,
         settings: typing.Optional[RunSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
@@ -7420,7 +7413,7 @@ class AsyncGooey:
 
         sadtalker_settings : typing.Optional[SadTalkerSettings]
 
-        selected_model : typing.Optional[LipsyncTtsRequestSelectedModel]
+        selected_model : typing.Optional[LipsyncModels]
 
         settings : typing.Optional[RunSettings]
 
@@ -7727,7 +7720,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.List[RecipeFunction]] = None,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        selected_model: typing.Optional[SpeechRecognitionRequestSelectedModel] = None,
+        selected_model: typing.Optional[AsrModels] = None,
         language: typing.Optional[str] = None,
         translation_model: typing.Optional[SpeechRecognitionRequestTranslationModel] = None,
         output_format: typing.Optional[SpeechRecognitionRequestOutputFormat] = None,
@@ -7751,7 +7744,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[SpeechRecognitionRequestSelectedModel]
+        selected_model : typing.Optional[AsrModels]
 
         language : typing.Optional[str]
 
@@ -9004,7 +8997,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         selected_model: typing.Optional[GoogleImageGenPageRequestSelectedModel] = OMIT,
         negative_prompt: typing.Optional[str] = OMIT,
@@ -9032,7 +9025,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead
@@ -9433,7 +9426,7 @@ class AsyncGooey:
         example_id: typing.Optional[str] = None,
         functions: typing.Optional[typing.Sequence[RecipeFunction]] = OMIT,
         variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        selected_model: typing.Optional[EmbeddingsPageRequestSelectedModel] = OMIT,
+        selected_model: typing.Optional[EmbeddingModels] = OMIT,
         settings: typing.Optional[RunSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsPageOutput:
@@ -9449,7 +9442,7 @@ class AsyncGooey:
         variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Variables to be used as Jinja prompt templates and in functions as arguments
 
-        selected_model : typing.Optional[EmbeddingsPageRequestSelectedModel]
+        selected_model : typing.Optional[EmbeddingModels]
 
         settings : typing.Optional[RunSettings]
 
@@ -9553,7 +9546,7 @@ class AsyncGooey:
         max_context_words: typing.Optional[int] = OMIT,
         scroll_jump: typing.Optional[int] = OMIT,
         doc_extract_url: typing.Optional[str] = OMIT,
-        embedding_model: typing.Optional[RelatedQnADocPageRequestEmbeddingModel] = OMIT,
+        embedding_model: typing.Optional[EmbeddingModels] = OMIT,
         dense_weight: typing.Optional[float] = OMIT,
         task_instructions: typing.Optional[str] = OMIT,
         query_instructions: typing.Optional[str] = OMIT,
@@ -9565,7 +9558,7 @@ class AsyncGooey:
         max_tokens: typing.Optional[int] = OMIT,
         sampling_temperature: typing.Optional[float] = OMIT,
         response_format_type: typing.Optional[RelatedQnADocPageRequestResponseFormatType] = OMIT,
-        serp_search_location: typing.Optional[SerpSearchLocation] = OMIT,
+        serp_search_location: typing.Optional[SerpSearchLocations] = OMIT,
         scaleserp_locations: typing.Optional[typing.Sequence[str]] = OMIT,
         serp_search_type: typing.Optional[SerpSearchType] = OMIT,
         scaleserp_search_field: typing.Optional[str] = OMIT,
@@ -9596,7 +9589,7 @@ class AsyncGooey:
 
         doc_extract_url : typing.Optional[str]
 
-        embedding_model : typing.Optional[RelatedQnADocPageRequestEmbeddingModel]
+        embedding_model : typing.Optional[EmbeddingModels]
 
         dense_weight : typing.Optional[float]
 
@@ -9624,7 +9617,7 @@ class AsyncGooey:
 
         response_format_type : typing.Optional[RelatedQnADocPageRequestResponseFormatType]
 
-        serp_search_location : typing.Optional[SerpSearchLocation]
+        serp_search_location : typing.Optional[SerpSearchLocations]
 
         scaleserp_locations : typing.Optional[typing.Sequence[str]]
             DEPRECATED: use `serp_search_location` instead

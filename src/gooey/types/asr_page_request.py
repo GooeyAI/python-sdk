@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .recipe_function import RecipeFunction
 import pydantic
-from .asr_page_request_selected_model import AsrPageRequestSelectedModel
+from .asr_models import AsrModels
 from .asr_page_request_translation_model import AsrPageRequestTranslationModel
 from .asr_page_request_output_format import AsrPageRequestOutputFormat
 from .run_settings import RunSettings
@@ -19,7 +19,7 @@ class AsrPageRequest(UniversalBaseModel):
     """
 
     documents: typing.List[str]
-    selected_model: typing.Optional[AsrPageRequestSelectedModel] = None
+    selected_model: typing.Optional[AsrModels] = None
     language: typing.Optional[str] = None
     translation_model: typing.Optional[AsrPageRequestTranslationModel] = None
     output_format: typing.Optional[AsrPageRequestOutputFormat] = None
