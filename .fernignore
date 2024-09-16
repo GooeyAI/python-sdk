@@ -4,3 +4,4 @@ src/gooey/core/http_client.py
 src/gooey/core/pydantic_utilities.py
 docs/
 mkdocs.yml
+scripts/
