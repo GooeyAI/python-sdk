@@ -1,0 +1,115 @@
+site_name: gooeyai
+repo_url: "https://github.com/GooeyAI/python-sdk"
+repo_name: "GooeyAI/python-sdk"
+site_dir: "site"
+watch: [mkdocs.yml, README.md, src/gooey]
+
+theme:
+  name: material
+  features:
+  - announce.dismiss
+  - content.code.copy
+  - content.tooltips
+  - navigation.footer
+  - navigation.indexes
+  - navigation.sections
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.top
+  - search.highlight
+  - search.suggest
+  - toc.follow
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: lime
+      toggle:
+        icon: material/weather-night
+        name: Switch to system preference
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+nav:
+- Home:
+  - Overview: index.md
+- API reference:
+  - gooeyai: reference/
+
+markdown_extensions:
+- attr_list
+- admonition
+- pymdownx.details
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+- pymdownx.highlight:
+    pygments_lang_class: true
+- pymdownx.superfences
+- pymdownx.tabbed:
+    alternate_style: true
+    slugify: !!python/object/apply:pymdownx.slugs.slugify
+      kwds:
+        case: lower
+- pymdownx.tilde
+- toc:
+    permalink: "¤"
+
+plugins:
+  - search
+  - autorefs
+  - gen-files:
+      scripts:
+      - scripts/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - markdown-exec
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            merge_init_into_class: true
+            parameter_headings: true
+            separate_signature: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            show_symbol_type_heading: true
+            show_symbol_toc: true
+            signature_crossrefs: true
+            summary: true
+
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/GooeyAI/python-sdk
+  - icon: fontawesome/brands/python
+    link: https://pypi.org/project/gooeyai
+  - icon: fontawesome/brands/twitter
+    link: https://twitter.com/GooeyAI
+  analytics:
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: Let us know how we can improve this page.

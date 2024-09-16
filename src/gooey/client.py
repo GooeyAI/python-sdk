@@ -90,37 +90,15 @@ class Gooey:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters
-    ----------
-    base_url : typing.Optional[str]
-        The base url to use for requests from the client.
-
-    environment : GooeyEnvironment
-        The environment to use for requests from the client. from .environment import GooeyEnvironment
-
-
-
-        Defaults to GooeyEnvironment.DEFAULT
-
-
-
-    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
-
-    follow_redirects : typing.Optional[bool]
-        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
-
-    httpx_client : typing.Optional[httpx.Client]
-        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-
     Examples
     --------
+    ```python
     from gooey import Gooey
 
     client = Gooey(
         api_key="YOUR_API_KEY",
     )
+    ```
     """
 
     def __init__(
@@ -174,51 +152,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeforumSdPageOutput:
         """
-        Parameters
-        ----------
-        animation_prompts : typing.Sequence[AnimationPrompt]
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        max_frames : typing.Optional[int]
-
-        selected_model : typing.Optional[AnimationModels]
-
-        animation_mode : typing.Optional[str]
-
-        zoom : typing.Optional[str]
-
-        translation_x : typing.Optional[str]
-
-        translation_y : typing.Optional[str]
-
-        rotation3d_x : typing.Optional[str]
-
-        rotation3d_y : typing.Optional[str]
-
-        rotation3d_z : typing.Optional[str]
-
-        fps : typing.Optional[int]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeforumSdPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import AnimationPrompt, Gooey
 
         client = Gooey(
@@ -232,6 +168,7 @@ class Gooey:
                 )
             ],
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/DeforumSD/async",
@@ -339,81 +276,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        qr_code_data : typing.Optional[str]
-
-        qr_code_input_image : typing.Optional[core.File]
-            See core.File for more documentation
-
-        qr_code_vcard : typing.Optional[Vcard]
-
-        qr_code_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        use_url_shortener : typing.Optional[bool]
-
-        negative_prompt : typing.Optional[str]
-
-        image_prompt : typing.Optional[str]
-
-        image_prompt_controlnet_models : typing.Optional[typing.List[ControlNetModels]]
-
-        image_prompt_strength : typing.Optional[float]
-
-        image_prompt_scale : typing.Optional[float]
-
-        image_prompt_pos_x : typing.Optional[float]
-
-        image_prompt_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[TextToImageModels]
-
-        selected_controlnet_model : typing.Optional[typing.List[ControlNetModels]]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.List[float]]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        scheduler : typing.Optional[Schedulers]
-
-        seed : typing.Optional[int]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        QrCodeGeneratorPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -422,6 +287,7 @@ class Gooey:
         client.qr_code(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/art-qr-code/async",
@@ -540,75 +406,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RelatedQnAPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        site_filter : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RelatedQnAPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -618,6 +418,7 @@ class Gooey:
             search_query="search_query",
             site_filter="site_filter",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/related-qna-maker/async",
@@ -726,64 +527,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SeoSummaryPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        keywords : str
-
-        title : str
-
-        company_url : str
-
-        example_id : typing.Optional[str]
-
-        task_instructions : typing.Optional[str]
-
-        enable_html : typing.Optional[bool]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        enable_crosslinks : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SeoSummaryPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -795,6 +541,7 @@ class Gooey:
             title="title",
             company_url="company_url",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/SEOSummary/async",
@@ -903,75 +650,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GoogleGptPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        site_filter : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GoogleGptPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -981,6 +662,7 @@ class Gooey:
             search_query="search_query",
             site_filter="site_filter",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/google-gpt/async",
@@ -1080,45 +762,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SocialLookupEmailPageOutput:
         """
-        Parameters
-        ----------
-        email_address : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SocialLookupEmailPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -1127,6 +773,7 @@ class Gooey:
         client.personalize_email(
             email_address="email_address",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/SocialLookupEmail/async",
@@ -1210,51 +857,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        run_urls : typing.List[str]
-
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-
-        input_columns : typing.Dict[str, str]
-
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-
-        output_columns : typing.Dict[str, str]
-
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.List[str]]
-
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkRunnerPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -1265,6 +870,7 @@ class Gooey:
             input_columns={"key": "value"},
             output_columns={"key": "value"},
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/bulk-runner/async",
@@ -1351,59 +957,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkEvalPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
-
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkEvalPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -1412,6 +968,7 @@ class Gooey:
         client.eval(
             documents=["documents"],
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/bulk-eval/async",
@@ -1504,62 +1061,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        sheet_url : typing.Optional[core.File]
-            See core.File for more documentation
-
-        selected_asr_model : typing.Optional[AsrModels]
-
-        google_translate_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        task_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocExtractPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.synthesize_data()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/doc-extract/async",
@@ -1652,49 +1163,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareLlmPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_models : typing.Optional[typing.Sequence[LargeLanguageModels]]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareLlmPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.llm()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/CompareLLM/async",
@@ -1791,69 +1269,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSearchPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[KeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        citation_style : typing.Optional[CitationStyles]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocSearchPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -1862,6 +1280,7 @@ class Gooey:
         client.rag(
             search_query="search_query",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/doc-search/async",
@@ -1961,49 +1380,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SmartGptPageOutput:
         """
-        Parameters
-        ----------
-        input_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        cot_prompt : typing.Optional[str]
-
-        reflexion_prompt : typing.Optional[str]
-
-        dera_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SmartGptPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -2012,6 +1391,7 @@ class Gooey:
         client.smart_gpt(
             input_prompt="input_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/SmartGPT/async",
@@ -2105,60 +1485,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        merge_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        chain_type : typing.Optional[CombineDocumentsChains]
-
-        selected_asr_model : typing.Optional[AsrModels]
-
-        google_translate_target : typing.Optional[str]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocSummaryPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.doc_summary()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/doc-summary/async",
@@ -2243,34 +1579,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FunctionsPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        code : typing.Optional[str]
-            The JS code to be executed.
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used in the code
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        FunctionsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.functions()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/functions/async",
@@ -2348,51 +1666,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_face : typing.Optional[core.File]
-            See core.File for more documentation
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncModels]
-
-        input_audio : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LipsyncPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.lipsync()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/Lipsync/async",
@@ -2498,81 +1781,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechProviders]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[OpenAiTtsVoices]
-
-        openai_tts_model : typing.Optional[OpenAiTtsModels]
-
-        input_face : typing.Optional[core.File]
-            See core.File for more documentation
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LipsyncTtsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -2581,6 +1792,7 @@ class Gooey:
         client.lipsync_tts(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/LipsyncTTS/async",
@@ -2697,66 +1909,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TextToSpeechPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechProviders]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[OpenAiTtsVoices]
-
-        openai_tts_model : typing.Optional[OpenAiTtsModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TextToSpeechPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -2765,6 +1920,7 @@ class Gooey:
         client.text_to_speech(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/TextToSpeech/async",
@@ -2862,54 +2018,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[AsrModels]
-
-        language : typing.Optional[str]
-
-        translation_model : typing.Optional[TranslationModels]
-
-        output_format : typing.Optional[AsrOutputFormat]
-
-        google_translate_target : typing.Optional[str]
-            use `translation_model` & `translation_target` instead.
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsrPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.speech_recognition()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/asr/async",
@@ -2999,45 +2117,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Text2AudioPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        duration_sec : typing.Optional[float]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[Text2AudioModels]]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Text2AudioPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -3046,6 +2128,7 @@ class Gooey:
         client.text_to_music(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/text2audio/async",
@@ -3129,44 +2212,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        texts : typing.Optional[typing.List[str]]
-
-        selected_model : typing.Optional[TranslationModels]
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TranslationPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.translate()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/translate/async",
@@ -3257,62 +2312,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        text_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[ImageToImageModels]
-
-        selected_controlnet_model : typing.Optional[SelectedControlNetModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.List[float]]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Img2ImgPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.remix_image()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/Img2Img/async",
@@ -3413,57 +2422,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareText2ImgPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        dall_e3quality : typing.Optional[str]
-
-        dall_e3style : typing.Optional[str]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[TextToImageModels]]
-
-        scheduler : typing.Optional[Schedulers]
-
-        edit_instruction : typing.Optional[str]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareText2ImgPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -3472,6 +2433,7 @@ class Gooey:
         client.text_to_image(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/CompareText2Img/async",
@@ -3571,58 +2533,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        mask_threshold : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ObjectInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -3631,6 +2544,7 @@ class Gooey:
         client.product_image(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/ObjectInpainting/async",
@@ -3731,56 +2645,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        FaceInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -3789,6 +2656,7 @@ class Gooey:
         client.portrait(
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/FaceInpainting/async",
@@ -3897,73 +2765,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailFaceInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        email_address : typing.Optional[str]
-
-        twitter_handle : typing.Optional[str]
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        should_send_email : typing.Optional[bool]
-
-        email_from : typing.Optional[str]
-
-        email_cc : typing.Optional[str]
-
-        email_bcc : typing.Optional[str]
-
-        email_subject : typing.Optional[str]
-
-        email_body : typing.Optional[str]
-
-        email_body_enable_html : typing.Optional[bool]
-
-        fallback_email_body : typing.Optional[str]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmailFaceInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -3973,6 +2777,7 @@ class Gooey:
             email_address="sean@dara.network",
             text_prompt="winter's day in paris",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/EmailFaceInpainting/async",
@@ -4078,54 +2883,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GoogleImageGenPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        selected_model : typing.Optional[ImageToImageModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GoogleImageGenPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -4135,6 +2895,7 @@ class Gooey:
             search_query="search_query",
             text_prompt="text_prompt",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/GoogleImageGen/async",
@@ -4225,50 +2986,16 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[ImageSegmentationModels]
-
-        mask_threshold : typing.Optional[float]
-
-        rect_persepective_transform : typing.Optional[bool]
-
-        reflection_opacity : typing.Optional[float]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ImageSegmentationPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.remove_background()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/ImageSegmentation/async",
@@ -4353,40 +3080,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
-        Parameters
-        ----------
-        scale : int
-            The final upsampling scale of the image
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_image : typing.Optional[core.File]
-            See core.File for more documentation
-
-        input_video : typing.Optional[core.File]
-            See core.File for more documentation
-
-        selected_models : typing.Optional[typing.List[UpscalerModels]]
-
-        selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareUpscalerPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -4395,6 +3091,7 @@ class Gooey:
         client.upscale(
             scale=1,
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/compare-ai-upscalers/async",
@@ -4473,31 +3170,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsPageOutput:
         """
-        Parameters
-        ----------
-        texts : typing.Sequence[str]
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmbeddingsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -4506,6 +3181,7 @@ class Gooey:
         client.embed(
             texts=["texts"],
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/embeddings/async",
@@ -4600,79 +3276,9 @@ class Gooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RelatedQnADocPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[KeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        citation_style : typing.Optional[CitationStyles]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RelatedQnADocPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
@@ -4681,6 +3287,7 @@ class Gooey:
         client.seo_people_also_ask_doc(
             search_query="search_query",
         )
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v3/related-qna-maker-doc/async",
@@ -4765,24 +3372,16 @@ class Gooey:
 
     def get_balance(self, *, request_options: typing.Optional[RequestOptions] = None) -> BalanceResponse:
         """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BalanceResponse
-            Successful Response
-
         Examples
         --------
+        ```python
         from gooey import Gooey
 
         client = Gooey(
             api_key="YOUR_API_KEY",
         )
         client.get_balance()
+        ```
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/balance/",
@@ -4808,37 +3407,15 @@ class AsyncGooey:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters
-    ----------
-    base_url : typing.Optional[str]
-        The base url to use for requests from the client.
-
-    environment : GooeyEnvironment
-        The environment to use for requests from the client. from .environment import GooeyEnvironment
-
-
-
-        Defaults to GooeyEnvironment.DEFAULT
-
-
-
-    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
-
-    follow_redirects : typing.Optional[bool]
-        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
-
-    httpx_client : typing.Optional[httpx.AsyncClient]
-        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-
     Examples
     --------
+    ```python
     from gooey import AsyncGooey
 
     client = AsyncGooey(
         api_key="YOUR_API_KEY",
     )
+    ```
     """
 
     def __init__(
@@ -4892,51 +3469,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeforumSdPageOutput:
         """
-        Parameters
-        ----------
-        animation_prompts : typing.Sequence[AnimationPrompt]
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        max_frames : typing.Optional[int]
-
-        selected_model : typing.Optional[AnimationModels]
-
-        animation_mode : typing.Optional[str]
-
-        zoom : typing.Optional[str]
-
-        translation_x : typing.Optional[str]
-
-        translation_y : typing.Optional[str]
-
-        rotation3d_x : typing.Optional[str]
-
-        rotation3d_y : typing.Optional[str]
-
-        rotation3d_z : typing.Optional[str]
-
-        fps : typing.Optional[int]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeforumSdPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AnimationPrompt, AsyncGooey
@@ -4958,6 +3493,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/DeforumSD/async",
@@ -5065,81 +3601,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QrCodeGeneratorPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        qr_code_data : typing.Optional[str]
-
-        qr_code_input_image : typing.Optional[core.File]
-            See core.File for more documentation
-
-        qr_code_vcard : typing.Optional[Vcard]
-
-        qr_code_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        use_url_shortener : typing.Optional[bool]
-
-        negative_prompt : typing.Optional[str]
-
-        image_prompt : typing.Optional[str]
-
-        image_prompt_controlnet_models : typing.Optional[typing.List[ControlNetModels]]
-
-        image_prompt_strength : typing.Optional[float]
-
-        image_prompt_scale : typing.Optional[float]
-
-        image_prompt_pos_x : typing.Optional[float]
-
-        image_prompt_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[TextToImageModels]
-
-        selected_controlnet_model : typing.Optional[typing.List[ControlNetModels]]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.List[float]]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        scheduler : typing.Optional[Schedulers]
-
-        seed : typing.Optional[int]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        QrCodeGeneratorPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -5156,6 +3620,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/art-qr-code/async",
@@ -5274,75 +3739,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RelatedQnAPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        site_filter : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RelatedQnAPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -5360,6 +3759,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/related-qna-maker/async",
@@ -5468,64 +3868,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SeoSummaryPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        keywords : str
-
-        title : str
-
-        company_url : str
-
-        example_id : typing.Optional[str]
-
-        task_instructions : typing.Optional[str]
-
-        enable_html : typing.Optional[bool]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        enable_crosslinks : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SeoSummaryPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -5545,6 +3890,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/SEOSummary/async",
@@ -5653,75 +3999,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GoogleGptPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        site_filter : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        max_search_urls : typing.Optional[int]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GoogleGptPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -5739,6 +4019,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/google-gpt/async",
@@ -5838,45 +4119,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SocialLookupEmailPageOutput:
         """
-        Parameters
-        ----------
-        email_address : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SocialLookupEmailPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -5893,6 +4138,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/SocialLookupEmail/async",
@@ -5976,51 +4222,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkRunnerPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        run_urls : typing.List[str]
-
-            Provide one or more Gooey.AI workflow runs.
-            You can add multiple runs from the same recipe (e.g. two versions of your copilot) and we'll run the inputs over both of them.
-
-
-        input_columns : typing.Dict[str, str]
-
-            For each input field in the Gooey.AI workflow, specify the column in your input data that corresponds to it.
-
-
-        output_columns : typing.Dict[str, str]
-
-            For each output field in the Gooey.AI workflow, specify the column name that you'd like to use for it in the output data.
-
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_urls : typing.Optional[typing.List[str]]
-
-            _(optional)_ Add one or more Gooey.AI Evaluator Workflows to evaluate the results of your runs.
-
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkRunnerPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6039,6 +4243,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/bulk-runner/async",
@@ -6125,59 +4330,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkEvalPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.Sequence[str]
-
-            Upload or link to a CSV or google sheet that contains your sample input data.
-            For example, for Copilot, this would sample questions or for Art QR Code, would would be pairs of image descriptions and URLs.
-            Remember to includes header names in your CSV too.
-
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        eval_prompts : typing.Optional[typing.Sequence[EvalPrompt]]
-
-            Specify custom LLM prompts to calculate metrics that evaluate each row of the input data. The output should be a JSON object mapping the metric names to values.
-            _The `columns` dictionary can be used to reference the spreadsheet columns._
-
-
-        agg_functions : typing.Optional[typing.Sequence[AggFunction]]
-
-            Aggregate using one or more operations. Uses [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html#dataframegroupby-computations-descriptive-stats).
-
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkEvalPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6194,6 +4349,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/bulk-eval/async",
@@ -6286,56 +4442,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocExtractPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        sheet_url : typing.Optional[core.File]
-            See core.File for more documentation
-
-        selected_asr_model : typing.Optional[AsrModels]
-
-        google_translate_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        task_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocExtractPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6350,6 +4459,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/doc-extract/async",
@@ -6442,43 +4552,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareLlmPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_prompt : typing.Optional[str]
-
-        selected_models : typing.Optional[typing.Sequence[LargeLanguageModels]]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareLlmPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6493,6 +4569,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/CompareLLM/async",
@@ -6589,69 +4666,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSearchPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[KeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        citation_style : typing.Optional[CitationStyles]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocSearchPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6668,6 +4685,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/doc-search/async",
@@ -6767,49 +4785,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SmartGptPageOutput:
         """
-        Parameters
-        ----------
-        input_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        cot_prompt : typing.Optional[str]
-
-        reflexion_prompt : typing.Optional[str]
-
-        dera_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SmartGptPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6826,6 +4804,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/SmartGPT/async",
@@ -6919,54 +4898,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocSummaryPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        task_instructions : typing.Optional[str]
-
-        merge_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        chain_type : typing.Optional[CombineDocumentsChains]
-
-        selected_asr_model : typing.Optional[AsrModels]
-
-        google_translate_target : typing.Optional[str]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DocSummaryPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -6981,6 +4915,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/doc-summary/async",
@@ -7065,28 +5000,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FunctionsPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        code : typing.Optional[str]
-            The JS code to be executed.
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used in the code
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        FunctionsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7101,6 +5017,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/functions/async",
@@ -7178,45 +5095,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_face : typing.Optional[core.File]
-            See core.File for more documentation
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncModels]
-
-        input_audio : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LipsyncPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7231,6 +5112,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/Lipsync/async",
@@ -7336,81 +5218,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LipsyncTtsPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechProviders]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[OpenAiTtsVoices]
-
-        openai_tts_model : typing.Optional[OpenAiTtsModels]
-
-        input_face : typing.Optional[core.File]
-            See core.File for more documentation
-
-        face_padding_top : typing.Optional[int]
-
-        face_padding_bottom : typing.Optional[int]
-
-        face_padding_left : typing.Optional[int]
-
-        face_padding_right : typing.Optional[int]
-
-        sadtalker_settings : typing.Optional[SadTalkerSettings]
-
-        selected_model : typing.Optional[LipsyncModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LipsyncTtsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7427,6 +5237,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/LipsyncTTS/async",
@@ -7543,66 +5354,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TextToSpeechPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        tts_provider : typing.Optional[TextToSpeechProviders]
-
-        uberduck_voice_name : typing.Optional[str]
-
-        uberduck_speaking_rate : typing.Optional[float]
-
-        google_voice_name : typing.Optional[str]
-
-        google_speaking_rate : typing.Optional[float]
-
-        google_pitch : typing.Optional[float]
-
-        bark_history_prompt : typing.Optional[str]
-
-        elevenlabs_voice_name : typing.Optional[str]
-            Use `elevenlabs_voice_id` instead
-
-        elevenlabs_api_key : typing.Optional[str]
-
-        elevenlabs_voice_id : typing.Optional[str]
-
-        elevenlabs_model : typing.Optional[str]
-
-        elevenlabs_stability : typing.Optional[float]
-
-        elevenlabs_similarity_boost : typing.Optional[float]
-
-        elevenlabs_style : typing.Optional[float]
-
-        elevenlabs_speaker_boost : typing.Optional[bool]
-
-        azure_voice_name : typing.Optional[str]
-
-        openai_voice_name : typing.Optional[OpenAiTtsVoices]
-
-        openai_tts_model : typing.Optional[OpenAiTtsModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TextToSpeechPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7619,6 +5373,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/TextToSpeech/async",
@@ -7716,48 +5471,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsrPageOutput:
         """
-        Parameters
-        ----------
-        documents : typing.List[core.File]
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[AsrModels]
-
-        language : typing.Optional[str]
-
-        translation_model : typing.Optional[TranslationModels]
-
-        output_format : typing.Optional[AsrOutputFormat]
-
-        google_translate_target : typing.Optional[str]
-            use `translation_model` & `translation_target` instead.
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsrPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7772,6 +5488,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/asr/async",
@@ -7861,45 +5578,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Text2AudioPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        duration_sec : typing.Optional[float]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[Text2AudioModels]]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Text2AudioPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -7916,6 +5597,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/text2audio/async",
@@ -7999,38 +5681,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TranslationPageOutput:
         """
-        Parameters
-        ----------
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        texts : typing.Optional[typing.List[str]]
-
-        selected_model : typing.Optional[TranslationModels]
-
-        translation_source : typing.Optional[str]
-
-        translation_target : typing.Optional[str]
-
-        glossary_document : typing.Optional[core.File]
-            See core.File for more documentation
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TranslationPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8045,6 +5698,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/translate/async",
@@ -8135,56 +5789,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Img2ImgPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        text_prompt : typing.Optional[str]
-
-        selected_model : typing.Optional[ImageToImageModels]
-
-        selected_controlnet_model : typing.Optional[SelectedControlNetModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        controlnet_conditioning_scale : typing.Optional[typing.List[float]]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Img2ImgPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8199,6 +5806,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/Img2Img/async",
@@ -8299,57 +5907,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareText2ImgPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        negative_prompt : typing.Optional[str]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        dall_e3quality : typing.Optional[str]
-
-        dall_e3style : typing.Optional[str]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        sd2upscaling : typing.Optional[bool]
-
-        selected_models : typing.Optional[typing.Sequence[TextToImageModels]]
-
-        scheduler : typing.Optional[Schedulers]
-
-        edit_instruction : typing.Optional[str]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareText2ImgPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8366,6 +5926,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/CompareText2Img/async",
@@ -8465,58 +6026,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        mask_threshold : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ObjectInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8533,6 +6045,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/ObjectInpainting/async",
@@ -8633,56 +6146,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FaceInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        FaceInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8699,6 +6165,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/FaceInpainting/async",
@@ -8807,73 +6274,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailFaceInpaintingPageOutput:
         """
-        Parameters
-        ----------
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        email_address : typing.Optional[str]
-
-        twitter_handle : typing.Optional[str]
-
-        face_scale : typing.Optional[float]
-
-        face_pos_x : typing.Optional[float]
-
-        face_pos_y : typing.Optional[float]
-
-        selected_model : typing.Optional[InpaintingModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        upscale_factor : typing.Optional[float]
-
-        output_width : typing.Optional[int]
-
-        output_height : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        should_send_email : typing.Optional[bool]
-
-        email_from : typing.Optional[str]
-
-        email_cc : typing.Optional[str]
-
-        email_bcc : typing.Optional[str]
-
-        email_subject : typing.Optional[str]
-
-        email_body : typing.Optional[str]
-
-        email_body_enable_html : typing.Optional[bool]
-
-        fallback_email_body : typing.Optional[str]
-
-        seed : typing.Optional[int]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmailFaceInpaintingPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -8891,6 +6294,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/EmailFaceInpainting/async",
@@ -8996,54 +6400,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GoogleImageGenPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        text_prompt : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        selected_model : typing.Optional[ImageToImageModels]
-
-        negative_prompt : typing.Optional[str]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[int]
-
-        guidance_scale : typing.Optional[float]
-
-        prompt_strength : typing.Optional[float]
-
-        sd2upscaling : typing.Optional[bool]
-
-        seed : typing.Optional[int]
-
-        image_guidance_scale : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GoogleImageGenPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9061,6 +6420,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/GoogleImageGen/async",
@@ -9151,44 +6511,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImageSegmentationPageOutput:
         """
-        Parameters
-        ----------
-        input_image : core.File
-            See core.File for more documentation
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[ImageSegmentationModels]
-
-        mask_threshold : typing.Optional[float]
-
-        rect_persepective_transform : typing.Optional[bool]
-
-        reflection_opacity : typing.Optional[float]
-
-        obj_scale : typing.Optional[float]
-
-        obj_pos_x : typing.Optional[float]
-
-        obj_pos_y : typing.Optional[float]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ImageSegmentationPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9203,6 +6528,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/ImageSegmentation/async",
@@ -9287,40 +6613,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CompareUpscalerPageOutput:
         """
-        Parameters
-        ----------
-        scale : int
-            The final upsampling scale of the image
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.List[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        input_image : typing.Optional[core.File]
-            See core.File for more documentation
-
-        input_video : typing.Optional[core.File]
-            See core.File for more documentation
-
-        selected_models : typing.Optional[typing.List[UpscalerModels]]
-
-        selected_bg_model : typing.Optional[typing.Literal["real_esrgan_x2"]]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CompareUpscalerPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9337,6 +6632,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/compare-ai-upscalers/async",
@@ -9415,31 +6711,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsPageOutput:
         """
-        Parameters
-        ----------
-        texts : typing.Sequence[str]
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        selected_model : typing.Optional[EmbeddingModels]
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmbeddingsPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9456,6 +6730,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/embeddings/async",
@@ -9550,79 +6825,9 @@ class AsyncGooey:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RelatedQnADocPageOutput:
         """
-        Parameters
-        ----------
-        search_query : str
-
-        example_id : typing.Optional[str]
-
-        functions : typing.Optional[typing.Sequence[RecipeFunction]]
-
-        variables : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Variables to be used as Jinja prompt templates and in functions as arguments
-
-        keyword_query : typing.Optional[KeywordQuery]
-
-        documents : typing.Optional[typing.Sequence[str]]
-
-        max_references : typing.Optional[int]
-
-        max_context_words : typing.Optional[int]
-
-        scroll_jump : typing.Optional[int]
-
-        doc_extract_url : typing.Optional[str]
-
-        embedding_model : typing.Optional[EmbeddingModels]
-
-        dense_weight : typing.Optional[float]
-
-            Weightage for dense vs sparse embeddings. `0` for sparse, `1` for dense, `0.5` for equal weight.
-            Generally speaking, dense embeddings excel at understanding the context of the query, whereas sparse vectors excel at keyword matches.
-
-
-        task_instructions : typing.Optional[str]
-
-        query_instructions : typing.Optional[str]
-
-        selected_model : typing.Optional[LargeLanguageModels]
-
-        citation_style : typing.Optional[CitationStyles]
-
-        avoid_repetition : typing.Optional[bool]
-
-        num_outputs : typing.Optional[int]
-
-        quality : typing.Optional[float]
-
-        max_tokens : typing.Optional[int]
-
-        sampling_temperature : typing.Optional[float]
-
-        response_format_type : typing.Optional[ResponseFormatType]
-
-        serp_search_location : typing.Optional[SerpSearchLocations]
-
-        scaleserp_locations : typing.Optional[typing.Sequence[str]]
-            DEPRECATED: use `serp_search_location` instead
-
-        serp_search_type : typing.Optional[SerpSearchType]
-
-        scaleserp_search_field : typing.Optional[str]
-            DEPRECATED: use `serp_search_type` instead
-
-        settings : typing.Optional[RunSettings]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RelatedQnADocPageOutput
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9639,6 +6844,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v3/related-qna-maker-doc/async",
@@ -9723,18 +6929,9 @@ class AsyncGooey:
 
     async def get_balance(self, *, request_options: typing.Optional[RequestOptions] = None) -> BalanceResponse:
         """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BalanceResponse
-            Successful Response
-
         Examples
         --------
+        ```python
         import asyncio
 
         from gooey import AsyncGooey
@@ -9749,6 +6946,7 @@ class AsyncGooey:
 
 
         asyncio.run(main())
+        ```
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/balance/",
