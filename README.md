@@ -49,7 +49,7 @@ Gooey.AI simplifies building AI workflows by:
 
 - Any developer who wants to quickly prototype with GenAI apps
 - Great for those who want to include GenAI in their existing product or app
-- Also amazing for those who want to prototype new AI product - Gooey.AI SDKs are great for speedy GTMs
+- Gooey.AI SDKs are great for speedy GTMs as we are already built to scale! 
   
 ## Try it on Colab
 
