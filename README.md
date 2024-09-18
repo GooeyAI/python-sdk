@@ -93,9 +93,9 @@ client = AsyncGooey(
 
 async def main() -> None:
     await client.lipsync(
-    input_face="./path/to/face.mp4",
-    input_audio="./path/to/audio.mp3",
-)
+        input_face="./path/to/face.mp4",
+        input_audio="./path/to/audio.mp3",
+    )
 
 
 asyncio.run(main())
