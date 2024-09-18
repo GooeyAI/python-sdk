@@ -1,9 +1,59 @@
+<h3 align="center">
+  <img src="https://storage.googleapis.com/dara-c1b52.appspot.com/daras_ai/media/cdc58fe0-2da1-11ef-84df-02420a0001f4/githubbanner.png"
+  />
+</h3>
+<p align="center">
+  <a href="https://gooey.ai">🏠 Homepage</a> ·
+  <a href="https://gooey.ai/explore">👾 Explore Workflows</a> ·
+  <a href="https://gooey.ai/docs">📚 Docs</a> ·
+  <a href="https://gooey.ai/api">🤖 API</a> ·
+  <a href="https://gooey.ai/discord">🛟 Discord</a> ·
+  <a href="https://gooey.ai/account">💃🏾 Start Building</a>
+</p>
+
+<div>
+  <p align="center">
+    <a
+    href="https://x.com/GooeyAI">
+        <img src="https://img.shields.io/badge/X/Twitter-000000?style=for-the-badge&logo=x&logoColor=white" />
+    </a>
+    <a href="https://in.linkedin.com/company/gooeyai">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
+    </a>
+    <a href="https://gooey.ai/discord">
+        <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
+    </a>
+    <a href="https://www.youtube.com/@gooeyai">
+        <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+    </a>
+ </p>
+</div>
+
+[Gooey.AI](http://gooey.ai/) is the low-code orchestration platform with **discoverable workflows** & **unified billing to all of GenAI universe.** 
+
 # Gooey Python Library
+
+The Gooey Python library provides convenient access to the Gooey API from Python.
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 [![pypi](https://img.shields.io/pypi/v/gooeyai)](https://pypi.python.org/pypi/gooeyai)
 
-The Gooey Python library provides convenient access to the Gooey API from Python.
+# 🤖🐍📦 What Gooey.AI SDK offers?
+
+Gooey.AI simplifies building AI workflows by:
+- Offering high and flexible interoperability
+- Single API key to run several AI workflows
+- Hosting private and open-source AI models - LLMs, ASR, Image and Animation
+
+## 🧑‍💻 Who is this for and why would I want to use it?
+
+- Any developer who wants to quickly prototype with GenAI apps
+- Great for those who want to include GenAI in their existing product or app
+- Also amazing for those who want to prototype new AI product - Gooey.AI SDKs are great for speedy GTMs
+  
+## Try it on Colab
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EH8zh_zPZgyksR9uitGSO_iXn0JU-JmD?usp=sharing)
 
 ## Installation
 
@@ -21,13 +71,9 @@ from gooey import AnimationPrompt, Gooey
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.animate(
-    animation_prompts=[
-        AnimationPrompt(
-            frame="frame",
-            prompt="prompt",
-        )
-    ],
+client.lipsync(
+    input_face="./path/to/face.mp4",
+    input_audio="./path/to/audio.mp3",
 )
 ```
 
@@ -46,14 +92,10 @@ client = AsyncGooey(
 
 
 async def main() -> None:
-    await client.animate(
-        animation_prompts=[
-            AnimationPrompt(
-                frame="frame",
-                prompt="prompt",
-            )
-        ],
-    )
+    await client.lipsync(
+    input_face="./path/to/face.mp4",
+    input_audio="./path/to/audio.mp3",
+)
 
 
 asyncio.run(main())
@@ -136,9 +178,7 @@ client = Gooey(
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
+
+Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
