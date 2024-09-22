@@ -539,11 +539,8 @@ def gooey_process_request_params(
                 new_files[k] = [open(item, "rb") for item in v]
             elif v and isinstance(v, str) and os.path.exists(v):
                 new_files[k] = open(v, "rb")
-            elif isinstance(v, str) or v is omit or not v:
-                # a URL, None, or omitted value
-                data[k] = new_files.pop(k)
             else:
-                new_files[k] = v
+                data[k] = new_files.pop(k)
 
     if new_files:
         return GooeyRequestParams(
