@@ -2,4 +2,4 @@
 
 import typing
 
-ConversationEntryRole = typing.Union[typing.Literal["user", "system", "assistant"], typing.Any]
+ConversationEntryRole = typing.Union[typing.Literal["user", "system", "assistant", "tool"], typing.Any]

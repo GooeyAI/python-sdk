@@ -2,4 +2,4 @@
 
 import typing
 
-RecipeRunState = typing.Union[typing.Literal["starting", "running", "completed", "failed"], typing.Any]
+RecipeRunState = typing.Union[typing.Literal["standby", "starting", "running", "completed", "failed"], typing.Any]

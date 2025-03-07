@@ -1,49 +1,9 @@
-<h3 align="center">
-  <img src="https://storage.googleapis.com/dara-c1b52.appspot.com/daras_ai/media/cdc58fe0-2da1-11ef-84df-02420a0001f4/githubbanner.png"
-  />
-</h3>
-<p align="center">
-  <a href="https://gooey.ai">🏠 Homepage</a> ·
-  <a href="https://gooey.ai/explore">👾 Explore Workflows</a> ·
-  <a href="https://gooey.ai/docs">📚 Docs</a> ·
-  <a href="https://gooey.ai/api">🤖 API</a> ·
-  <a href="https://gooey.ai/discord">🛟 Discord</a> ·
-  <a href="https://gooey.ai/account">💃🏾 Start Building</a>
-</p>
-
-<div>
-  <p align="center">
-    <a
-    href="https://x.com/GooeyAI">
-        <img src="https://img.shields.io/badge/X/Twitter-000000?style=for-the-badge&logo=x&logoColor=white" />
-    </a>
-    <a href="https://in.linkedin.com/company/gooeyai">
-        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
-    </a>
-    <a href="https://gooey.ai/discord">
-        <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
-    </a>
-    <a href="https://www.youtube.com/@gooeyai">
-        <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
-    </a>
- </p>
-</div>
-
-[Gooey.AI](http://gooey.ai/) is the low-code orchestration platform with **discoverable workflows** & **unified billing to all of GenAI universe.** 
-
 # Gooey Python Library
 
-The Gooey Python library provides convenient access to the Gooey API from Python.
-
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2FGooeyAI%2Fpython-sdk)
 [![pypi](https://img.shields.io/pypi/v/gooeyai)](https://pypi.python.org/pypi/gooeyai)
 
-# 🤖🐍📦 What Gooey.AI SDK offers?
-
-Gooey.AI simplifies building AI workflows by:
-- Offering high and flexible interoperability
-- Single API key to run several AI workflows
-- Hosting private and open-source AI models - LLMs, ASR, Image and Animation
+The Gooey Python library provides convenient access to the Gooey API from Python.
 
 ## 🧑‍💻 Who is this for and why would I want to use it?
 
@@ -66,14 +26,16 @@ pip install gooeyai
 Instantiate and use the client with the following:
 
 ```python
-from gooey import AnimationPrompt, Gooey
+from gooey import Gooey
 
 client = Gooey(
     api_key="YOUR_API_KEY",
 )
-client.lipsync(
-    input_face="./path/to/face.mp4",
-    input_audio="./path/to/audio.mp3",
+client.bulk_runner(
+    documents=["documents"],
+    run_urls=["run_urls"],
+    input_columns={"key": "value"},
+    output_columns={"key": "value"},
 )
 ```
 
@@ -84,7 +46,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from gooey import AnimationPrompt, AsyncGooey
+from gooey import AsyncGooey
 
 client = AsyncGooey(
     api_key="YOUR_API_KEY",
@@ -92,9 +54,11 @@ client = AsyncGooey(
 
 
 async def main() -> None:
-    await client.lipsync(
-        input_face="./path/to/face.mp4",
-        input_audio="./path/to/audio.mp3",
+    await client.bulk_runner(
+        documents=["documents"],
+        run_urls=["run_urls"],
+        input_columns={"key": "value"},
+        output_columns={"key": "value"},
     )
 
 
@@ -110,7 +74,7 @@ will be thrown.
 from gooey.core.api_error import ApiError
 
 try:
-    client.animate(...)
+    client.bulk_runner(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -128,14 +92,12 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
-- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
-- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.animate(..., {
+client.bulk_runner(..., {
     "max_retries": 1
 })
 ```
@@ -155,7 +117,7 @@ client = Gooey(
 
 
 # Override timeout for a specific method
-client.animate(..., {
+client.bulk_runner(..., {
     "timeout_in_seconds": 1
 })
 ```
@@ -180,7 +142,9 @@ client = Gooey(
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
-
-Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
